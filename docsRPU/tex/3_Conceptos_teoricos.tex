@@ -1,83 +1,118 @@
 \capitulo{3}{Conceptos teóricos}
 
-En aquellos proyectos que necesiten para su comprensión y desarrollo de unos conceptos teóricos de una determinada materia o de un determinado dominio de conocimiento, debe existir un apartado que sintetice dichos conceptos.
+%En aquellos proyectos que necesiten para su comprensión y desarrollo de unos conceptos teóricos de una determinada materia o de un determinado dominio de conocimiento, debe existir un apartado que sintetice dichos conceptos.
 
-Algunos conceptos teóricos de \LaTeX{} \footnote{Créditos a los proyectos de Álvaro López Cantero: Configurador de Presupuestos y Roberto Izquierdo Amo: PLQuiz}.
+%Algunos conceptos teóricos de \LaTeX{} \footnote{Créditos a los proyectos de Álvaro López Cantero: Configurador de Presupuestos y Roberto Izquierdo Amo: PLQuiz}.
 
-\section{Secciones}
+%\section{Secciones}
 
-Las secciones se incluyen con el comando section.
+%Las secciones se incluyen con el comando section.
 
-\subsection{Subsecciones}
+%\subsection{Subsecciones}
 
-Además de secciones tenemos subsecciones.
+%Además de secciones tenemos subsecciones.
 
-\subsubsection{Subsubsecciones}
+%\subsubsection{Subsubsecciones}
 
-Y subsecciones. 
-
-
-\section{Referencias}
-
-Las referencias se incluyen en el texto usando cite~\cite{wiki:latex}. Para citar webs, artículos o libros~\cite{koza92}, si se desean citar más de uno en el mismo lugar~\cite{bortolot2005, koza92}.
+%Y subsecciones. 
 
 
-\section{Imágenes}
+%\section{Referencias}
 
-Se pueden incluir imágenes con los comandos standard de \LaTeX, pero esta plantilla dispone de comandos propios como por ejemplo el siguiente:
-
-\imagen{escudoInfor}{Autómata para una expresión vacía}{.5}
+%Las referencias se incluyen en el texto usando cite~\cite{wiki:latex}. Para citar webs, artículos o libros~\cite{koza92}, si se desean citar más de uno en el mismo lugar~\cite{bortolot2005, koza92}.
 
 
+%\section{Imágenes}
 
-\section{Listas de items}
+%Se pueden incluir imágenes con los comandos standard de \LaTeX, pero esta plantilla dispone de comandos propios como por ejemplo el siguiente:
 
-Existen tres posibilidades:
+%\imagen{escudoInfor}{Autómata para una expresión vacía}{.5}
 
-\begin{itemize}
-	\item primer item.
-	\item segundo item.
-\end{itemize}
 
-\begin{enumerate}
-	\item primer item.
-	\item segundo item.
-\end{enumerate}
 
-\begin{description}
-	\item[Primer item] más información sobre el primer item.
-	\item[Segundo item] más información sobre el segundo item.
-\end{description}
+%\section{Listas de items}
+
+%Existen tres posibilidades:
+
+%\begin{itemize}
+%	\item primer item.
+%	\item segundo item.
+%\end{itemize}
+
+%\begin{enumerate}
+%	\item primer item.
+%	\item segundo item.
+%\end{enumerate}
+
+%\begin{description}
+%	\item[Primer item] más información sobre el primer item.
+%	\item[Segundo item] más información sobre el segundo item.
+%\end{description}
 	
-\begin{itemize}
-\item 
-\end{itemize}
+%begin{itemize}
+%\item 
+%\end{itemize}
 
-\section{Tablas}
+%\section{Tablas}
 
-Igualmente se pueden usar los comandos específicos de \LaTeX o bien usar alguno de los comandos de la plantilla.
+%Igualmente se pueden usar los comandos específicos de \LaTeX o bien usar alguno de los comandos de la plantilla.
 
-\tablaSmall{Herramientas y tecnologías utilizadas en cada parte del proyecto}{l c c c c}{herramientasportipodeuso}
-{ \multicolumn{1}{l}{Herramientas} & App AngularJS & API REST & BD & Memoria \\}{ 
-HTML5 & X & & &\\
-CSS3 & X & & &\\
-BOOTSTRAP & X & & &\\
-JavaScript & X & & &\\
-AngularJS & X & & &\\
-Bower & X & & &\\
-PHP & & X & &\\
-Karma + Jasmine & X & & &\\
-Slim framework & & X & &\\
-Idiorm & & X & &\\
-Composer & & X & &\\
-JSON & X & X & &\\
-PhpStorm & X & X & &\\
-MySQL & & & X &\\
-PhpMyAdmin & & & X &\\
-Git + BitBucket & X & X & X & X\\
-Mik\TeX{} & & & & X\\
-\TeX{}Maker & & & & X\\
-Astah & & & & X\\
-Balsamiq Mockups & X & & &\\
-VersionOne & X & X & X & X\\
-} 
+%\tablaSmall{Herramientas y tecnologías utilizadas en cada parte del proyecto}{l c c c c}{herramientasportipodeuso}
+%{ \multicolumn{1}{l}{Herramientas} & App AngularJS & API REST & BD & Memoria \\}{ 
+%HTML5 & X & & &\\
+%CSS3 & X & & &\\
+%BOOTSTRAP & X & & &\\
+%JavaScript & X & & &\\
+%AngularJS & X & & &\\
+%Bower & X & & &\\
+%PHP & & X & &\\
+%Karma + Jasmine & X & & &\\
+%Slim framework & & X & &\\
+%Idiorm & & X & &\\
+%Composer & & X & &\\
+%JSON & X & X & &\\
+%PhpStorm & X & X & &\\
+%MySQL & & & X &\\
+%PhpMyAdmin & & & X &\\
+%Git + BitBucket & X & X & X & X\\
+%Mik\TeX{} & & & & X\\
+%\TeX{}Maker & & & & X\\
+%Astah & & & & X\\
+%Balsamiq Mockups & X & & &\\
+%VersionOne & X & X & X & X\\
+%}
+
+\section{Parte teórica Machine Learning}
+
+	Tras varios momentos pensando como esta aplicación podría situarse como una clara competidora en el mercado, me di cuenta de que muchas aplicaciones no se centran en lo que de verdad importa: el cliente. Siempre se ha dicho que el cliente tiene la razón, que el cliente debe encontrarse cómodo... pero a la hora de la verdad, las aplicaciones no destinan el esfuerzo suficiente a dejar todo lo más sencillo, amigable y accesible que el cliente merece. Por ello, lo primero que hice fue ponerme en su piel y pensar que me gustaría encontrarme en mi aplicación, que problemas podría a llegar a tener... y di con ello: desconozco cuánto vale mi reloj. Sé que puede sonar raro, pero es así. Son tantos los precios que se estipulan a un mismo reloj que sé, a ciencia cierta, que sería incapaz de marcar un precio de venta directa donde consiguiese el mayor valor de venta posible. De aquí nace la idea de investigar acerca del aprendizaje automático o Machine Learning. Mi objetivo principal es crear un modelo capaz de predecir cuál es el precio más recomendable para la venta de mi reloj, apoyándome en un dataset de más de 280000 relojes de diferentes marcas, estados, géneros, precios... pero no nos adelantemos. Veamos que es todo esto.
+	
+	El aprendizaje automático o Machine Learning es una parte de la informática muy ligada al concepto de AI o Inteligencia Artificial. Definir el objetivo de esta es simple: conseguir que una máquina se comporte como un ser humano. Conseguir el objetivo de esto es algo más complicado. Principalmente se busca entrenar a la máquina con el uso de algoritmos y datos de forma que esta aprenda de manera gradual. No hay que decir que cuánto mayor sea el número de datos y cuánto mayor sea la calidad de estos, mayor precisión se conseguirá. 
+	
+	El término Machine Learning podemos atribuírselo a Arthur Samuel quien, en 1952, creo un software capaz de aprender y jugar a las damas. Aun así, este campo ha evolucionado a pasos agigantados, siendo actualmente uno de los puntos más relevantes dentro del campo de la informática. Entre los hitos más significativos, destacan principalmente unos estudiantes de la Universidad de Stanford. Estos alumnos consiguieron desarrollar en 1979 un software capaz de pilotar un carro de manera autónoma sin que este chocara con ningún obstáculo.  No podemos olvidarnos de uno de los momentos más significativos de nuestra época cuando el gran Garri Kaspárov fue derrotado por Deeper Blue en una partida de ajedrez en 1997, siendo la primera vez que el ajedrecista perdía contra una máquina.
+	
+	Como se ha marcado en esta introducción, esta rama de la informática se centra en desarrollar algoritmos y modelos autosuficientes, es decir, que sean capaces de aprender de manera automática a través de datos y la experiencia. Dentro de esta rama, encontramos infinidad de técnicas y algoritmos, aunque me voy a quedar con los más comunes.
+	
+	El aprendizaje supervisado es una rama del aprendizaje automático donde se entrena a un modelo con una serie de datos que contienen cuál es su entrada y cómo debe ser su salida. Un ejemplo de ello es la venta de un local: el modelo recibe como variables de entrada el número de baños, los metros cuadrados, el año de edificación... y el modelo procesa todo dando como salida el precio del local. Dentro de este tipo de aprendizaje pueden abordarse dos tipos de problemas: regresión si lo que devuelve la máquina es un valor justo (siguiendo con el ejemplo anterior, el precio del local), o clasificación si lo que devuelve es una categoría (clasificar imágenes de vehículos entre coches o camiones). Hay que añadir que son muchos los algoritmos de los que consta, aunque destacan principalmente:
+	
+\begin{description}
+	\item[Regresión lineal:] se modela la relación de una variable dependiente con una o varias variables independientes.
+	\item[Regresión logística:] se modela para solventar problemas de clasificación binaria.
+	\item[Regresión logística:] se modela para solventar problemas de clasificación binaria.
+	\item[SVM:] se utiliza tanto en regresión como en clasificación. El objetivo es separar las clases en el espacio de características a través de la búsqueda del hiperplano.
+	\item[Árboles de decisión:] el objetivo es dividir el espacio de características en regiones y asignar una etiqueta a cada una de ellas.
+	\item[Random forest:] conjunto de árboles de decisión que trabajan de manera combinada para alcanzar una mayor precisión y así evitar el sobreajuste.
+\end{description}
+
+	Por otro lado estaría el aprendizaje no supervisado donde los datos no tienen ni etiquetas ni salidas asociadas. Su objetivo es que la máquina aprenda a base de identificar patrones en los datos y extraer información útil de ellos. Para explicar mejor esto, pongamos un ejemplo: teniendo un conjunto de transacciones bancarias, determinar grupos de personas según las similitudes de compras. Dentro de ello podemos distinguir tres tipos de problemas:
+	
+\begin{description}
+	\item[Clustering:] el objetivo es agrupar los datos en conjuntos o clusters según existan similitudes entre ellos. Por indicar alguno de los algoritmos dentro de este tipo, destacan K-Means, Clustering Jerárquico o DBSCAN.
+	\item[Reducción de dimensionalidad:] el objetivo es reducir el número de variables en un conjunto de datos sin perder la mayor parte de la información. Ejemplos de algoritmos son Análisis de Componentes Principales (PCA) y T-Distributed Stochastic Neighbor Embedding (t-SNE)
+	\item[Asociación:] el objetivo de la máquina es que aprenda a base de relacionar variables en un conjunto de datos determinado. Un ejemplo dominante dentro de este grupo son la sección de recomendación de webs de compras. Ejemplos de algoritmos dentro de ello son Eclat y FP-Growth.
+\end{description}
+
+	Si combinamos las ideas fundamentales de estos dos aprendizajes anteriores, damos lugar al aprendizaje semisupervisado. Simplemente permite que la máquina aprenda a base de datos sin etiqueta y con ella.
+	
+	Otro tipo de Machine Learning es el conocido como aprendizaje por refuerzo. La idea fundamental de este tipo de aprendizaje es que la respuesta del modelo mejore a partir de una retroalimentación en forma de recompensas. En otras palabras, el algoritmo va a aprender basándose en lo que le rodea y siguiendo la filosofía “ensayo-error”. Se utiliza en infinidad de sectores y los algoritmos por excelencia dentro de este aprendizaje son Q-Learning, SARSA, Algoritmo de Policy Gradient...
+	
+	Por último, otro aprendizaje muy presente en diversos sectores es el Deep Learning. El objetivo de este campo es emular el comportamiento de un cerebro humano a partir de algoritmos de redes neuronales artificiales formadas por múltiples capas de procesamiento capaces de representar datos de alto nivel. Ejemplos muy característicos son el reconocimiento de imágenes, detección de objetos, detección de fraudes, traducción automática...

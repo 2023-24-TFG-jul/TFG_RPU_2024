@@ -2,38 +2,87 @@
 
 \section{Introducción}
 
-Una muestra de cómo podría ser una tabla de casos de uso:
+	Una buena práctica a la hora de realizar cualquier proyecto es definir previamente que se busca. En cuanto al desarrollo software, es muy importante definir previamente información esencial que, bien estructurada, va a ser de gran ayuda para afrontar mejor el proyecto. Como marcabamos en anteriores apartados, durante la realización del trabajo se ha explicado la metodología ágil a seguir. Sin embargo, existen ciertos conceptos que deben conocerse para entender el porqué de este apartado.	
+	
+	Una vez reunidos tanto tutores como alumno, se decide definir en grupo cuáles son los requisitos del programa. Denominamos "requisitos funcionales" a todo aquello que esperamos que sea realizado por nuestro programa final. Un ejemplo es: "el programa debe permitir crear una cuenta". Por otro lado, los "requisitos no funcinales" complementan a los anteriores marcando cómo un software debe realizar ciertas actividades. En este caso, un ejemplo sería: "el cambio de una página a otra de la aplicación no puede ser mayor de 4 segundos".
+	
+	Definir previamente esto nos ayuda a entender mejor que queremos como usuario final y nos permite estructurar mejor el desarrollo del proyecto. Sin embargo, esto es solo un parte. A esto debe sumar la definición de las historias de usuario, los casos de uso y los diagramas de interacción.
+	
+	Una "historia de usuario" no es más que la explicación del requisito funcional en un lenguaje comprensible para el usuario. Por otra parte, conocemos como "casos de uso" a la forma de describir como el usuario realiza una actividad dentro del sistema, mientras que los "diagramas de interacción" representan als interacciones que se dan dentro de este.
+	
+	Con todo esto definido, podemos dar comienzo a la definición de objetivos, definición de los requisitos y desarrollo de estos, así como un esquema gráfico de cómo debería ser la aplicación final.
+
+%Una muestra de cómo podría ser una tabla de casos de uso:
 
 % Caso de Uso 1 -> Consultar Experimentos.
-\begin{table}[p]
-	\centering
-	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
-		\toprule
-		\textbf{CU-1}    & \textbf{Ejemplo de caso de uso}\\
-		\toprule
-		\textbf{Versión}              & 1.0    \\
-		\textbf{Autor}                & Alumno \\
-		\textbf{Requisitos asociados} & RF-xx, RF-xx \\
-		\textbf{Descripción}          & La descripción del CU \\
-		\textbf{Precondición}         & Precondiciones (podría haber más de una) \\
-		\textbf{Acciones}             &
-		\begin{enumerate}
-			\def\labelenumi{\arabic{enumi}.}
-			\tightlist
-			\item Pasos del CU
-			\item Pasos del CU (añadir tantos como sean necesarios)
-		\end{enumerate}\\
-		\textbf{Postcondición}        & Postcondiciones (podría haber más de una) \\
-		\textbf{Excepciones}          & Excepciones \\
-		\textbf{Importancia}          & Alta o Media o Baja... \\
-		\bottomrule
-	\end{tabularx}
-	\caption{CU-1 Nombre del caso de uso.}
-\end{table}
+%\begin{table}[p]
+%	\centering
+%	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+%		\toprule
+%		\textbf{CU-1}    & \textbf{Ejemplo de caso de uso}\\
+%		\toprule
+%		\textbf{Versión}              & 1.0    \\
+%		\textbf{Autor}                & Alumno \\
+%		\textbf{Requisitos asociados} & RF-xx, RF-xx \\
+%		\textbf{Descripción}          & La descripción del CU \\
+%		\textbf{Precondición}         & Precondiciones (podría haber más de una) \\
+%		\textbf{Acciones}             &
+%		\begin{enumerate}
+%			\def\labelenumi{\arabic{enumi}.}
+%			\tightlist
+%			\item Pasos del CU
+%			\item Pasos del CU (añadir tantos como sean necesarios)
+%		\end{enumerate}\\
+%		\textbf{Postcondición}        & Postcondiciones (podría haber más de una) \\
+%		\textbf{Excepciones}          & Excepciones \\
+%		\textbf{Importancia}          & Alta o Media o Baja... \\
+%		\bottomrule
+%	\end{tabularx}
+%	\caption{CU-1 Nombre del caso de uso.}
+%\end{table}
 
 \section{Objetivos generales}
 
+	Como indicamos en la presentación formal de la idea para este trabajo, los objetivos de este proyecto podrían resumirse como:
+	
+\begin{itemize}
+	\item Se realizará una aplicación multiplataforma apoyándose en el uso de un SDK denominado Flutter.
+	\item La aplicación permitirá al usuario subir su producto y marcar qué tipo de subasta aplicar para la venta de este, así como un precio de venta directa si el comprador no quiere aplicar a la subasta y conseguir el producto directamente
+	\item Los tipos de subasta recogidos son: Subasta dinámica ascendente o inglesa, Subasta dinámica descendente o holandesa, Subasta en sobre cerrado de primer precio, y subasta en sobre cerrado de segundo precio o Vickrey
+	\item El trabajo incorporará un apartado de recomendación de precios a estipular para la venta directa del objeto basándose en los precios de otros productos ya vendidos, así como subastas ya realizadas.
+\end{itemize}
+
 \section{Catálogo de requisitos}
+
+	A modo de ser lo más ordenado posible, se enumeran a continuación todos los requisitos establecidos durante el proyecto:
+	
+\begin{itemize}
+	\item 1) Un usuario accederá a la aplicación introduciendo su email y su contraseña en una pantalla de inicio de sesión.
+	\item 2) La pantalla de inicio de sesión mostrará un mensaje de error si el nombre de usuario no existe y/o si la contraseña es errónea.
+	\item 3) Un usuario podrá registrarse accediendo desde un botón específico para ello situado en la pantalla de inicio de sesión.	
+	\item 4) El registro de un usuario debe contener los siguientes datos personales: nombre, apellidos, fecha de nacimiento, país, email, password y número de cuenta donde se realizarán las transacciones.
+	\item 5) Tanto el número de cuenta como el email deben ser únicos en la aplicación.
+	\item 6) La contraseña del usuario debe seguir las siguientes directrices: longitud mínima de 8 caracteres y contener al menos una mayúscula, una minúscula, un número y un caracter especial.
+	\item 7) Si no se completa de manera correcta el registro, la aplicación lanzará un mensaje de error indicando el origen del problema.
+	\item 8) La aplicación contará con una pantalla principal donde dispondrá de las siguientes funcionalidades: mis relojes, estado de mis ventas, compra de un reloj, consultar precio de reloj y configuración.
+	\item 9) Un usuario podrá subir su reloj a la aplicación marcando: nombre, modelo, referencia, movimiento, material de la caja, material del brazalete, año de fabricación, estado y género. Son obligatorios marca, modelo, año y estado.
+	\item 10) Un usuario podrá eliminar un reloj.
+	\item 11) Un usuario podrá editar la información de un reloj.
+	\item 12) Un usuario podrá vender su reloj previamente subido a través de uno de los cuatro posibles métodos de subasta explicados anteriormente.
+	\item 13) Un usuario podrá vender su reloj de manera directa marcando un precio de venta directa.	
+	\item 14) Un usuario podrá eliminar una venta en curso siempre que no se haya recibido una primera respuesta a la subasta.
+	\item 15) Un usuario podrá editar una venta en curso siempre que no se haya recibido una primera respuesta a la subasta.
+	\item 16) Un usuario podrá comprar un reloj a través de uno de los cuatro posibles métodos de subasta explicados anteriormente.
+	\item 17) Un usuario podrá comprar un reloj de manera directa aceptando el precio de venta directa.	
+	\item 18) Un usuario podrá editar una compra en curso siempre que otros compradores no hayan respondido a dicha puja.
+	\item 19) Un usuario podrá cancelar una puja si esta es la más alta durante la realización de la subasta.
+	\item 20) La aplicación integrará una IA que marque cuál es el precio recomendado de venta directa de un producto.
+	\item 21) La aplicación contará con un apartado donde se introduciran los siguientes datos para la estimación de un precio de un reloj: nombre, modelo, referencia, movimiento, material de la caja, material del brazalete, año de fabricación, estado y género. Son obligatorios marca, modelo, año y estado.
+	\item 22) La aplicación contará con buscadores para llegar a la compras, ventas o productos de manera cómoda.
+	\item 23) Se habilitará un modal al hora de fijar un precio de venta una nota donde se marque que la organización se lleva un porcentaje de la venta realizada.
+	\item 24) La aplicación contará con un apartado de edición de datos personales.
+	\item 25) La aplicación contará con un apartado de edición de contraseña.
+\end{itemize}
 
 \section{Especificación de requisitos}
 

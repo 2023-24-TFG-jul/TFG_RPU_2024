@@ -1,6 +1,35 @@
 \capitulo{4}{Técnicas y herramientas}
 
-Esta parte de la memoria tiene como objetivo presentar las técnicas metodológicas y las herramientas de desarrollo que se han utilizado para llevar a cabo el proyecto. Si se han estudiado diferentes alternativas de metodologías, herramientas, bibliotecas se puede hacer un resumen de los aspectos más destacados de cada alternativa, incluyendo comparativas entre las distintas opciones y una justificación de las elecciones realizadas. 
-No se pretende que este apartado se convierta en un capítulo de un libro dedicado a cada una de las alternativas, sino comentar los aspectos más destacados de cada opción, con un repaso somero a los fundamentos esenciales y referencias bibliográficas para que el lector pueda ampliar su conocimiento sobre el tema.
+%Esta parte de la memoria tiene como objetivo presentar las técnicas metodológicas y las herramientas de desarrollo que se han utilizado para llevar a cabo el proyecto. Si se han estudiado diferentes alternativas de metodologías, herramientas, bibliotecas se puede hacer un resumen de los aspectos más destacados de cada alternativa, incluyendo comparativas entre las distintas opciones y una justificación de las elecciones realizadas. 
+%No se pretende que este apartado se convierta en un capítulo de un libro dedicado a cada una de las alternativas, sino comentar los aspectos más destacados de cada opción, con un repaso somero a los fundamentos esenciales y referencias bibliográficas para que el lector pueda ampliar su conocimiento sobre el tema.
 
+\section{Técnicas y herramientas en Machine Learning}
 
+	Habiendo introducido los aspectos clave del Machine Learning, podemos afirmar que nuestro caso corresponde a un modelo de regresión. Voy a realizar mi tratamiento del dataset de relojes con el fin de encontrar cual es el precio de venta más recomendable para cualquier reloj. Para ello, las dos herramientas clave que utilizaré son: Python (aprovechando la biblioteca de data science Panda) y mi dataset en formato .csv.
+	
+	Las tres fases fundamentales dentro de esta labor práctica son:
+
+\begin{itemize}
+	\item Puesta a punto de los datos
+	\item Entrenamiento de nuestro modelo
+	\item Predicciones
+\end{itemize}
+
+	El dataset que voy a utilizar ha sido importado de Kaggle, cuyo link dejo marcado a continuación: https://www.kaggle.com/datasets/philmorekoung11/luxury-watch-listings . Siguiendo el orden que marcan las columnas del archivo, podemos crear una leyenda tal que:
+
+\begin{description}
+	\item[unnamed:] número de línea predefinido
+	\item[name:] nombre del reloj
+	\item[price:] precio del reloj
+	\item[brand:] marca del reloj
+	\item[model:] modelo del reloj
+	\item[ref:] número de referencia del reloj
+	\item[mvmt:] tipo de movimiento del reloj
+	\item[casem:] material de la caja
+	\item[bracem:] material del brazalete
+	\item[yop:] año de producción
+	\item[cond:] estado
+	\item[sex:] género
+	\item[size:] tamaño
+	\item[condition:] estado
+\end{description}

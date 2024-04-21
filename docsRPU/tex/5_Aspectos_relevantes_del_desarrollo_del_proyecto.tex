@@ -1,7 +1,67 @@
 \capitulo{5}{Aspectos relevantes del desarrollo del proyecto}
 
-Este apartado pretende recoger los aspectos más interesantes del desarrollo del proyecto, comentados por los autores del mismo.
-Debe incluir desde la exposición del ciclo de vida utilizado, hasta los detalles de mayor relevancia de las fases de análisis, diseño e implementación.
-Se busca que no sea una mera operación de copiar y pegar diagramas y extractos del código fuente, sino que realmente se justifiquen los caminos de solución que se han tomado, especialmente aquellos que no sean triviales.
-Puede ser el lugar más adecuado para documentar los aspectos más interesantes del diseño y de la implementación, con un mayor hincapié en aspectos tales como el tipo de arquitectura elegido, los índices de las tablas de la base de datos, normalización y desnormalización, distribución en ficheros3, reglas de negocio dentro de las bases de datos (EDVHV GH GDWRV DFWLYDV), aspectos de desarrollo relacionados con el WWW...
-Este apartado, debe convertirse en el resumen de la experiencia práctica del proyecto, y por sí mismo justifica que la memoria se convierta en un documento útil, fuente de referencia para los autores, los tutores y futuros alumnos.
+%\begin{enumerate}
+%\def\labelenumi{\arabic{enumi}.}
+%\tightlist
+%\item
+%  \textbf{Travis}: realizaba una compilación del proyecto, ejecutaba los
+%  test unitarios, ejecutaba \emph{Lint}, ponía en marcha un emulador de
+%  Android, y ejecutaba los Android test sobre este. Al finalizar,
+%  enviaba los resultados a Codecov y SonarQube.
+%\item
+%  \textbf{Codecov}: realizaba un análisis sobre la cobertura de los test
+%  unitarios.
+%\item
+%  \textbf{CodeClimate}: ejecutaba cuatro motores de chequeo
+%  (\emph{checkstyle}, \emph{fixme}, \emph{pmd} y \emph{markdownlint})
+%  sobre el código para detectar posibles problemas o vulnerabilidades en
+%  él.
+%\item
+%  \textbf{SonarQube}: analizaba código duplicado, violaciones de
+%  estándares, cobertura de tests unitarios, \emph{bugs} potenciales, etc.
+%\item
+%  \textbf{VersionEye}: chequeaba todas las dependencias utilizadas en la
+%  aplicación y comprobaba si estaban actualizadas, si tenían algún
+%  problema de seguridad conocido, o si violaban la licencia del
+%  proyecto.
+%\end{enumerate}
+
+Como se ha marcado antes, es necesario preparar bien nuestro dataset. Revisando previamente el archivo, existen múltiples datos que nos van a dificultar nuestro trabajo tal y como vienen definidos. Por esta razón, se procede a hacer un estudio previo desde la aplicación de Microsoft Excel. El proceso consiste en crear una tabla dinámica con todos los datos y con los encabezados (estos últimos completos), de forma que se pueda ver los distintos nombres o números que forman el rango de datos:
+ 
+	 Observando cada columna de esta forma, vemos los siguientes problemas:
+
+1)	Columna unnamed
+	Esta columna, a primera vista, parece que marca de manera incremental el número de filas del archivo. Sin embargo, cuando cambiamos de marca de reloj, vuelve a comenzar en uno. Por lo tanto, trata de marcar el número de relojes por marca. Resumiendo, es inútil trabajar con ella para conseguir nuestro objetivo. La solución que se plantea es el borrado de esta columna.
+2)	Columna name
+	Sin duda es la columna más problemática de todo el archivo. Más que ser el nombre del reloj, es una descripción de este. El problema principal es que la descripción no sigue ninguna estructura: marca los datos que quiere, como quiere, repite datos de otras columnas... En resumen, ha sido y es una columna intratable. Por tanto, la solución es su borrado.
+3)	Columna price
+	Esta columna no presenta apenas errores. Simplemente marca el precio de cada reloj en dólares. Sin embargo, aquel producto que no se le haya sido marcado un precio, adquiere el valor “Price on request” o directamente se encuentra en blanco. La solución que se plantea es dar a estas dos excepciones el valor -1 para entender que no existe información relativa sobre ese reloj. Hay que añadir que se quitará el símbolo “$” para evitar errores.
+4)	Columna brand
+	No presenta ningún error. Simplemente, se categorizará para su posterior uso en el modelo a crear. Las celdas sin información pasarán a valer -1.
+5)	Columna model
+	No presenta ningún error. Simplemente, se categorizará para su posterior uso en el modelo a crear. Las celdas sin información pasarán a valer -1.
+6)	Columna ref
+	Siendo como soy, un apasionado de los relojes, sé que tener la referencia del reloj que buscamos es uno de los puntos más claves a la hora de reconocer el reloj. Sin embargo, la columna de nuestro dataset no está del todo limpia. Aun así, no quise perder tan valiosa información y me di cuenta de que toda referencia que lleva una letra siempre aparecerá en mayúscula. Por tanto, la solución que se da es eliminar toda aquella palabra que tenga al menos una minúscula.
+7)	Columna mvmt
+	No presenta ningún error. Simplemente, se categorizará para su posterior uso en el modelo a crear. Las celdas sin información pasarán a valer -1.
+
+
+8)	Columna casem
+	No presenta ningún error. Simplemente, se categorizará para su posterior uso en el modelo a crear. Las celdas sin información pasarán a valer -1.
+9)	Columna bracem
+	No presenta ningún error. Simplemente, se categorizará para su posterior uso en el modelo a crear. Las celdas sin información pasarán a valer -1.
+10)	Columna yop
+	Se da la información de cuatro formas diferentes:
+-	Un único año (Ej. 2024)
+-	Varios años separado por comas (Ej. 2021, 2022, 2023)
+-	Un año seguido de la palabra aproximación (Ej. 2020 (Approximation))
+-	No se sabe el año y se marca como Unknown, o se deja en blanco.
+	La solución que se aporta es únicamente marcar un año por celda. Por tanto, para el primer caso no se haría nada; el segundo caso haríamos la media entre todos los años que se marquen; para el tercero quitaremos la palabra “Approximation”; y para el último cambiaremos el valor “Unknown” o celda blanca por -1.
+11)	Columna cond
+	Esta columna tiene los datos perfectamente dispuestos para ser categorizados. Sin embargo, vemos que termina a mitad de camino, siendo la columna “condition” quien siga el trabajo de esta. La solución que se aporta es combinar ambas columnas en una misma y categorizar, marcando como -1 aquellas celdas que se encuentren vacías.
+12)	Columna condition
+	Explicada en apartado anterior.
+13)	Columna sex
+	No presenta ningún error. Simplemente, se categorizará para su posterior uso en el modelo a crear. Las celdas sin información pasarán a valer -1.
+14)	Columna size
+	Aunque es un campo que opone muchas dificultades, la solución que se aporta es simple: borrar la columna. No es un campo que aporte información útil comparado con otros campos como la marca, el estado, el precio... que son variables que van a definir casi por completo la predicción objetivo.
