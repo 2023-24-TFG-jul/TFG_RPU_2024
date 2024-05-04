@@ -1,44 +1,30 @@
 import 'package:flutter/material.dart';
 
-void main(){
-  runApp(MyApp());
-}
+class Login extends StatefulWidget {
+  const Login ({
+    Key? key,
+  }) : super(key: key);
 
-class MyApp extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  State<Login> createState() => _LoginState();
 }
 
-class _MyAppState extends State<MyApp> {
-  @override
-  Widget build(BuildContext context){
-    return MaterialApp(
-      title: "Widgets",
-      home: Home(),
-    );
-  }
-}
-
-class Home extends StatefulWidget {
-   @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
+class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      body: fondoPantalla(),
+      body: fondoPantalla(context),
     );
   }
 }
 
-Widget fondoPantalla(){
+Widget fondoPantalla(BuildContext context){
   return Container(
     decoration: BoxDecoration(
-      image: DecorationImage(image: NetworkImage("https://marketplace.canva.com/EAEqsNZQF1o/1/0/225w/canva-azul-y-rosa-acuarela-suave-sin-texto-fondo-de-pantalla-de-tel%C3%A9fono-phP0xrNZh2o.jpg"),
-      fit: BoxFit.cover
-      )
+      image: DecorationImage(
+        image: NetworkImage("https://marketplace.canva.com/EAEqsNZQF1o/1/0/225w/canva-azul-y-rosa-acuarela-suave-sin-texto-fondo-de-pantalla-de-tel%C3%A9fono-phP0xrNZh2o.jpg"),
+        fit: BoxFit.cover,
+      ),
     ),
     child: Center(
       child: Column(
@@ -47,9 +33,9 @@ Widget fondoPantalla(){
           boxUser(),
           boxPassword(),
           SizedBox(height: 10,),
-          buttonLogIn()
+          buttonLogIn(context), // Pasar el contexto a la función
         ],
-      )
+      ),
     ),
   );
 }
@@ -80,9 +66,15 @@ Widget boxPassword(){
   );
 }
 
-Widget buttonLogIn(){
-  return TextButton(
-    onPressed: (){},
-    child: Text("Log in")
+Widget buttonLogIn(BuildContext context){ // Añadir el contexto como parámetro
+  return SizedBox(
+    width: double.infinity, // Ancho del botón igual al ancho disponible
+    child: ElevatedButton(
+      onPressed: (){
+        // Navegar a la página de inicio
+        Navigator.pushNamed(context, '/home');
+      },
+      child: Text("Log in"),
+    ),
   );
 }

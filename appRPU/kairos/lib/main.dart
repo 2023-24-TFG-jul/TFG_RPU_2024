@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:kairos/views/login.dart';
 import 'package:kairos/views/home.dart';
+import 'package:kairos/views/add_user.dart'; // Importa la clase Register
 import 'firebase_options.dart';
 
 void main() async {
@@ -13,52 +15,17 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Home',
-      home: Home(),
-      // Marcar rutas aqui
+    return MaterialApp(
+      title: 'My app',
+      initialRoute: '/login',
+      routes: {
+        '/login': (context) => Login(),
+        '/home': (context) => Home(),
+        '/add_user': (context) => Register(), // Corregido aquí el nombre de la clase
+      }
     );
   }
 }
-
-// class UserListScreen extends StatefulWidget {
-//   @override
-//   _UserListScreenState createState() => _UserListScreenState();
-// }
-
-// class _UserListScreenState extends State<UserListScreen> {
-//   List users = [];
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     getUsersFromFirestore();
-//   }
-
-//   Future<void> getUsersFromFirestore() async {
-//     List fetchedUsers = await getUsers();
-//     setState(() {
-//       users = fetchedUsers;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('User List'),
-//       ),
-//       body: ListView.builder(
-//         itemCount: users.length,
-//         itemBuilder: (context, index) {
-//           return ListTile(
-//             title: Text(users[index]['name'])
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kairos/models/user.dart';
+import 'add_user.dart'; // Importa la página de registro
 
 class Home extends StatefulWidget {
   const Home ({
@@ -12,27 +12,45 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text ('Home'),
+        title: const Text('Home'),
       ),
-      body: FutureBuilder(
-        future: getUsers(),
-        builder: (context, snapshot){
-          if (snapshot.hasData){
-            return ListView.builder(
-              itemCount: snapshot.data?.length,
-              itemBuilder: ((context, index){
-                return Text(snapshot.data?[index]['name']);
-              }));
-          } else {
-            return const Center(
-              child: CircularProgressIndicator()
-            );
-          }
-        }
-      )
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Register()),
+                );
+              },
+              child: Text('Registrarse'), // Texto del botón
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Agrega aquí la navegación para el segundo botón
+              },
+              child: Text('Segundo Botón'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Agrega aquí la navegación para el tercer botón
+              },
+              child: Text('Tercer Botón'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Agrega aquí la navegación para el cuarto botón
+              },
+              child: Text('Cuarto Botón'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
