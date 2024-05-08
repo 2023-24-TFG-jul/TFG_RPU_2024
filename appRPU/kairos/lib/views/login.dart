@@ -1,80 +1,136 @@
 import 'package:flutter/material.dart';
+import 'package:kairos/models/user.dart';
+import 'package:collection/collection.dart';
 
 class Login extends StatefulWidget {
-  const Login ({
-    Key? key,
-  }) : super(key: key);
+  const Login({
+    super.key,
+  });
 
   @override
   State<Login> createState() => _LoginState();
 }
 
 class _LoginState extends State<Login> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final UserRepository _userRepository = UserRepository();
+
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-      body: fondoPantalla(context),
+      body: pantallaGeneral(context),
     );
   }
-}
 
-Widget fondoPantalla(BuildContext context){
-  return Container(
-    decoration: BoxDecoration(
-      image: DecorationImage(
-        image: NetworkImage("https://marketplace.canva.com/EAEqsNZQF1o/1/0/225w/canva-azul-y-rosa-acuarela-suave-sin-texto-fondo-de-pantalla-de-tel%C3%A9fono-phP0xrNZh2o.jpg"),
-        fit: BoxFit.cover,
+  Widget pantallaGeneral(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: NetworkImage(
+              "https://www.meisterdrucke.es/kunstwerke/1260px/Francesco_de_Rossi_Salviati_-_KAIROS_%28temps_de_loccasion_opportune%29_-_Time_of_Decision_%28Kairos%29_fresque_de_Fra_-_%28MeisterDrucke-1323120%29.jpg"),
+          fit: BoxFit.cover,
+        ),
       ),
-    ),
-    child: Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          boxUser(),
-          boxPassword(),
-          SizedBox(height: 10,),
-          buttonLogIn(context), // Pasar el contexto a la función
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: const Text(
+              'Welcome to Kairos',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 42,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                boxEmail(),
+                boxPassword(),
+                const SizedBox(
+                  height: 10,
+                ),
+                buttonLogIn(context),
+              ],
+            ),
+          ),
         ],
       ),
-    ),
-  );
-}
+    );
+  }
 
-Widget boxUser(){
-  return Container(
-    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-    child: TextField(
-      decoration: InputDecoration(
-        hintText: "User",
-        fillColor: Colors.white,
-        filled: true,
+  Widget boxEmail() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+      child: TextField(
+        controller: _emailController,
+        decoration: const InputDecoration(
+          hintText: "Email",
+          fillColor: Colors.white,
+          filled: true,
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-Widget boxPassword(){
-  return Container(
-    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-    child: TextField(
-      decoration: InputDecoration(
-        hintText: "Password",
-        fillColor: Colors.white,
-        filled: true,
+  Widget boxPassword() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+      child: TextField(
+        controller: _passwordController,
+        obscureText: true,
+        decoration: const InputDecoration(
+          hintText: "Password",
+          fillColor: Colors.white,
+          filled: true,
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-Widget buttonLogIn(BuildContext context){ // Añadir el contexto como parámetro
-  return SizedBox(
-    width: double.infinity, // Ancho del botón igual al ancho disponible
-    child: ElevatedButton(
-      onPressed: (){
-        // Navegar a la página de inicio
-        Navigator.pushNamed(context, '/home');
-      },
-      child: Text("Log in"),
-    ),
-  );
+  Widget buttonLogIn(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: () {
+          final String email = _emailController.text.trim();
+          final String password = _passwordController.text.trim();
+
+          _userRepository.getAllUsers().then((List<User> users) {
+            User? user = users.firstWhereOrNull(
+              (user) => user.email == email && user.password == password,
+            );
+
+            if (user != null) {
+              Navigator.pushNamed(context, '/home');  // Todo bien
+            } else {  // Errores
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text('Error'),
+                    content: const Text('Invalid email or password.'),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+          });
+        },
+        child: const Text("Log in"),
+      ),
+    );
+  }
 }

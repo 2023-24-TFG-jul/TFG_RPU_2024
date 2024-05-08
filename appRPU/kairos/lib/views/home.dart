@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'add_user.dart'; // Importa la página de registro
+import 'add_user.dart';
 
 class Home extends StatefulWidget {
   const Home ({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<Home> createState() => _HomeState();
@@ -25,28 +25,28 @@ class _HomeState extends State<Home> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Register()),
+                  MaterialPageRoute(builder: (context) => const Register()),
                 );
               },
-              child: Text('Registrarse'), // Texto del botón
+              child: const Text('Registrarse'), // Texto del botón
             ),
             ElevatedButton(
               onPressed: () {
-                // Agrega aquí la navegación para el segundo botón
+                // COSASSS
               },
-              child: Text('Segundo Botón'),
+              child: const Text('Segundo Botón'),
             ),
             ElevatedButton(
               onPressed: () {
-                // Agrega aquí la navegación para el tercer botón
+                // COSASSS
               },
-              child: Text('Tercer Botón'),
+              child: const Text('Tercer Botón'),
             ),
             ElevatedButton(
               onPressed: () {
-                // Agrega aquí la navegación para el cuarto botón
+                // COSASSS
               },
-              child: Text('Cuarto Botón'),
+              child: const Text('Cuarto Botón'),
             ),
           ],
         ),
