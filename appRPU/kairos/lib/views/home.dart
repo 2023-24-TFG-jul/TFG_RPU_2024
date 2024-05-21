@@ -1,56 +1,90 @@
 import 'package:flutter/material.dart';
-import 'add_user.dart';
+import 'package:kairos/views/add_watch.dart';
+import 'view_watches.dart';
+import 'login.dart';
 
-class Home extends StatefulWidget {
-  const Home ({
-    super.key,
+class Home extends StatelessWidget {
+  const Home({
+    super.key
   });
 
   @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-      ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Register()),
-                );
-              },
-              child: const Text('Registrarse'), // Texto del botón
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // COSASSS
-              },
-              child: const Text('Segundo Botón'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // COSASSS
-              },
-              child: const Text('Tercer Botón'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // COSASSS
-              },
-              child: const Text('Cuarto Botón'),
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(20.0), // Ajusta el espacio alrededor del contenido
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              const Text(
+                'Home',
+                style: TextStyle(
+                  fontSize: 32.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 20), // Espacio entre el texto y los botones
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ViewWatches()),
+                    );
+                  },
+                  child: const Text('Consulte sus productos'), // Texto del botón
+                ),
+              ),
+              const SizedBox(height: 10), // Separación entre los botones
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const AddWatch()),
+                    );
+                  },
+                  child: const Text('Añada su reloj'),
+                ),
+              ),
+              const SizedBox(height: 10), // Separación entre los botones
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // COSAS
+                  },
+                  child: const Text('Proximamente...'),
+                ),
+              ),
+              const SizedBox(height: 10), // Separación entre los botones
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // COSAS
+                  },
+                  child: const Text('Proximamente...R'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
+      floatingActionButton: IconButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const Login()),
+          );
+        },
+        icon: const Icon(Icons.logout),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
     );
   }
 }

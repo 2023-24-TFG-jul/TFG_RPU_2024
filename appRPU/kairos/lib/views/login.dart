@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kairos/models/user.dart';
 import 'package:collection/collection.dart';
+import 'add_user.dart';
 
 class Login extends StatefulWidget {
   const Login({
@@ -24,43 +25,38 @@ class _LoginState extends State<Login> {
   }
 
   Widget pantallaGeneral(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: NetworkImage(
-              "https://www.meisterdrucke.es/kunstwerke/1260px/Francesco_de_Rossi_Salviati_-_KAIROS_%28temps_de_loccasion_opportune%29_-_Time_of_Decision_%28Kairos%29_fresque_de_Fra_-_%28MeisterDrucke-1323120%29.jpg"),
-          fit: BoxFit.cover,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        const Text(
+          'Welcome to Kairos',
+          style: TextStyle(
+            fontSize: 32.0,
+            fontWeight: FontWeight.bold,
+          ),
         ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 20),
-            child: const Text(
-              'Welcome to Kairos',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 42,
-                fontWeight: FontWeight.bold,
+        const SizedBox(height: 20),
+        const Text(
+          'Please enter your credentials to access the application.',
+          style: TextStyle(
+            fontSize: 16.0,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              boxEmail(),
+              boxPassword(),
+              const SizedBox(
+                height: 10,
               ),
-            ),
+              buttonLogIn(context),
+            ],
           ),
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                boxEmail(),
-                boxPassword(),
-                const SizedBox(
-                  height: 10,
-                ),
-                buttonLogIn(context),
-              ],
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -93,44 +89,71 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Widget buttonLogIn(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: () {
-          final String email = _emailController.text.trim();
-          final String password = _passwordController.text.trim();
+Widget buttonLogIn(BuildContext context) {
+  return Column(
+    children: [
+      SizedBox(
+        width: double.infinity,
+        child: ElevatedButton(
+          onPressed: () {
+            final String email = _emailController.text.trim();
+            final String password = _passwordController.text.trim();
 
-          _userRepository.getAllUsers().then((List<User> users) {
-            User? user = users.firstWhereOrNull(
-              (user) => user.email == email && user.password == password,
-            );
-
-            if (user != null) {
-              Navigator.pushNamed(context, '/home');  // Todo bien
-            } else {  // Errores
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: const Text('Error'),
-                    content: const Text('Invalid email or password.'),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: const Text('OK'),
-                      ),
-                    ],
-                  );
-                },
+            _userRepository.getAllUsers().then((List<User> users) {
+              User? user = users.firstWhereOrNull(
+                (user) => user.email == email && user.password == password,
               );
-            }
-          });
-        },
-        child: const Text("Log in"),
+
+              if (user != null) {
+                Navigator.pushNamed(context, '/home'); // Todo bien
+              } else {
+                // Errores
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text('Error'),
+                      content: const Text('Invalid email or password.'),
+                      actions: <Widget>[
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
+            });
+          },
+          child: const Text("Log in"),
+        ),
       ),
-    );
-  }
+      const SizedBox(height: 10),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text("Don't have an account yet? "),
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Register()),
+              );
+            },
+            style: ButtonStyle(
+              textStyle: MaterialStateProperty.all<TextStyle>(
+                const TextStyle(decoration: TextDecoration.underline),
+              ),
+            ),
+            child: const Text('Register'), // Texto del botón
+          ),
+        ],
+      ),
+    ],
+  );
+}
+
 }
