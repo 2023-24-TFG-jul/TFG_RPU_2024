@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:kairos/models/watch.dart';
 
 class AddWatch extends StatefulWidget {
-  const AddWatch({
-    super.key,
-  });
+  final String email;
+  const AddWatch({super.key, required this.email});
 
   @override
   State<AddWatch> createState() => _AddWatchState();
 }
 
 class _AddWatchState extends State<AddWatch> {
-  
   final TextEditingController _brandController = TextEditingController();
   final TextEditingController _modelController = TextEditingController();
   final TextEditingController _referenceController = TextEditingController();
@@ -21,6 +19,8 @@ class _AddWatchState extends State<AddWatch> {
   final TextEditingController _yopController = TextEditingController();
   final TextEditingController _conditionController = TextEditingController();
   final TextEditingController _sexController = TextEditingController();
+  final TextEditingController _priceController = TextEditingController();
+  final TextEditingController _saleStatusController = TextEditingController();
 
   final WatchRepository _watchRepository = WatchRepository();
 
@@ -54,7 +54,6 @@ class _AddWatchState extends State<AddWatch> {
             TextField(
               controller: _casemController,
               decoration: const InputDecoration(labelText: 'Casem'),
-              obscureText: true,
             ),
             TextField(
               controller: _bracemController,
@@ -67,17 +66,22 @@ class _AddWatchState extends State<AddWatch> {
             TextField(
               controller: _conditionController,
               decoration: const InputDecoration(labelText: 'Condition'),
-              obscureText: true,
             ),
             TextField(
               controller: _sexController,
               decoration: const InputDecoration(labelText: 'Sex'),
             ),
+            TextField(
+              controller: _priceController,
+              decoration: const InputDecoration(labelText: 'Price'),
+            ),
+            TextField(
+              controller: _saleStatusController,
+              decoration: const InputDecoration(labelText: 'Sale Status'),
+            ),
             const SizedBox(height: 20.0),
             ElevatedButton(
-              onPressed: () {
-                _addWatch();
-              },
+              onPressed: _addWatch,
               child: const Text('Añadir reloj'),
             ),
           ],
@@ -96,6 +100,8 @@ class _AddWatchState extends State<AddWatch> {
     String yop = _yopController.text;
     String condition = _conditionController.text;
     String sex = _sexController.text;
+    String price = _priceController.text;
+    String saleStatus = _saleStatusController.text;
 
     if (brand.isEmpty ||
         model.isEmpty ||
@@ -105,7 +111,9 @@ class _AddWatchState extends State<AddWatch> {
         bracem.isEmpty ||
         yop.isEmpty ||
         condition.isEmpty ||
-        sex.isEmpty) {
+        sex.isEmpty ||
+        price.isEmpty ||
+        saleStatus.isEmpty) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -127,27 +135,34 @@ class _AddWatchState extends State<AddWatch> {
     }
 
     try {
-      await _watchRepository.addWatch(Watch(
-        brand: brand,
-        model: model,
-        reference: reference,
-        movement: movement,
-        casem: casem,
-        bracem: bracem,
-        yop: yop,
-        condition: condition,
-        sex: sex,
-      ));
+      await _watchRepository.addWatch(
+        Watch(
+          id: '',
+          brand: brand,
+          model: model,
+          reference: reference,
+          movement: movement,
+          casem: casem,
+          bracem: bracem,
+          yop: yop,
+          condition: condition,
+          sex: sex,
+          price: price,
+          saleStatus: saleStatus,
+        ),
+        widget.email,
+      );
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Reloj regitrado correctamente'),
-            content: const Text('Reloj regitrado correctamente'),
+            title: const Text('Reloj registrado correctamente'),
+            content: const Text('Reloj registrado correctamente'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
+                  Navigator.of(context).pop(true); // se cierra el registro, se pasa a pantalla views actualizada
                 },
                 child: const Text('OK'),
               ),

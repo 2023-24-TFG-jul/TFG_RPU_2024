@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Watch {
+  final String id;
   final String brand;
   final String model;
   final String reference;
@@ -10,8 +11,11 @@ class Watch {
   final String yop;
   final String condition;
   final String sex;
+  final String price;
+  final String saleStatus;
 
   Watch({
+    required this.id,
     required this.brand,
     required this.model,
     required this.reference,
@@ -21,12 +25,14 @@ class Watch {
     required this.yop,
     required this.condition,
     required this.sex,
+    required this.price,
+    required this.saleStatus,
   });
 
-  // doc de Firestore en objeto Watch
   factory Watch.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data() as Map<String, dynamic>;
     return Watch(
+      id: doc.id,
       brand: data['brand'] ?? '',
       model: data['model'] ?? '',
       reference: data['reference'] ?? '',
@@ -36,10 +42,11 @@ class Watch {
       yop: data['yop'] ?? '',
       condition: data['condition'] ?? '',
       sex: data['sex'] ?? '',
+      price: data['price'] ?? '',
+      saleStatus: data['saleStatus'] ?? '',
     );
   }
 
-  // objeto Watch en doc para agregar a Firestore
   Map<String, dynamic> toMap() {
     return {
       'brand': brand,
@@ -51,6 +58,8 @@ class Watch {
       'yop': yop,
       'condition': condition,
       'sex': sex,
+      'price': price,
+      'saleStatus': saleStatus,
     };
   }
 }
@@ -58,24 +67,27 @@ class Watch {
 class WatchRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  // GET
   Future<List<Watch>> getAllWatches(String email) async {
     List<Watch> watches = [];
     QuerySnapshot querySnapshot = await _db.collection('watches')
-      .where('userEmail', isEqualTo: email)
-      .get();
+        .where('userEmail', isEqualTo: email)
+        .get();
     for (var doc in querySnapshot.docs) {
       watches.add(Watch.fromFirestore(doc));
     }
     return watches;
   }
 
-  // ADD
-  Future<void> addWatch(Watch watch) async {
-    await _db.collection("watches").add(watch.toMap());
+  Future<void> addWatch(Watch watch, String email) async {
+    Map<String, dynamic> watchData = watch.toMap();
+    watchData['userEmail'] = email;
+    await _db.collection("watches").add(watchData);
   }
 
-  // UPDATE -> repasar bien esto
+  Future<void> deleteWatch(String id) async {
+    await _db.collection("watches").doc(id).delete();
+  }
+
   Future<void> updateWatch(String uid, String newName) async {
     await _db.collection("watches").doc(uid).update({"brand": newName});
   }

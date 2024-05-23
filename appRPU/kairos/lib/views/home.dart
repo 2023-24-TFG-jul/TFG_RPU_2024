@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kairos/views/add_watch.dart';
 import 'view_watches.dart';
 import 'login.dart';
 
@@ -54,12 +53,9 @@ class Home extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const AddWatch()),
-                    );
+                    // COSAS
                   },
-                  child: const Text('Añada su reloj'),
+                  child: const Text('Relojes en venta'),
                 ),
               ),
               const SizedBox(height: 10),
@@ -79,7 +75,7 @@ class Home extends StatelessWidget {
                   onPressed: () {
                     // COSAS
                   },
-                  child: const Text('Proximamente...R'),
+                  child: const Text('Proximamente...'),
                 ),
               ),
             ],
