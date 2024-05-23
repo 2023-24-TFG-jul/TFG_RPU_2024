@@ -89,71 +89,73 @@ class _LoginState extends State<Login> {
     );
   }
 
-Widget buttonLogIn(BuildContext context) {
-  return Column(
-    children: [
-      SizedBox(
-        width: double.infinity,
-        child: ElevatedButton(
-          onPressed: () {
-            final String email = _emailController.text.trim();
-            final String password = _passwordController.text.trim();
-
-            _userRepository.getAllUsers().then((List<User> users) {
-              User? user = users.firstWhereOrNull(
-                (user) => user.email == email && user.password == password,
-              );
-
-              if (user != null) {
-                Navigator.pushNamed(context, '/home'); // Todo bien
-              } else {
-                // Errores
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text('Error'),
-                      content: const Text('Invalid email or password.'),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: const Text('OK'),
-                        ),
-                      ],
-                    );
-                  },
-                );
-              }
-            });
-          },
-          child: const Text("Log in"),
-        ),
-      ),
-      const SizedBox(height: 10),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text("Don't have an account yet? "),
-          TextButton(
+  Widget buttonLogIn(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Register()),
-              );
-            },
-            style: ButtonStyle(
-              textStyle: MaterialStateProperty.all<TextStyle>(
-                const TextStyle(decoration: TextDecoration.underline),
-              ),
-            ),
-            child: const Text('Register'), // Texto del botón
-          ),
-        ],
-      ),
-    ],
-  );
-}
+              final String email = _emailController.text.trim();
+              final String password = _passwordController.text.trim();
 
+              _userRepository.getAllUsers().then((List<User> users) {
+                User? user = users.firstWhereOrNull(
+                  (user) => user.email == email && user.password == password,
+                );
+
+                if (user != null) {
+                  Navigator.pushNamed(
+                    context,
+                    '/home',
+                    arguments: email,
+                  );
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Error'),
+                        content: const Text('Invalid email or password.'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+              });
+            },
+            child: const Text("Log in"),
+          ),
+        ),
+        const SizedBox(height: 10),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text("Don't have an account yet? "),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Register()),
+                );
+              },
+              style: ButtonStyle(
+                textStyle: MaterialStateProperty.all<TextStyle>(
+                  const TextStyle(decoration: TextDecoration.underline),
+                ),
+              ),
+              child: const Text('Register'),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
 }

@@ -23,7 +23,7 @@ class Watch {
     required this.sex,
   });
 
-  // doc de Firestore en objeto User
+  // doc de Firestore en objeto Watch
   factory Watch.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data() as Map<String, dynamic>;
     return Watch(
@@ -39,7 +39,7 @@ class Watch {
     );
   }
 
-  // objeto User en doc para agregar a Firestore
+  // objeto Watch en doc para agregar a Firestore
   Map<String, dynamic> toMap() {
     return {
       'brand': brand,
@@ -59,25 +59,16 @@ class WatchRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   // GET
-  Future<List<Watch>> getAllWatches() async {
+  Future<List<Watch>> getAllWatches(String email) async {
     List<Watch> watches = [];
-    QuerySnapshot querySnapshot = await _db.collection('watches').get();
+    QuerySnapshot querySnapshot = await _db.collection('watches')
+      .where('userEmail', isEqualTo: email)
+      .get();
     for (var doc in querySnapshot.docs) {
       watches.add(Watch.fromFirestore(doc));
     }
     return watches;
   }
-
-  // // user exist?
-  // Future<bool> checkUserExists(String email) async {
-  //   QuerySnapshot querySnapshot = await _db
-  //       .collection('users')
-  //       .where('email', isEqualTo: email)
-  //       .limit(1)
-  //       .get();
-
-  //   return querySnapshot.docs.isNotEmpty;
-  // }
 
   // ADD
   Future<void> addWatch(Watch watch) async {

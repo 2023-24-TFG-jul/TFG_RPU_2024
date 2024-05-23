@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:kairos/views/add_watch.dart';
 import 'package:kairos/views/login.dart';
 import 'package:kairos/views/home.dart';
-import 'package:kairos/views/add_user.dart'; // Importa la clase Register
+import 'package:kairos/views/add_user.dart';
+import 'package:kairos/views/view_watches.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -15,16 +17,18 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'My app',
       initialRoute: '/login',
       routes: {
-        '/login': (context) => Login(),
-        '/home': (context) => Home(),
-        '/add_user': (context) => Register(), // Corregido aquí el nombre de la clase
+        '/login': (context) => const Login(),
+        '/home': (context) => const Home(),
+        '/add_user': (context) => const Register(),
+        '/add_watch': (context) => const AddWatch(),
+        '/view_watches': (context) => const ViewWatches(),
       }
     );
   }

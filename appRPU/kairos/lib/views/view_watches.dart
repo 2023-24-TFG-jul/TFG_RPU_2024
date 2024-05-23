@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kairos/models/watch.dart'; // Asegúrate de que la ruta sea correcta
+import 'package:kairos/models/watch.dart';
 
 class ViewWatches extends StatefulWidget {
-  const ViewWatches({Key? key}) : super(key: key);
+  const ViewWatches({super.key});
 
   @override
   _ViewWatchesState createState() => _ViewWatchesState();
@@ -15,7 +15,12 @@ class _ViewWatchesState extends State<ViewWatches> {
   @override
   void initState() {
     super.initState();
-    _watchesFuture = _watchRepository.getAllWatches();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final String email = ModalRoute.of(context)!.settings.arguments as String;
+      setState(() {
+        _watchesFuture = _watchRepository.getAllWatches(email);
+      });
+    });
   }
 
   @override
