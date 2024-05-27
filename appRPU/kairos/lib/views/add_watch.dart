@@ -20,7 +20,6 @@ class _AddWatchState extends State<AddWatch> {
   final TextEditingController _conditionController = TextEditingController();
   final TextEditingController _sexController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
-  final TextEditingController _saleStatusController = TextEditingController();
 
   final WatchRepository _watchRepository = WatchRepository();
 
@@ -75,10 +74,6 @@ class _AddWatchState extends State<AddWatch> {
               controller: _priceController,
               decoration: const InputDecoration(labelText: 'Price'),
             ),
-            TextField(
-              controller: _saleStatusController,
-              decoration: const InputDecoration(labelText: 'Sale Status'),
-            ),
             const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: _addWatch,
@@ -101,7 +96,6 @@ class _AddWatchState extends State<AddWatch> {
     String condition = _conditionController.text;
     String sex = _sexController.text;
     String price = _priceController.text;
-    String saleStatus = _saleStatusController.text;
 
     if (brand.isEmpty ||
         model.isEmpty ||
@@ -112,8 +106,7 @@ class _AddWatchState extends State<AddWatch> {
         yop.isEmpty ||
         condition.isEmpty ||
         sex.isEmpty ||
-        price.isEmpty ||
-        saleStatus.isEmpty) {
+        price.isEmpty) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -148,7 +141,7 @@ class _AddWatchState extends State<AddWatch> {
           condition: condition,
           sex: sex,
           price: price,
-          saleStatus: saleStatus,
+          saleStatus: 'Subido',
         ),
         widget.email,
       );

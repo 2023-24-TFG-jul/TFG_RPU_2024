@@ -88,7 +88,7 @@ class WatchRepository {
     await _db.collection("watches").doc(id).delete();
   }
 
-  Future<void> updateWatch(String uid, String newName) async {
-    await _db.collection("watches").doc(uid).update({"brand": newName});
+  Future<void> updateWatch(String uid, String saleStatus) async {
+    await _db.collection("watches").doc(uid).update({"saleStatus": saleStatus});
   }
 }

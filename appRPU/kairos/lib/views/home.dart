@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kairos/views/view_auctions.dart';
 import 'view_watches.dart';
 import 'login.dart';
 
@@ -53,7 +54,13 @@ class Home extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    // COSAS
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ViewAuctions(),
+                        settings: RouteSettings(arguments: email),
+                      ),
+                    );
                   },
                   child: const Text('Relojes en venta'),
                 ),
