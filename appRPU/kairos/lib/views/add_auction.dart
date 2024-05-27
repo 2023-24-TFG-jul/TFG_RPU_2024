@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kairos/models/auction.dart';
+import 'package:kairos/models/watch.dart';
 
 class AddAuction extends StatefulWidget {
   final String loginUserEmail;
@@ -12,6 +13,7 @@ class AddAuction extends StatefulWidget {
 class _AddAuctionState extends State<AddAuction> {
   final TextEditingController _watchIdController = TextEditingController();
   final AuctionRepository _auctionRepository = AuctionRepository();
+  final WatchRepository _watchRepository = WatchRepository();
   
   @override
   Widget build(BuildContext context) {
@@ -72,6 +74,9 @@ class _AddAuctionState extends State<AddAuction> {
           watchId: watchId,
         ),
       );
+
+      await _watchRepository.updateWatch(watchId, 'En subasta');  //cambio estado reloj
+
       showDialog(
         context: context,
         builder: (BuildContext context) {

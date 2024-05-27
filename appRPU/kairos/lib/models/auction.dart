@@ -61,9 +61,9 @@ class AuctionRepository {
     await _db.collection('auctions').doc(idAuction).delete();
   }
 
-  Future<void> buyWatch(String idAuction, String buyerId) async {
+  Future<void> buyWatch(String idAuction, String buyerEmail) async {
     await _db.collection('auctions').doc(idAuction).update({
-      'buyerEmail': buyerId,
+      'buyerEmail': buyerEmail,
       'purchaseDate': Timestamp.now(),
     });
   }

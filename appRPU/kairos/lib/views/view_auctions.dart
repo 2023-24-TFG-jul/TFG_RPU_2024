@@ -12,24 +12,24 @@ class ViewAuctions extends StatefulWidget {
 class _ViewAuctionsState extends State<ViewAuctions> {
   final AuctionRepository _auctionRepository = AuctionRepository();
   late Future<List<Auction>> _auctionsFuture;
+  late String loginUserEmail;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final String loginUserEmail = ModalRoute.of(context)!.settings.arguments as String;
+      loginUserEmail = ModalRoute.of(context)!.settings.arguments as String;
       _loadAuctions(loginUserEmail);
     });
   }
 
-  void _loadAuctions(String loginUserEmail) {
+  void _loadAuctions(String email) {
     setState(() {
       _auctionsFuture = _auctionRepository.getAllAuctionsWithStatusSubido();
     });
   }
 
   void _navigateToAddAuction() async {
-    final String loginUserEmail = ModalRoute.of(context)!.settings.arguments as String;
     await Navigator.push(
       context,
       MaterialPageRoute(
@@ -42,11 +42,24 @@ class _ViewAuctionsState extends State<ViewAuctions> {
   void _deleteAuction(String id) async {
     try {
       await _auctionRepository.deleteAuction(id);
-      final String loginUserEmail = ModalRoute.of(context)!.settings.arguments as String;
       _loadAuctions(loginUserEmail);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error al borrar la subasta: $e')),
+      );
+    }
+  }
+
+  void _buyAuction(String auctionId) async {
+    try {
+      await _auctionRepository.buyWatch(auctionId, loginUserEmail);
+      _loadAuctions(loginUserEmail);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Reloj adquirido con éxito')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error al adquirir el reloj: $e')),
       );
     }
   }
@@ -90,12 +103,18 @@ class _ViewAuctionsState extends State<ViewAuctions> {
                     DataCell(Text(auction.salerEmail)),
                     DataCell(Text(auction.buyerEmail)),
                     DataCell(Text(auction.auctionStatus)),
-                    DataCell(
-                      IconButton(
-                        icon: const Icon(Icons.delete),
-                        onPressed: () => _deleteAuction(auction.idAuction),
-                      ),
-                    ),
+                    DataCell(Row(
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.delete),
+                          onPressed: () => _deleteAuction(auction.idAuction),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.shopping_cart),
+                          onPressed: () => _buyAuction(auction.idAuction),
+                        ),
+                      ],
+                    )),
                   ]);
                 }).toList(),
               ),
