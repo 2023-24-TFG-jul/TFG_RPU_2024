@@ -6,7 +6,7 @@ class ViewWatches extends StatefulWidget {
   const ViewWatches({super.key});
 
   @override
-  _ViewWatchesState createState() => _ViewWatchesState();
+  State<ViewWatches> createState() => _ViewWatchesState();
 }
 
 class _ViewWatchesState extends State<ViewWatches> {
@@ -17,36 +17,36 @@ class _ViewWatchesState extends State<ViewWatches> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final String email = ModalRoute.of(context)!.settings.arguments as String;
-      _loadWatches(email);
+      final String loginUserEmail = ModalRoute.of(context)!.settings.arguments as String;
+      _loadWatches(loginUserEmail);
     });
   }
 
-  void _loadWatches(String email) {
+  void _loadWatches(String loginUserEmail) {
     setState(() {
-      _watchesFuture = _watchRepository.getAllWatches(email);
+      _watchesFuture = _watchRepository.getAllWatches(loginUserEmail);
     });
   }
 
   void _navigateToAddWatch() async {
-    final String email = ModalRoute.of(context)!.settings.arguments as String;
+    final String loginUserEmail = ModalRoute.of(context)!.settings.arguments as String;
     await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => AddWatch(email: email),
+        builder: (context) => AddWatch(loginUserEmail: loginUserEmail),
       ),
     );
-    _loadWatches(email);
+    _loadWatches(loginUserEmail);
   }
 
   void _deleteWatch(String id) async {
     try {
       await _watchRepository.deleteWatch(id);
-      final String email = ModalRoute.of(context)!.settings.arguments as String;
-      _loadWatches(email);
+      final String loginUserEmail = ModalRoute.of(context)!.settings.arguments as String;
+      _loadWatches(loginUserEmail);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error al borrar el reloj: $e')),
+        SnackBar(content: Text('Error deleting the watch: $e')),
       );
     }
   }
@@ -55,13 +55,7 @@ class _ViewWatchesState extends State<ViewWatches> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Relojes del Usuario'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: _navigateToAddWatch,
-          ),
-        ],
+        title: const Text('Your watches'),
       ),
       body: FutureBuilder<List<Watch>>(
         future: _watchesFuture,
@@ -71,21 +65,21 @@ class _ViewWatchesState extends State<ViewWatches> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No se encontraron relojes'));
+            return const Center(child: Text('No watches found'));
           } else {
             List<Watch> watches = snapshot.data!;
             return SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: DataTable(
                 columns: const [
-                  DataColumn(label: Text('Marca')),
-                  DataColumn(label: Text('Modelo')),
-                  DataColumn(label: Text('Año de Producción')),
-                  DataColumn(label: Text('Condición')),
-                  DataColumn(label: Text('Sexo')),
+                  DataColumn(label: Text('Brand')),
+                  DataColumn(label: Text('Model')),
+                  DataColumn(label: Text('Year of Production')),
+                  DataColumn(label: Text('Condition')),
+                  DataColumn(label: Text('Sex')),
                   DataColumn(label: Text('Price')),
                   DataColumn(label: Text('Sale Status')),
-                  DataColumn(label: Text('Acciones')),
+                  DataColumn(label: Text('Actions')),
                 ],
                 rows: watches.map((watch) {
                   return DataRow(cells: [
@@ -97,17 +91,33 @@ class _ViewWatchesState extends State<ViewWatches> {
                     DataCell(Text(watch.price)),
                     DataCell(Text(watch.saleStatus)),
                     DataCell(
-                      IconButton(
-                        icon: const Icon(Icons.delete),
-                        onPressed: () => _deleteWatch(watch.id),
+                      Row(
+                        children: <Widget>[
+                          IconButton(
+                            icon: const Icon(Icons.edit),
+                            onPressed: () {
+                              _deleteWatch(watch.id); //poner edit aqui
+                            },
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.delete),
+                            onPressed: () {
+                              _deleteWatch(watch.id);
+                            },
+                          ),
+                        ],
                       ),
-                    ),
+                    )
                   ]);
                 }).toList(),
               ),
             );
           }
         },
+      ),
+      floatingActionButton: IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: _navigateToAddWatch,
       ),
     );
   }

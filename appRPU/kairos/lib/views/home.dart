@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kairos/views/view_auctions.dart';
 import 'view_watches.dart';
+import 'view_price_watch.dart';
 import 'login.dart';
 
 class Home extends StatelessWidget {
@@ -8,7 +9,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String email = ModalRoute.of(context)!.settings.arguments as String;
+    final String loginUserEmail = ModalRoute.of(context)!.settings.arguments as String;
 
     return Scaffold(
       body: Center(
@@ -27,7 +28,7 @@ class Home extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Text(
-                'Welcome, $email',
+                'Welcome, $loginUserEmail',
                 style: const TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.bold,
@@ -42,11 +43,11 @@ class Home extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => const ViewWatches(),
-                        settings: RouteSettings(arguments: email),
+                        settings: RouteSettings(arguments: loginUserEmail),
                       ),
                     );
                   },
-                  child: const Text('Consulte sus productos'),
+                  child: const Text('Consult your watches'),
                 ),
               ),
               const SizedBox(height: 10),
@@ -58,11 +59,26 @@ class Home extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) => const ViewAuctions(),
-                        settings: RouteSettings(arguments: email),
+                        settings: RouteSettings(arguments: loginUserEmail),
                       ),
                     );
                   },
-                  child: const Text('Relojes en venta'),
+                  child: const Text('See the auctions'),
+                ),
+              ),
+              const SizedBox(height: 10),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ViewPriceWatch(),
+                      ),
+                    );
+                  },
+                  child: const Text('How much is my watch worth?'),
                 ),
               ),
               const SizedBox(height: 10),
@@ -72,17 +88,7 @@ class Home extends StatelessWidget {
                   onPressed: () {
                     // COSAS
                   },
-                  child: const Text('Proximamente...'),
-                ),
-              ),
-              const SizedBox(height: 10),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // COSAS
-                  },
-                  child: const Text('Proximamente...'),
+                  child: const Text('Update your personal data'),
                 ),
               ),
             ],
@@ -98,7 +104,6 @@ class Home extends StatelessWidget {
         },
         icon: const Icon(Icons.logout),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endTop,
     );
   }
 }

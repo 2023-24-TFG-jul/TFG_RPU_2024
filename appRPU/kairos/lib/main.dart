@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const Login(),
         '/home': (context) => const Home(),
         '/add_user': (context) => const Register(),
-        '/add_watch': (context) => const AddWatch(email: '',),
+        '/add_watch': (context) => const AddWatch(loginUserEmail: '',),
         '/view_watches': (context) => const ViewWatches(),
       }
     );

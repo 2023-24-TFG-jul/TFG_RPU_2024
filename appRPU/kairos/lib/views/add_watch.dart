@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:kairos/models/watch.dart';
 
 class AddWatch extends StatefulWidget {
-  final String email;
-  const AddWatch({super.key, required this.email});
+  final String loginUserEmail;
+  const AddWatch({super.key, required this.loginUserEmail});
 
   @override
   State<AddWatch> createState() => _AddWatchState();
@@ -27,7 +27,7 @@ class _AddWatchState extends State<AddWatch> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Registro de Reloj'),
+        title: const Text('Register your watch'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
@@ -77,7 +77,7 @@ class _AddWatchState extends State<AddWatch> {
             const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: _addWatch,
-              child: const Text('Añadir reloj'),
+              child: const Text('Add your watch'),
             ),
           ],
         ),
@@ -111,8 +111,8 @@ class _AddWatchState extends State<AddWatch> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Campos faltantes'),
-            content: const Text('Por favor complete todos los campos.'),
+            title: const Text('Missing fields'),
+            content: const Text('Please complete all fields.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -141,16 +141,16 @@ class _AddWatchState extends State<AddWatch> {
           condition: condition,
           sex: sex,
           price: price,
-          saleStatus: 'Subido',
+          saleStatus: 'Uploaded',
         ),
-        widget.email,
+        widget.loginUserEmail,
       );
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Reloj registrado correctamente'),
-            content: const Text('Reloj registrado correctamente'),
+            title: const Text('Correct registration'),
+            content: const Text('Watch registered correctly.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -169,7 +169,7 @@ class _AddWatchState extends State<AddWatch> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Error'),
-            content: Text('Error al registrar el reloj: $e'),
+            content: Text('Error registering watch: $e'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {

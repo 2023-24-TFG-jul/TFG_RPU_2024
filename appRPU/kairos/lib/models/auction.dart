@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Auction {
   final String idAuction;
-  final String salerEmail;
+  final String vendorEmail;
   final String buyerEmail;
   final DateTime purchaseDate;
   final String auctionStatus;
@@ -10,7 +10,7 @@ class Auction {
 
   Auction({
     required this.idAuction,
-    required this.salerEmail,
+    required this.vendorEmail,
     required this.buyerEmail,
     required this.purchaseDate,
     required this.auctionStatus,
@@ -21,7 +21,7 @@ class Auction {
     Map data = doc.data() as Map<String, dynamic>;
     return Auction(
       idAuction: doc.id,
-      salerEmail: data['salerEmail'] ?? '',
+      vendorEmail: data['vendorEmail'] ?? '',
       buyerEmail: data['buyerEmail'] ?? '',
       purchaseDate: (data['purchaseDate'] as Timestamp).toDate(),
       auctionStatus: data['auctionStatus'] ?? '',
@@ -31,7 +31,7 @@ class Auction {
 
   Map<String, dynamic> toMap() {
     return {
-      'salerEmail': salerEmail,
+      'vendorEmail': vendorEmail,
       'buyerEmail': buyerEmail,
       'purchaseDate': Timestamp.fromDate(purchaseDate),
       'auctionStatus': auctionStatus,
@@ -43,7 +43,7 @@ class Auction {
 class AuctionRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  Future<List<Auction>> getAllAuctionsWithStatusSubido() async {
+  Future<List<Auction>> getAllAuctionsWithStatusUploaded() async {
     QuerySnapshot querySnapshot = await _db.collection('auctions')
     .get();
     return querySnapshot.docs.map((doc) => Auction.fromFirestore(doc)).toList();

@@ -6,7 +6,7 @@ class ViewAuctions extends StatefulWidget {
   const ViewAuctions({super.key});
 
   @override
-  _ViewAuctionsState createState() => _ViewAuctionsState();
+  State<ViewAuctions> createState() => _ViewAuctionsState();
 }
 
 class _ViewAuctionsState extends State<ViewAuctions> {
@@ -25,7 +25,7 @@ class _ViewAuctionsState extends State<ViewAuctions> {
 
   void _loadAuctions(String email) {
     setState(() {
-      _auctionsFuture = _auctionRepository.getAllAuctionsWithStatusSubido();
+      _auctionsFuture = _auctionRepository.getAllAuctionsWithStatusUploaded();
     });
   }
 
@@ -45,7 +45,7 @@ class _ViewAuctionsState extends State<ViewAuctions> {
       _loadAuctions(loginUserEmail);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error al borrar la subasta: $e')),
+        SnackBar(content: Text('Error deleting the auction: $e')),
       );
     }
   }
@@ -55,11 +55,11 @@ class _ViewAuctionsState extends State<ViewAuctions> {
       await _auctionRepository.buyWatch(auctionId, loginUserEmail);
       _loadAuctions(loginUserEmail);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Reloj adquirido con éxito')),
+        const SnackBar(content: Text('Watch successfully acquired.')),
       );
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error al adquirir el reloj: $e')),
+        SnackBar(content: Text('Error when purchasing the watch: $e')),
       );
     }
   }
@@ -68,7 +68,7 @@ class _ViewAuctionsState extends State<ViewAuctions> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Subastas'),
+        title: const Text('Auctions'),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
@@ -84,23 +84,23 @@ class _ViewAuctionsState extends State<ViewAuctions> {
           } else if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(child: Text('No se encontraron relojes'));
+            return const Center(child: Text('No auctions found.'));
           } else {
             List<Auction> auctions = snapshot.data!;
             return SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: DataTable(
                 columns: const [
-                  DataColumn(label: Text('Id del reloj')),
-                  DataColumn(label: Text('Vendedor')),
-                  DataColumn(label: Text('Comprador')),
-                  DataColumn(label: Text('Estado')),
-                  DataColumn(label: Text('Acciones')),
+                  DataColumn(label: Text('Watch Id')),
+                  DataColumn(label: Text('Vendor')),
+                  DataColumn(label: Text('Buyer')),
+                  DataColumn(label: Text('Status')),
+                  DataColumn(label: Text('Actions')),
                 ],
                 rows: auctions.map((auction) {
                   return DataRow(cells: [
                     DataCell(Text(auction.watchId)),
-                    DataCell(Text(auction.salerEmail)),
+                    DataCell(Text(auction.vendorEmail)),
                     DataCell(Text(auction.buyerEmail)),
                     DataCell(Text(auction.auctionStatus)),
                     DataCell(Row(

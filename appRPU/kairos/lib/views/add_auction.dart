@@ -18,7 +18,7 @@ class _AddAuctionState extends State<AddAuction> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Crear Subasta')),
+      appBar: AppBar(title: const Text('Create auction')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -26,12 +26,12 @@ class _AddAuctionState extends State<AddAuction> {
           children: [
             TextField(
               controller: _watchIdController,
-              decoration: const InputDecoration(labelText: 'ID del Reloj'),
+              decoration: const InputDecoration(labelText: 'Watch ID'),
             ),
             const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: _addAuction,
-              child: const Text('Crear Subasta'),
+              child: const Text('Create auction'),
             ),
           ],
         ),
@@ -47,8 +47,8 @@ class _AddAuctionState extends State<AddAuction> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Campos faltantes'),
-            content: const Text('Por favor ingrese el ID del reloj.'),
+            title: const Text('Missing fields'),
+            content: const Text('Please enter your watch ID.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -67,7 +67,7 @@ class _AddAuctionState extends State<AddAuction> {
       await _auctionRepository.addAuction(
         Auction(
           idAuction: '',
-          salerEmail: widget.loginUserEmail,
+          vendorEmail: widget.loginUserEmail,
           buyerEmail: '-',
           purchaseDate: DateTime.now(),
           auctionStatus: 'Activa',
@@ -75,14 +75,14 @@ class _AddAuctionState extends State<AddAuction> {
         ),
       );
 
-      await _watchRepository.updateWatch(watchId, 'En subasta');  //cambio estado reloj
+      await _watchRepository.updateWatch(watchId, 'At auction');  //cambio estado reloj
 
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Reloj registrado correctamente'),
-            content: const Text('Reloj registrado correctamente'),
+            title: const Text('Correct registration'),
+            content: const Text('Auction registered correctly.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -101,7 +101,7 @@ class _AddAuctionState extends State<AddAuction> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Error'),
-            content: Text('Error al registrar la subasta: $e'),
+            content: Text('Error registering auction: $e'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
