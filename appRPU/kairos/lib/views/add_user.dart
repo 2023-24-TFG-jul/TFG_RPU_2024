@@ -11,6 +11,7 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  
   DateTime? _selectedDate;
 
   final TextEditingController _nameController = TextEditingController();
@@ -18,6 +19,7 @@ class _RegisterState extends State<Register> {
   final TextEditingController _countryController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordRepeatController = TextEditingController();
   final TextEditingController _bankCodeController = TextEditingController();
 
   final UserRepository _userRepository = UserRepository();
@@ -26,7 +28,7 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Registro de Usuario'),
+        title: const Text('User registration'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
@@ -35,43 +37,54 @@ class _RegisterState extends State<Register> {
           children: [
             TextField(
               controller: _nameController,
-              decoration: const InputDecoration(labelText: 'Nombre'),
+              decoration: const InputDecoration(labelText: 'Name'),
             ),
+            const SizedBox(height: 20.0),
             TextField(
               controller: _surnameController,
-              decoration: const InputDecoration(labelText: 'Apellido'),
+              decoration: const InputDecoration(labelText: 'Surnames'),
             ),
+            const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () => _selectDate(context),
               child: Text(
                 _selectedDate != null
-                    ? 'Fecha de Nacimiento: ${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}'
-                    : 'Seleccionar Fecha de Nacimiento',
+                    ? 'Date of birth: ${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}'
+                    : 'Enter your date of birth',
               ),
             ),
+            const SizedBox(height: 20.0),
             TextField(
               controller: _countryController,
-              decoration: const InputDecoration(labelText: 'País'),
+              decoration: const InputDecoration(labelText: 'Country'),
             ),
+            const SizedBox(height: 20.0),
             TextField(
               controller: _emailController,
               decoration: const InputDecoration(labelText: 'Email'),
             ),
+            const SizedBox(height: 20.0),
             TextField(
               controller: _passwordController,
-              decoration: const InputDecoration(labelText: 'Contraseña'),
+              decoration: const InputDecoration(labelText: 'New password'),
               obscureText: true,
             ),
             TextField(
+              controller: _passwordRepeatController,
+              decoration: const InputDecoration(labelText: 'Repeat your new password'),
+              obscureText: true,
+            ),
+            const SizedBox(height: 20.0),
+            TextField(
               controller: _bankCodeController,
-              decoration: const InputDecoration(labelText: 'Código de Banco'),
+              decoration: const InputDecoration(labelText: 'Bank code'),
             ),
             const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () {
                 _addUser();
               },
-              child: const Text('Registrarse'),
+              child: const Text('Sign up'),
             ),
           ],
         ),
@@ -80,17 +93,27 @@ class _RegisterState extends State<Register> {
   }
 
   Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
+    final DateTime? birthday = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
     );
-    if (picked != null) {
+    if (birthday != null) {
       setState(() {
-        _selectedDate = picked;
+        _selectedDate = birthday;
       });
     }
+  }
+
+  bool _isUserAdult(DateTime birthdate) {
+    final today = DateTime.now();
+    final age = today.year - birthdate.year;
+    if (today.month < birthdate.month ||
+        (today.month == birthdate.month && today.day < birthdate.day)) {
+      return age - 1 >= 18;
+    }
+    return age >= 18;
   }
 
   void _addUser() async {
@@ -99,7 +122,12 @@ class _RegisterState extends State<Register> {
     String country = _countryController.text;
     String email = _emailController.text;
     String password = _passwordController.text;
+    String passwordRepeat = _passwordRepeatController.text;
     String bankCode = _bankCodeController.text;
+
+    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+    final passwordRegex = RegExp(r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W).+$');
+    final nameSurnameCountryRegex = RegExp(r'^[^0-9]+$');
 
     if (_selectedDate == null ||
         name.isEmpty ||
@@ -108,46 +136,47 @@ class _RegisterState extends State<Register> {
         email.isEmpty ||
         password.isEmpty ||
         bankCode.isEmpty) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Campos faltantes'),
-            content: const Text('Por favor complete todos los campos.'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
+      _showDialog('Missing fields', 'Please complete all fields.');
+      return;
+    }
+
+    if (!nameSurnameCountryRegex.hasMatch(name) ||
+        !nameSurnameCountryRegex.hasMatch(surname) ||
+        !nameSurnameCountryRegex.hasMatch(country) ||
+        name == 'null' || surname == 'null' || country == 'null') { // control para no inyectar null
+      _showDialog('Invalid fields', 'The fields name, surname and country cannot contain numbers.');
+      return;
+    }
+
+    if (!_isUserAdult(_selectedDate!)) {
+      _showDialog('Underage user', 'You must be at least 18 years old to register.');
+      return;
+    }
+
+    if (!emailRegex.hasMatch(email)) {
+      _showDialog('Invalid email address', 'Please enter an email address according to the general form.');
+      return;
+    }
+
+    if (!passwordRegex.hasMatch(password)) {
+      _showDialog('Incorrect password', 'The password must contain at least one number, one lower case letter, one upper case letter and one special character.');
+      return;
+    }
+
+    if (password != passwordRepeat) {
+      _showDialog('Incorrect password', 'Both passwords must be the same.');
+      return;
+    }
+
+    if (bankCode == 'null') { // control para no inyectar null
+      _showDialog('Null error', 'There is no bank account with the term null.');
       return;
     }
 
     // Usuario existe?
     bool userExists = await _userRepository.checkUserExists(email);
     if (userExists) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Error'),
-            content: const Text('El usuario ya existe.'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
+      _showDialog('Error', 'The user already exists.');
       return;
     }
 
@@ -161,41 +190,29 @@ class _RegisterState extends State<Register> {
         password: password,
         bankCode: bankCode,
       ));
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Registro exitoso'),
-            content: const Text('Usuario registrado exitosamente.'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
+      _showDialog('Registration successful', 'User successfully registered.');
     } catch (e) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Error'),
-            content: Text('Error al registrar usuario: $e'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
+      _showDialog('Error', 'Error registering user.: $e');
     }
+  }
+
+  void _showDialog(String title, String content) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(content),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

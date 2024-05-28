@@ -3,9 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class User {
   final String name;
   final String surname;
-  final String birthdate;
+  final String birthdate;   // no editable
   final String country;
-  final String email;
+  final String email;       // no editable
   final String password;
   final String bankCode;
 
@@ -77,7 +77,18 @@ class UserRepository {
   }
 
   // UPDATE
-  Future<void> updateUser(String uid, String newName) async {
-    await _db.collection("users").doc(uid).update({"name": newName});
+  Future<void> updateUser(String uid, 
+                          String newName,
+                          String newSurname,
+                          String newCountry,
+                          String newPassword,
+                          String newBankCode) async {
+    await _db.collection("users").doc(uid).update({
+      "name": newName,
+      "surname": newSurname,
+      "country": newCountry,
+      "password": newPassword,
+      "bankCode": newBankCode
+      });
   }
 }
