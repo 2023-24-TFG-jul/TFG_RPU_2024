@@ -6,7 +6,7 @@ class Auction {
   final String buyerEmail;
   final DateTime purchaseDate;
   final String auctionStatus;
-  final String watchId;
+  final String watchNickName;
 
   Auction({
     required this.idAuction,
@@ -14,7 +14,7 @@ class Auction {
     required this.buyerEmail,
     required this.purchaseDate,
     required this.auctionStatus,
-    required this.watchId,
+    required this.watchNickName,
   });
 
   factory Auction.fromFirestore(DocumentSnapshot doc) {
@@ -25,7 +25,7 @@ class Auction {
       buyerEmail: data['buyerEmail'] ?? '',
       purchaseDate: (data['purchaseDate'] as Timestamp).toDate(),
       auctionStatus: data['auctionStatus'] ?? '',
-      watchId: data['watchId'] ?? '',
+      watchNickName: data['watchNickName'] ?? '',
     );
   }
 
@@ -35,7 +35,7 @@ class Auction {
       'buyerEmail': buyerEmail,
       'purchaseDate': Timestamp.fromDate(purchaseDate),
       'auctionStatus': auctionStatus,
-      'watchId': watchId,
+      'watchNickName': watchNickName,
     };
   }
 }
@@ -44,8 +44,7 @@ class AuctionRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   Future<List<Auction>> getAllAuctionsWithStatusUploaded() async {
-    QuerySnapshot querySnapshot = await _db.collection('auctions')
-    .get();
+    QuerySnapshot querySnapshot = await _db.collection('auctions').get();
     return querySnapshot.docs.map((doc) => Auction.fromFirestore(doc)).toList();
   }
 

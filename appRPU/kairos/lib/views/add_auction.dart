@@ -11,7 +11,7 @@ class AddAuction extends StatefulWidget {
 }
 
 class _AddAuctionState extends State<AddAuction> {
-  final TextEditingController _watchIdController = TextEditingController();
+  final TextEditingController _watchNickNameController = TextEditingController();
   final AuctionRepository _auctionRepository = AuctionRepository();
   final WatchRepository _watchRepository = WatchRepository();
   
@@ -25,8 +25,8 @@ class _AddAuctionState extends State<AddAuction> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             TextField(
-              controller: _watchIdController,
-              decoration: const InputDecoration(labelText: 'Watch ID'),
+              controller: _watchNickNameController,
+              decoration: const InputDecoration(labelText: 'Watch Nickname'),
             ),
             const SizedBox(height: 20.0),
             ElevatedButton(
@@ -40,15 +40,15 @@ class _AddAuctionState extends State<AddAuction> {
   }
 
   void _addAuction() async {
-    String watchId = _watchIdController.text;
+    String watchNickName = _watchNickNameController.text;
 
-    if (watchId.isEmpty) {
+    if (watchNickName.isEmpty) {
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Missing fields'),
-            content: const Text('Please enter your watch ID.'),
+            content: const Text('Please enter your watch nickname.'),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -64,18 +64,42 @@ class _AddAuctionState extends State<AddAuction> {
     }
 
     try {
+      
+      bool watchExists = await _watchRepository.existWatch(watchNickName); //vemos si existe el reloj
+
+      if (!watchExists) {  //si no existe el reloj, no crea
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Error'),
+              content: const Text('The watch nickname does not exist'),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+        return;
+      }
+
       await _auctionRepository.addAuction(
         Auction(
           idAuction: '',
           vendorEmail: widget.loginUserEmail,
           buyerEmail: '-',
           purchaseDate: DateTime.now(),
-          auctionStatus: 'Activa',
-          watchId: watchId,
+          auctionStatus: 'Active',
+          watchNickName: watchNickName,
         ),
       );
 
-      await _watchRepository.updateWatch(watchId, 'At auction');  //cambio estado reloj
+      await _watchRepository.updateSaleStatusWatch(watchNickName, 'At auction');
 
       showDialog(
         context: context,

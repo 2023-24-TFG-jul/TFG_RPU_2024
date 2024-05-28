@@ -91,7 +91,7 @@ class _ViewAuctionsState extends State<ViewAuctions> {
               scrollDirection: Axis.horizontal,
               child: DataTable(
                 columns: const [
-                  DataColumn(label: Text('Watch Id')),
+                  DataColumn(label: Text('Watch Nickname')),
                   DataColumn(label: Text('Vendor')),
                   DataColumn(label: Text('Buyer')),
                   DataColumn(label: Text('Status')),
@@ -99,7 +99,7 @@ class _ViewAuctionsState extends State<ViewAuctions> {
                 ],
                 rows: auctions.map((auction) {
                   return DataRow(cells: [
-                    DataCell(Text(auction.watchId)),
+                    DataCell(Text(auction.watchNickName)),
                     DataCell(Text(auction.vendorEmail)),
                     DataCell(Text(auction.buyerEmail)),
                     DataCell(Text(auction.auctionStatus)),

@@ -10,6 +10,7 @@ class AddWatch extends StatefulWidget {
 }
 
 class _AddWatchState extends State<AddWatch> {
+  final TextEditingController _watchNickNameController = TextEditingController();
   final TextEditingController _brandController = TextEditingController();
   final TextEditingController _modelController = TextEditingController();
   final TextEditingController _referenceController = TextEditingController();
@@ -34,6 +35,10 @@ class _AddWatchState extends State<AddWatch> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            TextField(
+              controller: _watchNickNameController,
+              decoration: const InputDecoration(labelText: 'Watch nickname'),
+            ),
             TextField(
               controller: _brandController,
               decoration: const InputDecoration(labelText: 'Brand'),
@@ -86,6 +91,7 @@ class _AddWatchState extends State<AddWatch> {
   }
 
   void _addWatch() async {
+    String watchNickName = _watchNickNameController.text;
     String brand = _brandController.text;
     String model = _modelController.text;
     String reference = _referenceController.text;
@@ -97,7 +103,8 @@ class _AddWatchState extends State<AddWatch> {
     String sex = _sexController.text;
     String price = _priceController.text;
 
-    if (brand.isEmpty ||
+    if (watchNickName.isEmpty ||
+        brand.isEmpty ||
         model.isEmpty ||
         reference.isEmpty ||
         movement.isEmpty ||
@@ -131,6 +138,7 @@ class _AddWatchState extends State<AddWatch> {
       await _watchRepository.addWatch(
         Watch(
           id: '',
+          watchNickName: watchNickName,
           brand: brand,
           model: model,
           reference: reference,

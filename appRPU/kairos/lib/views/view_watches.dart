@@ -72,6 +72,7 @@ class _ViewWatchesState extends State<ViewWatches> {
               scrollDirection: Axis.horizontal,
               child: DataTable(
                 columns: const [
+                  DataColumn(label: Text('Watch Nickname')),
                   DataColumn(label: Text('Brand')),
                   DataColumn(label: Text('Model')),
                   DataColumn(label: Text('Year of Production')),
@@ -83,6 +84,7 @@ class _ViewWatchesState extends State<ViewWatches> {
                 ],
                 rows: watches.map((watch) {
                   return DataRow(cells: [
+                    DataCell(Text(watch.watchNickName)),
                     DataCell(Text(watch.brand)),
                     DataCell(Text(watch.model)),
                     DataCell(Text(watch.yop)),

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Watch {
   final String id;
+  final String watchNickName;
   final String brand;
   final String model;
   final String reference;
@@ -16,6 +17,7 @@ class Watch {
 
   Watch({
     required this.id,
+    required this.watchNickName, // facilidad para el usuario a la hora de crear una subasta
     required this.brand,
     required this.model,
     required this.reference,
@@ -34,6 +36,7 @@ class Watch {
     return Watch(
       id: doc.id,
       brand: data['brand'] ?? '',
+      watchNickName: data['watchNickName'] ?? '',
       model: data['model'] ?? '',
       reference: data['reference'] ?? '',
       movement: data['movement'] ?? '',
@@ -49,6 +52,7 @@ class Watch {
 
   Map<String, dynamic> toMap() {
     return {
+      'watchNickName': watchNickName,
       'brand': brand,
       'model': model,
       'reference': reference,
@@ -88,7 +92,30 @@ class WatchRepository {
     await _db.collection("watches").doc(id).delete();
   }
 
-  Future<void> updateWatch(String uid, String saleStatus) async {
-    await _db.collection("watches").doc(uid).update({"saleStatus": saleStatus});
+  Future<bool> existWatch(String watchNickName) async {
+    try {
+      var watchQuery = await FirebaseFirestore.instance
+          .collection('watches')
+          .where('watchNickName', isEqualTo: watchNickName)
+          .get();
+
+      return watchQuery.docs.isNotEmpty;
+    } catch (e) {
+      return false;
+    }
   }
+
+  Future<void> updateSaleStatusWatch(String watchNickName, String saleStatus) async {
+    QuerySnapshot querySnapshot = await _db.collection('watches')
+    .where('watchNickName', isEqualTo: watchNickName)
+    .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      var documentReference = querySnapshot.docs.first.reference;
+      await documentReference.update({'saleStatus': saleStatus});
+    } else {
+      throw Exception('Watch nickname not found: $watchNickName');
+    }
+  }
+
 }
