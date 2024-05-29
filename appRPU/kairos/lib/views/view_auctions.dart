@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kairos/models/auction.dart';
+import 'package:kairos/models/watch.dart';
 import 'add_auction.dart';
 
 class ViewAuctions extends StatefulWidget {
@@ -11,7 +12,10 @@ class ViewAuctions extends StatefulWidget {
 }
 
 class _ViewAuctionsState extends State<ViewAuctions> {
+
   final AuctionRepository _auctionRepository = AuctionRepository();
+  final WatchRepository _watchRepository = WatchRepository();
+  
   late Future<List<Auction>> _auctionsFuture;
   late String loginUserEmail;
 
@@ -42,6 +46,8 @@ class _ViewAuctionsState extends State<ViewAuctions> {
 
   void _deleteAuction(String id) async {
     try {
+      Auction auction = await _auctionRepository.getAuctionById(id);
+      await _watchRepository.updateSaleStatusWatch(auction.watchNickName, 'Uploaded -> Remove');
       await _auctionRepository.deleteAuction(id);
       _loadAuctions(loginUserEmail);
     } catch (e) {

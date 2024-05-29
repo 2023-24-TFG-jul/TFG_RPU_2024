@@ -66,4 +66,14 @@ class AuctionRepository {
       'purchaseDate': Timestamp.now(),
     });
   }
+
+  Future<Auction> getAuctionById(String id) async {
+    DocumentSnapshot doc = await _db.collection('auctions').doc(id).get();
+    if (doc.exists) {
+      return Auction.fromFirestore(doc);
+    } else {
+      throw Exception('Auction not found');
+    }
+  }
+
 }
