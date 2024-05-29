@@ -82,6 +82,17 @@ class WatchRepository {
     return watches;
   }
 
+  // watch exist?
+  Future<bool> checkWatchExists(String nickname) async {
+    QuerySnapshot querySnapshot = await _db
+        .collection('watches')
+        .where('watchNickName', isEqualTo: nickname)
+        .limit(1)
+        .get();
+
+    return querySnapshot.docs.isNotEmpty;
+  }
+
   Future<void> addWatch(Watch watch, String email) async {
     Map<String, dynamic> watchData = watch.toMap();
     watchData['userEmail'] = email;
@@ -115,6 +126,42 @@ class WatchRepository {
       await documentReference.update({'saleStatus': saleStatus});
     } else {
       throw Exception('Watch nickname not found: $watchNickName');
+    }
+  }
+
+  // GET WATCH BY NICKNAME
+  Future<Watch> getWatchByNickname(String nickname) async {
+    QuerySnapshot querySnapshot = await _db
+        .collection('watches')
+        .where('watchNickName', isEqualTo: nickname)
+        .limit(1)
+        .get();
+        
+    if (querySnapshot.docs.isNotEmpty) {
+      return Watch.fromFirestore(querySnapshot.docs.first);
+    } else {
+      throw Exception('Watch not found');
+    }
+  }
+
+  // UPDATE
+  Future<void> updateWatch(String watchNickName,
+                          String newCondition, 
+                          String newPrice) async {
+    QuerySnapshot querySnapshot = await _db
+        .collection('watches')
+        .where('watchNickName', isEqualTo: watchNickName)
+        .limit(1)
+        .get();
+        
+    if (querySnapshot.docs.isNotEmpty) {
+      String uid = querySnapshot.docs.first.id;
+      await _db.collection("watches").doc(uid).update({
+        "condition": newCondition,
+        "price": newPrice
+      });
+    } else {
+      throw Exception('Watch not found');
     }
   }
 

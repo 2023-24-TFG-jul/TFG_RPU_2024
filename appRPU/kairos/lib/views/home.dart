@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kairos/views/update_user.dart';
 import 'package:kairos/views/view_auctions.dart';
 import 'view_watches.dart';
 import 'view_price_watch.dart';
@@ -86,7 +87,12 @@ class Home extends StatelessWidget {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: () {
-                    // COSAS
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UpdateUser(userEmail: loginUserEmail),
+                      ),
+                    );
                   },
                   child: const Text('Update your personal data'),
                 ),

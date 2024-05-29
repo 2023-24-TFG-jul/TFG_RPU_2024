@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:kairos/models/watch.dart';
 
 class AddWatch extends StatefulWidget {
+  
   final String loginUserEmail;
+  
   const AddWatch({super.key, required this.loginUserEmail});
 
   @override
@@ -91,6 +93,7 @@ class _AddWatchState extends State<AddWatch> {
   }
 
   void _addWatch() async {
+    
     String watchNickName = _watchNickNameController.text;
     String brand = _brandController.text;
     String model = _modelController.text;
@@ -103,40 +106,47 @@ class _AddWatchState extends State<AddWatch> {
     String sex = _sexController.text;
     String price = _priceController.text;
 
-    if (watchNickName.isEmpty ||
-        brand.isEmpty ||
+    final yopRegex = RegExp(r'(\d+)');
+    final sexRegex = RegExp(r'^(Women|Men/Unisex)$');
+    final priceRegex = RegExp(r'^\d+(\.\d+)?$');
+
+    if (!yopRegex.hasMatch(yop)) {
+      _showDialog('Invalid yop', 'Please enter a year greater than zero.');
+      return;
+    }
+
+    if (!sexRegex.hasMatch(sex)) {
+      _showDialog('Invalid sex', 'Please enter "Women" or "Men/Unisex".');
+      return;
+    }
+
+    if (!priceRegex.hasMatch(price)) {
+      _showDialog('Invalid price', 'Please enter an integer and positive price.');
+      return;
+    }
+
+    if (brand.isEmpty ||
         model.isEmpty ||
-        reference.isEmpty ||
-        movement.isEmpty ||
-        casem.isEmpty ||
-        bracem.isEmpty ||
         yop.isEmpty ||
-        condition.isEmpty ||
-        sex.isEmpty ||
-        price.isEmpty) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Missing fields'),
-            content: const Text('Please complete all fields.'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
+        condition.isEmpty) {
+      _showDialog('Missing fields', 'Please complete all fields.');
+      return;
+    }
+
+    // Watch existe?
+    bool watchExists = await _watchRepository.checkWatchExists(watchNickName);
+    if (watchExists) {
+      _showDialog('Error', 'The watch already exists.');
+      return;
+    }
+
+    if (brand == 'null' || model == 'null' || condition == 'null') { // control para no inyectar null
+      _showDialog('Invalid fields', 'The fields brand, model and condition cannot be null.');
       return;
     }
 
     try {
-      await _watchRepository.addWatch(
-        Watch(
+      await _watchRepository.addWatch(Watch(
           id: '',
           watchNickName: watchNickName,
           brand: brand,
@@ -149,46 +159,32 @@ class _AddWatchState extends State<AddWatch> {
           condition: condition,
           sex: sex,
           price: price,
-          saleStatus: 'Uploaded',
-        ),
-        widget.loginUserEmail,
-      );
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Correct registration'),
-            content: const Text('Watch registered correctly.'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pop(true); // se cierra el registro, se pasa a pantalla views actualizada
-                },
-                child: const Text('OK'),
-              ),
-            ],
+          saleStatus: 'Uploaded'), 
+          widget.loginUserEmail
           );
-        },
-      );
+      _showDialog('Registration successful', 'Watch successfully registered.');
     } catch (e) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Error'),
-            content: Text('Error registering watch: $e'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
+      _showDialog('Error', 'Error registering watch.: $e');
     }
+  }
+
+  void _showDialog(String title, String content) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+          content: Text(content),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }

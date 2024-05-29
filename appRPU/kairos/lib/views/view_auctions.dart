@@ -3,6 +3,7 @@ import 'package:kairos/models/auction.dart';
 import 'add_auction.dart';
 
 class ViewAuctions extends StatefulWidget {
+  
   const ViewAuctions({super.key});
 
   @override
@@ -69,12 +70,6 @@ class _ViewAuctionsState extends State<ViewAuctions> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Auctions'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: _navigateToAddAuction,
-          ),
-        ],
       ),
       body: FutureBuilder<List<Auction>>(
         future: _auctionsFuture,
@@ -121,6 +116,10 @@ class _ViewAuctionsState extends State<ViewAuctions> {
             );
           }
         },
+      ),
+      floatingActionButton: IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: _navigateToAddAuction,
       ),
     );
   }

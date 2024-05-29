@@ -3,7 +3,9 @@ import 'package:kairos/models/auction.dart';
 import 'package:kairos/models/watch.dart';
 
 class AddAuction extends StatefulWidget {
+  
   final String loginUserEmail;
+  
   const AddAuction({super.key, required this.loginUserEmail});
 
   @override
@@ -11,7 +13,9 @@ class AddAuction extends StatefulWidget {
 }
 
 class _AddAuctionState extends State<AddAuction> {
+  
   final TextEditingController _watchNickNameController = TextEditingController();
+  
   final AuctionRepository _auctionRepository = AuctionRepository();
   final WatchRepository _watchRepository = WatchRepository();
   
@@ -40,6 +44,7 @@ class _AddAuctionState extends State<AddAuction> {
   }
 
   void _addAuction() async {
+    
     String watchNickName = _watchNickNameController.text;
 
     if (watchNickName.isEmpty) {

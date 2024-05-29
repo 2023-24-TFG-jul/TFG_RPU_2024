@@ -77,18 +77,44 @@ class UserRepository {
   }
 
   // UPDATE
-  Future<void> updateUser(String uid, 
+  Future<void> updateUser(String email, 
                           String newName,
                           String newSurname,
                           String newCountry,
                           String newPassword,
                           String newBankCode) async {
-    await _db.collection("users").doc(uid).update({
-      "name": newName,
-      "surname": newSurname,
-      "country": newCountry,
-      "password": newPassword,
-      "bankCode": newBankCode
+    QuerySnapshot querySnapshot = await _db
+        .collection('users')
+        .where('email', isEqualTo: email)
+        .limit(1)
+        .get();
+        
+    if (querySnapshot.docs.isNotEmpty) {
+      String uid = querySnapshot.docs.first.id;
+      await _db.collection("users").doc(uid).update({
+        "name": newName,
+        "surname": newSurname,
+        "country": newCountry,
+        "password": newPassword,
+        "bankCode": newBankCode
       });
+    } else {
+      throw Exception('User not found');
+    }
+  }
+
+  // GET USER BY EMAIL
+  Future<User> getUserByEmail(String email) async {
+    QuerySnapshot querySnapshot = await _db
+        .collection('users')
+        .where('email', isEqualTo: email)
+        .limit(1)
+        .get();
+        
+    if (querySnapshot.docs.isNotEmpty) {
+      return User.fromFirestore(querySnapshot.docs.first);
+    } else {
+      throw Exception('User not found');
+    }
   }
 }

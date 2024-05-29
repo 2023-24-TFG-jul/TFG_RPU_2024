@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kairos/models/watch.dart';
+import 'package:kairos/views/update_watch.dart';
 import 'add_watch.dart';
 
 class ViewWatches extends StatefulWidget {
@@ -34,6 +35,17 @@ class _ViewWatchesState extends State<ViewWatches> {
       context,
       MaterialPageRoute(
         builder: (context) => AddWatch(loginUserEmail: loginUserEmail),
+      ),
+    );
+    _loadWatches(loginUserEmail);
+  }
+
+  void _navigateToUpdateWatch(String watchNickName) async {
+    final String loginUserEmail = ModalRoute.of(context)!.settings.arguments as String;
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => UpdateWatch(watchNickName: watchNickName),
       ),
     );
     _loadWatches(loginUserEmail);
@@ -98,7 +110,7 @@ class _ViewWatchesState extends State<ViewWatches> {
                           IconButton(
                             icon: const Icon(Icons.edit),
                             onPressed: () {
-                              _deleteWatch(watch.id); //poner edit aqui
+                              _navigateToUpdateWatch(watch.watchNickName); //poner edit aqui
                             },
                           ),
                           IconButton(
