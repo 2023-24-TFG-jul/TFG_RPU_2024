@@ -21,6 +21,7 @@ class _RegisterState extends State<Register> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordRepeatController = TextEditingController();
   final TextEditingController _bankCodeController = TextEditingController();
+  final TextEditingController _walletController = TextEditingController();
 
   final UserRepository _userRepository = UserRepository();
 
@@ -80,6 +81,23 @@ class _RegisterState extends State<Register> {
               decoration: const InputDecoration(labelText: 'Bank code'),
             ),
             const SizedBox(height: 20.0),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _walletController,
+                    decoration: const InputDecoration(labelText: 'Wallet'),
+                    obscureText: true,
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.info_outline),
+                  tooltip: 'This field collects the money you wish to debit your account for payments. You can change it in the "Update your personal data" section.',
+                  onPressed: () {},
+                ),
+              ],
+            ),
+            const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () {
                 _addUser();
@@ -124,10 +142,12 @@ class _RegisterState extends State<Register> {
     String password = _passwordController.text;
     String passwordRepeat = _passwordRepeatController.text;
     String bankCode = _bankCodeController.text;
+    String wallet = _walletController.text;
 
     final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
     final passwordRegex = RegExp(r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W).+$');
     final nameSurnameCountryRegex = RegExp(r'^[^0-9]+$');
+    final walletRegex = RegExp(r'^\d+(\.\d+)?$');
 
     if (_selectedDate == null ||
         name.isEmpty ||
@@ -173,6 +193,11 @@ class _RegisterState extends State<Register> {
       return;
     }
 
+    if (!walletRegex.hasMatch(wallet)) {
+      _showDialog('Invalid wallet', 'Please enter an integer and positive money.');
+      return;
+    }
+
     // Usuario existe?
     bool userExists = await _userRepository.checkUserExists(email);
     if (userExists) {
@@ -189,6 +214,7 @@ class _RegisterState extends State<Register> {
         email: email,
         password: password,
         bankCode: bankCode,
+        wallet: wallet
       ));
       _showDialog('Registration successful', 'User successfully registered.');
     } catch (e) {

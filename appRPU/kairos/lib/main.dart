@@ -12,24 +12,40 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'My app',
       initialRoute: '/login',
-      routes: {
-        '/login': (context) => const Login(),
-        '/home': (context) => const Home(),
-        '/add_user': (context) => const Register(),
-        '/add_watch': (context) => const AddWatch(loginUserEmail: '',),
-        '/view_watches': (context) => const ViewWatches(),
-      }
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case '/home':
+            final String loginUserEmail = settings.arguments as String;
+            return MaterialPageRoute(
+              builder: (context) => Home(loginUserEmail: loginUserEmail),
+            );
+          case '/login':
+            return MaterialPageRoute(builder: (context) => const Login());
+          case '/add_user':
+            return MaterialPageRoute(builder: (context) => const Register());
+          case '/add_watch':
+            final String loginUserEmail = settings.arguments as String;
+            return MaterialPageRoute(
+              builder: (context) => AddWatch(loginUserEmail: loginUserEmail),
+            );
+          case '/view_watches':
+            return MaterialPageRoute(builder: (context) => const ViewWatches());
+          default:
+            return null;
+        }
+      },
     );
   }
 }

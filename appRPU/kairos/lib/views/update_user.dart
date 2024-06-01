@@ -17,6 +17,7 @@ class _UpdateUserState extends State<UpdateUser> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _passwordRepeatController = TextEditingController();
   final TextEditingController _bankCodeController = TextEditingController();
+  final TextEditingController _walletController = TextEditingController();
 
   final UserRepository _userRepository = UserRepository();
 
@@ -34,6 +35,7 @@ class _UpdateUserState extends State<UpdateUser> {
         _surnameController.text = user.surname;
         _countryController.text = user.country;
         _bankCodeController.text = user.bankCode;
+        _walletController.text = user.wallet;
       });
     } catch (e) {
       _showDialog('Error', 'Error loading user data: $e');
@@ -46,7 +48,7 @@ class _UpdateUserState extends State<UpdateUser> {
       appBar: AppBar(
         title: const Text('Update Your Personal Data'),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -94,6 +96,11 @@ class _UpdateUserState extends State<UpdateUser> {
               decoration: const InputDecoration(labelText: 'New Bank Code'),
             ),
             const SizedBox(height: 20.0),
+            TextField(
+              controller: _walletController,
+              decoration: const InputDecoration(labelText: 'New money amount in wallet'),
+            ),
+            const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: _updateUser,
               child: const Text('Update'),
@@ -111,15 +118,18 @@ class _UpdateUserState extends State<UpdateUser> {
     String newPassword = _passwordController.text;
     String newPasswordRepeat = _passwordRepeatController.text;
     String newBankCode = _bankCodeController.text;
+    String newWallet = _walletController.text;
 
     final passwordRegex = RegExp(r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W).+$');
     final nameSurnameCountryRegex = RegExp(r'^[^0-9]+$');
+    final walletRegex = RegExp(r'^\d+(\.\d+)?$');
 
     if (newName.isEmpty ||
         newSurname.isEmpty ||
         newCountry.isEmpty ||
         newPassword.isEmpty ||
-        newBankCode.isEmpty) {
+        newBankCode.isEmpty ||
+        newWallet.isEmpty) {
       _showDialog('Missing fields', 'Please complete all fields.');
       return;
     }
@@ -147,6 +157,11 @@ class _UpdateUserState extends State<UpdateUser> {
       return;
     }
 
+    if (!walletRegex.hasMatch(newWallet)) {
+      _showDialog('Invalid wallet', 'Please enter an integer and positive money.');
+      return;
+    }
+
     try {
       await _userRepository.updateUser(
         widget.userEmail,
@@ -155,6 +170,7 @@ class _UpdateUserState extends State<UpdateUser> {
         newCountry,
         newPassword,
         newBankCode,
+        newWallet,
       );
       _showDialog('Update Successful', 'Your personal data has been updated.');
     } catch (e) {

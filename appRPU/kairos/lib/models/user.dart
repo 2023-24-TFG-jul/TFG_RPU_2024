@@ -8,6 +8,7 @@ class User {
   final String email;       // no editable
   final String password;
   final String bankCode;
+  final String wallet;
 
   User({
     required this.name,
@@ -17,6 +18,7 @@ class User {
     required this.email,
     required this.password,
     required this.bankCode,
+    required this.wallet
   });
 
   // doc de Firestore en objeto User
@@ -30,6 +32,7 @@ class User {
       email: data['email'] ?? '',
       password: data['password'] ?? '',
       bankCode: data['bankCode'] ?? '',
+      wallet: data['wallet'] ?? '',
     );
   }
 
@@ -43,6 +46,7 @@ class User {
       'email': email,
       'password': password,
       'bankCode': bankCode,
+      'wallet': wallet,
     };
   }
 }
@@ -82,7 +86,8 @@ class UserRepository {
                           String newSurname,
                           String newCountry,
                           String newPassword,
-                          String newBankCode) async {
+                          String newBankCode,
+                          String newWallet) async {
     QuerySnapshot querySnapshot = await _db
         .collection('users')
         .where('email', isEqualTo: email)
@@ -96,7 +101,8 @@ class UserRepository {
         "surname": newSurname,
         "country": newCountry,
         "password": newPassword,
-        "bankCode": newBankCode
+        "bankCode": newBankCode,
+        "wallet": newWallet
       });
     } else {
       throw Exception('User not found');
@@ -113,6 +119,22 @@ class UserRepository {
         
     if (querySnapshot.docs.isNotEmpty) {
       return User.fromFirestore(querySnapshot.docs.first);
+    } else {
+      throw Exception('User not found');
+    }
+  }
+
+  
+  // GET WALLET BY EMAIL
+  Future<String> getWalletByEmail(String email) async {
+    QuerySnapshot querySnapshot = await _db
+        .collection('users')
+        .where('email', isEqualTo: email)
+        .limit(1)
+        .get();
+        
+    if (querySnapshot.docs.isNotEmpty) {
+      return querySnapshot.docs.first['wallet'];
     } else {
       throw Exception('User not found');
     }
