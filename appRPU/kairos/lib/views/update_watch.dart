@@ -17,6 +17,10 @@ class _UpdateWatchState extends State<UpdateWatch> {
 
   final WatchRepository _watchRepository = WatchRepository();
 
+  final List<String> _condition = ['Fair', 'Good', 'Incomplete', 'New', 'Poor', 'Unworn', 'Very good'];
+
+  String? _selectedCondition;
+
   @override
   void initState() {
     super.initState();
@@ -46,14 +50,40 @@ class _UpdateWatchState extends State<UpdateWatch> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextField(
-              controller: _conditionController,
-              decoration: const InputDecoration(labelText: 'New condition'),
+            DropdownButtonFormField<String>(
+              value: _selectedCondition,
+              items: _condition.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              onChanged: (newValue) {
+                setState(() {
+                  _selectedCondition = newValue;
+                });
+              },
+              decoration: const InputDecoration(
+                labelText: 'New condition *',
+                labelStyle: TextStyle(color: Colors.red),
+              ),
             ),
             const SizedBox(height: 20.0),
-            TextField(
-              controller: _priceController,
-              decoration: const InputDecoration(labelText: 'New price'),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _priceController,
+                    decoration: const InputDecoration(labelText: 'New price'),
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.euro),
+                  onPressed: () {
+                    // calculo prediccion
+                  },
+                ),
+              ],
             ),
             const SizedBox(height: 20.0),
             ElevatedButton(
@@ -67,7 +97,7 @@ class _UpdateWatchState extends State<UpdateWatch> {
   }
 
   void _updateWatch() async {
-    String newCondition = _conditionController.text;
+    String newCondition = _selectedCondition ?? '';
     String newPrice = _priceController.text;
 
     final priceRegex = RegExp(r'^\d+(\.\d+)?$');

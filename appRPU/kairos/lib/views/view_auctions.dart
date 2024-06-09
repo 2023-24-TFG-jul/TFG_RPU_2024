@@ -4,7 +4,6 @@ import 'package:kairos/models/watch.dart';
 import 'add_auction.dart';
 
 class ViewAuctions extends StatefulWidget {
-  
   const ViewAuctions({super.key});
 
   @override
@@ -12,10 +11,9 @@ class ViewAuctions extends StatefulWidget {
 }
 
 class _ViewAuctionsState extends State<ViewAuctions> {
-
   final AuctionRepository _auctionRepository = AuctionRepository();
   final WatchRepository _watchRepository = WatchRepository();
-  
+
   late Future<List<Auction>> _auctionsFuture;
   late String loginUserEmail;
 
@@ -47,7 +45,7 @@ class _ViewAuctionsState extends State<ViewAuctions> {
   void _deleteAuction(String id) async {
     try {
       Auction auction = await _auctionRepository.getAuctionById(id);
-      await _watchRepository.updateSaleStatusWatch(auction.watchNickName, 'Uploaded -> Remove');
+      await _watchRepository.updateSaleStatusWatch(auction.watchNickName, 'Available');
       await _auctionRepository.deleteAuction(id);
       _loadAuctions(loginUserEmail);
     } catch (e) {
@@ -59,7 +57,10 @@ class _ViewAuctionsState extends State<ViewAuctions> {
 
   void _buyAuction(String auctionId) async {
     try {
+      Auction auction = await _auctionRepository.getAuctionById(auctionId);
+      await _watchRepository.updateSaleStatusWatch(auction.watchNickName, 'Purchased');
       await _auctionRepository.buyWatch(auctionId, loginUserEmail);
+      await _auctionRepository.updateAuctionStatus(auction.watchNickName, 'Finished');
       _loadAuctions(loginUserEmail);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Watch successfully acquired.')),
@@ -99,6 +100,7 @@ class _ViewAuctionsState extends State<ViewAuctions> {
                   DataColumn(label: Text('Actions')),
                 ],
                 rows: auctions.map((auction) {
+                  bool isFinished = auction.auctionStatus == 'Finished';
                   return DataRow(cells: [
                     DataCell(Text(auction.watchNickName)),
                     DataCell(Text(auction.vendorEmail)),
@@ -108,11 +110,11 @@ class _ViewAuctionsState extends State<ViewAuctions> {
                       children: [
                         IconButton(
                           icon: const Icon(Icons.delete),
-                          onPressed: () => _deleteAuction(auction.idAuction),
+                          onPressed: isFinished ? null : () => _deleteAuction(auction.idAuction),
                         ),
                         IconButton(
                           icon: const Icon(Icons.shopping_cart),
-                          onPressed: () => _buyAuction(auction.idAuction),
+                          onPressed: isFinished ? null : () => _buyAuction(auction.idAuction),
                         ),
                       ],
                     )),
@@ -124,8 +126,8 @@ class _ViewAuctionsState extends State<ViewAuctions> {
         },
       ),
       floatingActionButton: IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: _navigateToAddAuction,
+        icon: const Icon(Icons.add),
+        onPressed: _navigateToAddAuction,
       ),
     );
   }

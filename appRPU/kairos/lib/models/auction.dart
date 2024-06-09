@@ -76,4 +76,17 @@ class AuctionRepository {
     }
   }
 
+  Future<void> updateAuctionStatus(String watchNickName, String auctionStatus) async {
+    QuerySnapshot querySnapshot = await _db.collection('auctions')
+    .where('watchNickName', isEqualTo: watchNickName)
+    .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      var documentReference = querySnapshot.docs.first.reference;
+      await documentReference.update({'auctionStatus': auctionStatus});
+    } else {
+      throw Exception('Auction not found with the following data: $watchNickName');
+    }
+  }
+
 }
