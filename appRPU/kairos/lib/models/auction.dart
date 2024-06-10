@@ -4,17 +4,25 @@ class Auction {
   final String idAuction;
   final String vendorEmail;
   final String buyerEmail;
-  final DateTime purchaseDate;
+  final DateTime purchaseDate;  // fecha de la compra / aplicacion a subasta
+  final String limitDate;     // fecha final de subasta
   final String auctionStatus;
   final String watchNickName;
+  final String minimumValue;
+  final String actualValue;
+  final String maximumValue;
 
   Auction({
     required this.idAuction,
     required this.vendorEmail,
     required this.buyerEmail,
     required this.purchaseDate,
+    required this.limitDate,
     required this.auctionStatus,
     required this.watchNickName,
+    required this.minimumValue,
+    required this.actualValue,
+    required this.maximumValue,
   });
 
   factory Auction.fromFirestore(DocumentSnapshot doc) {
@@ -24,8 +32,12 @@ class Auction {
       vendorEmail: data['vendorEmail'] ?? '',
       buyerEmail: data['buyerEmail'] ?? '',
       purchaseDate: (data['purchaseDate'] as Timestamp).toDate(),
+      limitDate: data['limitDate'] ?? '',
       auctionStatus: data['auctionStatus'] ?? '',
       watchNickName: data['watchNickName'] ?? '',
+      minimumValue: data['minimumValue'] ?? '',
+      actualValue: data['actualValue'] ?? '',
+      maximumValue: data['maximumValue'] ?? ''
     );
   }
 
@@ -34,8 +46,12 @@ class Auction {
       'vendorEmail': vendorEmail,
       'buyerEmail': buyerEmail,
       'purchaseDate': Timestamp.fromDate(purchaseDate),
+      'limitDate': limitDate,
       'auctionStatus': auctionStatus,
       'watchNickName': watchNickName,
+      'minimumValue': minimumValue,
+      'actualValue': actualValue,
+      'maximumValue': maximumValue
     };
   }
 }

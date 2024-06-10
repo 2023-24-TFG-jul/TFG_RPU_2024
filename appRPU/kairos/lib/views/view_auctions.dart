@@ -11,6 +11,7 @@ class ViewAuctions extends StatefulWidget {
 }
 
 class _ViewAuctionsState extends State<ViewAuctions> {
+  
   final AuctionRepository _auctionRepository = AuctionRepository();
   final WatchRepository _watchRepository = WatchRepository();
 
@@ -96,6 +97,10 @@ class _ViewAuctionsState extends State<ViewAuctions> {
                   DataColumn(label: Text('Watch Nickname')),
                   DataColumn(label: Text('Vendor')),
                   DataColumn(label: Text('Buyer')),
+                  DataColumn(label: Text('Start Value')),
+                  DataColumn(label: Text('Actual Value')),
+                  DataColumn(label: Text('Direct sale price')),
+                  DataColumn(label: Text('Limit Date')),
                   DataColumn(label: Text('Status')),
                   DataColumn(label: Text('Actions')),
                 ],
@@ -105,6 +110,10 @@ class _ViewAuctionsState extends State<ViewAuctions> {
                     DataCell(Text(auction.watchNickName)),
                     DataCell(Text(auction.vendorEmail)),
                     DataCell(Text(auction.buyerEmail)),
+                    DataCell(Text(auction.minimumValue)),
+                    DataCell(Text(auction.actualValue)),
+                    DataCell(Text(auction.maximumValue)),
+                    DataCell(Text(auction.limitDate)),
                     DataCell(Text(auction.auctionStatus)),
                     DataCell(Row(
                       children: [

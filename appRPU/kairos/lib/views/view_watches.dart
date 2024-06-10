@@ -95,6 +95,7 @@ class _ViewWatchesState extends State<ViewWatches> {
                   DataColumn(label: Text('Actions')),
                 ],
                 rows: watches.map((watch) {
+                  bool isFinished = (watch.saleStatus == 'Purchased' || watch.saleStatus == 'At auction');
                   return DataRow(cells: [
                     DataCell(Text(watch.watchNickName)),
                     DataCell(Text(watch.brand)),
@@ -109,15 +110,11 @@ class _ViewWatchesState extends State<ViewWatches> {
                         children: <Widget>[
                           IconButton(
                             icon: const Icon(Icons.edit),
-                            onPressed: () {
-                              _navigateToUpdateWatch(watch.watchNickName); //poner edit aqui
-                            },
+                            onPressed: isFinished ? null : () => _navigateToUpdateWatch(watch.watchNickName),
                           ),
                           IconButton(
                             icon: const Icon(Icons.delete),
-                            onPressed: () {
-                              _deleteWatch(watch.id);
-                            },
+                            onPressed: isFinished ? null : () =>_deleteWatch(watch.id),
                           ),
                         ],
                       ),

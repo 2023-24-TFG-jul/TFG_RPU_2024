@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kairos/models/user.dart';
+import 'package:kairos/views/home.dart';
 
 class UpdateUser extends StatefulWidget {
   final String userEmail;
@@ -158,24 +159,32 @@ class _UpdateUserState extends State<UpdateUser> {
     }
 
     if (!walletRegex.hasMatch(newWallet)) {
-      _showDialog('Invalid wallet', 'Please enter an integer and positive money.');
+      _showDialog('Invalid wallet', 'Please enter an integer and positive amount of money.');
       return;
     }
 
-    try {
-      await _userRepository.updateUser(
-        widget.userEmail,
-        newName,
-        newSurname,
-        newCountry,
-        newPassword,
-        newBankCode,
-        newWallet,
-      );
-      _showDialog('Update Successful', 'Your personal data has been updated.');
-    } catch (e) {
-      _showDialog('Error', 'Error updating user: $e');
-    }
+  try {
+    await _userRepository.updateUser(
+      widget.userEmail,
+      newName,
+      newSurname,
+      newCountry,
+      newPassword,
+      newBankCode,
+      newWallet,
+    );
+
+    _showDialog('Update Successful', 'Your personal data has been updated.');
+    Navigator.of(context).popUntil((route) => route.isFirst);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Home(loginUserEmail: widget.userEmail),
+      ),
+    );
+  } catch (e) {
+    _showDialog('Error', 'Error updating user: $e');
+  }
   }
 
   void _showDialog(String title, String content) {

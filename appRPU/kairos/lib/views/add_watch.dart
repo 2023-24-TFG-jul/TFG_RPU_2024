@@ -261,8 +261,8 @@ class _AddWatchState extends State<AddWatch> {
     final yopRegex = RegExp(r'(\d+)');
     final priceRegex = RegExp(r'^\d+(\.\d+)?$');
 
-    if (!yopRegex.hasMatch(yop)) {
-      _showDialog('Invalid yop', 'Please enter a year greater than zero.');
+    if (!yopRegex.hasMatch(yop) || int.parse(yop) > DateTime.now().year) {
+      _showDialog('Invalid yop', 'Please enter a year between zero and the actual year.');
       return;
     }
 

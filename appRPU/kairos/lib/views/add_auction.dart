@@ -14,10 +14,15 @@ class AddAuction extends StatefulWidget {
 
 class _AddAuctionState extends State<AddAuction> {
   
+  DateTime? _selectedDate;
+  
   final TextEditingController _watchNickNameController = TextEditingController();
+  final TextEditingController _minimumValueController = TextEditingController();
+  final TextEditingController _maximumValueController = TextEditingController();
   
   final AuctionRepository _auctionRepository = AuctionRepository();
   final WatchRepository _watchRepository = WatchRepository();
+
   
   @override
   Widget build(BuildContext context) {
@@ -33,6 +38,25 @@ class _AddAuctionState extends State<AddAuction> {
               decoration: const InputDecoration(labelText: 'Watch Nickname'),
             ),
             const SizedBox(height: 20.0),
+            TextField(
+              controller: _minimumValueController,
+              decoration: const InputDecoration(labelText: 'Minimum price'),
+            ),
+            const SizedBox(height: 20.0),
+                        TextField(
+              controller: _maximumValueController,
+              decoration: const InputDecoration(labelText: 'Maximum price'),
+            ),
+            const SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: () => _selectDate(context),
+              child: Text(
+                _selectedDate != null
+                    ? 'Limit date: ${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}'
+                    : 'Enter limit date',
+              ),
+            ),
+            const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: _addAuction,
               child: const Text('Create auction'),
@@ -43,9 +67,24 @@ class _AddAuctionState extends State<AddAuction> {
     );
   }
 
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? limitDate = await showDatePicker(
+      context: context,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2200),
+    );
+    if (limitDate != null) {
+      setState(() {
+        _selectedDate = limitDate;
+      });
+    }
+  }
+
   void _addAuction() async {
     
     String watchNickName = _watchNickNameController.text;
+    String minimumValue = _minimumValueController.text;
+    String maximumValue = _maximumValueController.text;
 
     if (watchNickName.isEmpty) {
       showDialog(
@@ -99,8 +138,12 @@ class _AddAuctionState extends State<AddAuction> {
           vendorEmail: widget.loginUserEmail,
           buyerEmail: '-',
           purchaseDate: DateTime.now(),
+          limitDate: "${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}",
           auctionStatus: 'Active',
           watchNickName: watchNickName,
+          minimumValue: '0',
+          actualValue: minimumValue, // tiene que empezar en el valor minimo
+          maximumValue: maximumValue
         ),
       );
 
