@@ -67,18 +67,33 @@ class _AddAuctionState extends State<AddAuction> {
     );
   }
 
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? limitDate = await showDatePicker(
+Future<void> _selectDate(BuildContext context) async {
+  final DateTime? limitDate = await showDatePicker(
+    context: context,
+    firstDate: DateTime.now(),
+    lastDate: DateTime(2200),
+  );
+
+  if (limitDate != null) {
+    final TimeOfDay? selectedTime = await showTimePicker(
       context: context,
-      firstDate: DateTime.now(),
-      lastDate: DateTime(2200),
+      initialTime: TimeOfDay.now(),
     );
-    if (limitDate != null) {
+
+    if (selectedTime != null) {
       setState(() {
-        _selectedDate = limitDate;
+        _selectedDate = DateTime(
+          limitDate.year,
+          limitDate.month,
+          limitDate.day,
+          selectedTime.hour,
+          selectedTime.minute,
+        );
       });
     }
   }
+}
+
 
   void _addAuction() async {
     
@@ -137,7 +152,7 @@ class _AddAuctionState extends State<AddAuction> {
           idAuction: '',
           vendorEmail: widget.loginUserEmail,
           buyerEmail: '-',
-          limitDate: "${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}",
+          limitDate: _selectedDate!,  // no puede ser nulo -> !
           auctionStatus: 'Active',
           watchNickName: watchNickName,
           minimumValue: minimumValue,

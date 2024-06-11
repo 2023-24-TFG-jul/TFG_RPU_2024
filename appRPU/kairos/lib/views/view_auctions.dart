@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:kairos/models/auction.dart';
 import 'package:kairos/models/watch.dart';
 import 'add_auction.dart';
@@ -29,11 +28,21 @@ class _ViewAuctionsState extends State<ViewAuctions> {
     });
   }
 
-  void _loadAuctions(String email) {
-    setState(() {
-      _auctionsFuture = _auctionRepository.getAllAuctionsWithStatusUploaded();
+void _loadAuctions(String email) {
+  setState(() {
+    _auctionsFuture = _auctionRepository.getAllAuctionsWithStatusUploaded().then((auctions) async {
+      for (var auction in auctions) {
+        if (_isAuctionExpired(auction) && auction.auctionStatus != 'Finished') {
+          auction.auctionStatus = 'Finished';
+          await _watchRepository.updateSaleStatusWatch(auction.watchNickName, 'Purchased');
+          await _auctionRepository.updateAuction(auction);
+        }
+      }
+      return auctions;
     });
-  }
+  });
+}
+
 
   void _navigateToAddAuction() async {
     await Navigator.push(
@@ -129,9 +138,10 @@ class _ViewAuctionsState extends State<ViewAuctions> {
   }
 
   bool _isAuctionExpired(Auction auction) {
-  DateTime limitDate = DateFormat('dd/MM/yyyy').parse(auction.limitDate);
+    DateTime limitDate = auction.limitDate;
     return DateTime.now().isAfter(limitDate);
   }
+
 
   @override
   Widget build(BuildContext context) {

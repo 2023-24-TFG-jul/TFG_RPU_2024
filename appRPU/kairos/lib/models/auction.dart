@@ -4,8 +4,8 @@ class Auction {
   final String idAuction;
   final String vendorEmail;
   String buyerEmail;
-  final String limitDate;
-  final String auctionStatus;
+  final DateTime limitDate;
+  String auctionStatus;
   final String watchNickName;
   final String minimumValue;
   String actualValue;
@@ -29,7 +29,7 @@ class Auction {
       idAuction: doc.id,
       vendorEmail: data['vendorEmail'] ?? '',
       buyerEmail: data['buyerEmail'] ?? '',
-      limitDate: data['limitDate'] ?? '',
+      limitDate: (data['limitDate'] as Timestamp).toDate(),
       auctionStatus: data['auctionStatus'] ?? '',
       watchNickName: data['watchNickName'] ?? '',
       minimumValue: data['minimumValue'] ?? '',
