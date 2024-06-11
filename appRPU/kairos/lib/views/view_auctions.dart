@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:kairos/models/auction.dart';
 import 'package:kairos/models/watch.dart';
 import 'add_auction.dart';
@@ -11,7 +12,6 @@ class ViewAuctions extends StatefulWidget {
 }
 
 class _ViewAuctionsState extends State<ViewAuctions> {
-  
   final AuctionRepository _auctionRepository = AuctionRepository();
   final WatchRepository _watchRepository = WatchRepository();
 
@@ -73,6 +73,60 @@ class _ViewAuctionsState extends State<ViewAuctions> {
     }
   }
 
+  void _showBidDialog(Auction auction) {
+
+    TextEditingController bidController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text('Place a Bid'),
+          content: TextField(
+            controller: bidController,
+            decoration: const InputDecoration(labelText: 'Bid Amount'),
+            keyboardType: TextInputType.number,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () async {
+                String bidAmount = bidController.text;
+                if (double.tryParse(bidAmount) != null) {
+                  double newBid = double.parse(bidAmount);
+                  if (newBid > double.parse(auction.actualValue) && newBid >= double.parse(auction.minimumValue)) {
+                    auction.updateBid(newBid.toString());
+                    await _auctionRepository.updateAuction(auction);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Bid of $bidAmount placed successfully.')),
+                    );
+                    _loadAuctions(loginUserEmail);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Bid must be higher than current value.')),
+                    );
+                  }
+                }
+                Navigator.of(context).pop();
+              },
+              child: const Text('Place Bid'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  bool _isAuctionExpired(Auction auction) {
+    DateTime limitDate = DateFormat('dd/MM/yyyy').parse(auction.limitDate);
+    return DateTime.now().isAfter(limitDate);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,52 +144,61 @@ class _ViewAuctionsState extends State<ViewAuctions> {
             return const Center(child: Text('No auctions found.'));
           } else {
             List<Auction> auctions = snapshot.data!;
-            return SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: DataTable(
-                columns: const [
-                  DataColumn(label: Text('Watch Nickname')),
-                  DataColumn(label: Text('Vendor')),
-                  DataColumn(label: Text('Buyer')),
-                  DataColumn(label: Text('Start Value')),
-                  DataColumn(label: Text('Actual Value')),
-                  DataColumn(label: Text('Direct sale price')),
-                  DataColumn(label: Text('Limit Date')),
-                  DataColumn(label: Text('Status')),
-                  DataColumn(label: Text('Actions')),
-                ],
-                rows: auctions.map((auction) {
-                  bool isFinished = auction.auctionStatus == 'Finished';
-                  return DataRow(cells: [
-                    DataCell(Text(auction.watchNickName)),
-                    DataCell(Text(auction.vendorEmail)),
-                    DataCell(Text(auction.buyerEmail)),
-                    DataCell(Text(auction.minimumValue)),
-                    DataCell(Text(auction.actualValue)),
-                    DataCell(Text(auction.maximumValue)),
-                    DataCell(Text(auction.limitDate)),
-                    DataCell(Text(auction.auctionStatus)),
-                    DataCell(Row(
+            return ListView.builder(
+              itemCount: auctions.length,
+              itemBuilder: (context, index) {
+                Auction auction = auctions[index];
+                bool isVendor = auction.vendorEmail == loginUserEmail;
+                bool isExpired = _isAuctionExpired(auction);
+
+                return Card(
+                  margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                  child: ListTile(
+                    title: Text(auction.watchNickName),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Vendor: ${auction.vendorEmail}'),
+                        Text('Buyer: ${auction.buyerEmail}'),
+                        Text('Start Value: ${auction.minimumValue}'),
+                        Text('Actual Value: ${auction.actualValue}'),
+                        Text('Direct Sale Price: ${auction.maximumValue}'),
+                        Text('Limit Date: ${auction.limitDate}'),
+                        Text('Status: ${auction.auctionStatus}'),
+                      ],
+                    ),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         IconButton(
                           icon: const Icon(Icons.delete),
-                          onPressed: isFinished ? null : () => _deleteAuction(auction.idAuction),
+                          onPressed: isVendor && !isExpired
+                              ? () => _deleteAuction(auction.idAuction)
+                              : null,
                         ),
                         IconButton(
                           icon: const Icon(Icons.shopping_cart),
-                          onPressed: isFinished ? null : () => _buyAuction(auction.idAuction),
+                          onPressed: !isVendor && !isExpired
+                              ? () => _buyAuction(auction.idAuction)
+                              : null,
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.euro),
+                          onPressed: !isVendor && !isExpired
+                              ? () => _showBidDialog(auction)
+                              : null,
                         ),
                       ],
-                    )),
-                  ]);
-                }).toList(),
-              ),
+                    ),
+                  ),
+                );
+              },
             );
           }
         },
       ),
-      floatingActionButton: IconButton(
-        icon: const Icon(Icons.add),
+      floatingActionButton: FloatingActionButton(
+        child: const Icon(Icons.add),
         onPressed: _navigateToAddAuction,
       ),
     );

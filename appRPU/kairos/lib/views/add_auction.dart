@@ -137,12 +137,11 @@ class _AddAuctionState extends State<AddAuction> {
           idAuction: '',
           vendorEmail: widget.loginUserEmail,
           buyerEmail: '-',
-          purchaseDate: DateTime.now(),
           limitDate: "${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}",
           auctionStatus: 'Active',
           watchNickName: watchNickName,
-          minimumValue: '0',
-          actualValue: minimumValue, // tiene que empezar en el valor minimo
+          minimumValue: minimumValue,
+          actualValue: '0', // empieza en 0 porque puede que no compre nadie, pero la apuesta es la minima
           maximumValue: maximumValue
         ),
       );
