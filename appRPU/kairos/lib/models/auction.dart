@@ -76,9 +76,10 @@ class AuctionRepository {
     await _db.collection('auctions').doc(idAuction).delete();
   }
 
-  Future<void> buyWatch(String idAuction, String buyerEmail) async {
+  Future<void> buyWatch(String idAuction, String buyerEmail, String maximumValue) async {
     await _db.collection('auctions').doc(idAuction).update({
       'buyerEmail': buyerEmail,
+      'actualValue': maximumValue //compras directo, pues el valora actual es el
     });
   }
 

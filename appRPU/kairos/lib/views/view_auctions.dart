@@ -5,6 +5,7 @@ import 'package:kairos/models/watch.dart';
 import 'add_auction.dart';
 
 class ViewAuctions extends StatefulWidget {
+  
   const ViewAuctions({super.key});
 
   @override
@@ -12,6 +13,7 @@ class ViewAuctions extends StatefulWidget {
 }
 
 class _ViewAuctionsState extends State<ViewAuctions> {
+  
   final AuctionRepository _auctionRepository = AuctionRepository();
   final WatchRepository _watchRepository = WatchRepository();
 
@@ -60,7 +62,7 @@ class _ViewAuctionsState extends State<ViewAuctions> {
     try {
       Auction auction = await _auctionRepository.getAuctionById(auctionId);
       await _watchRepository.updateSaleStatusWatch(auction.watchNickName, 'Purchased');
-      await _auctionRepository.buyWatch(auctionId, loginUserEmail);
+      await _auctionRepository.buyWatch(auctionId, loginUserEmail, auction.maximumValue);
       await _auctionRepository.updateAuctionStatus(auction.watchNickName, 'Finished');
       _loadAuctions(loginUserEmail);
       ScaffoldMessenger.of(context).showSnackBar(
@@ -74,17 +76,16 @@ class _ViewAuctionsState extends State<ViewAuctions> {
   }
 
   void _showBidDialog(Auction auction) {
-
     TextEditingController bidController = TextEditingController();
 
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Place a Bid'),
+          title: const Text('Place a bid'),
           content: TextField(
             controller: bidController,
-            decoration: const InputDecoration(labelText: 'Bid Amount'),
+            decoration: const InputDecoration(labelText: 'Bid Amount (€)'),
             keyboardType: TextInputType.number,
           ),
           actions: [
@@ -99,11 +100,15 @@ class _ViewAuctionsState extends State<ViewAuctions> {
                 String bidAmount = bidController.text;
                 if (double.tryParse(bidAmount) != null) {
                   double newBid = double.parse(bidAmount);
-                  if (newBid > double.parse(auction.actualValue) && newBid >= double.parse(auction.minimumValue)) {
+                  if (newBid >= double.parse(auction.maximumValue)) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('You cannot exceed the maximum value.')),
+                    );
+                  } else if (newBid > double.parse(auction.actualValue) && newBid >= double.parse(auction.minimumValue)) {
                     auction.updateBid(newBid.toString());
                     await _auctionRepository.updateAuction(auction);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Bid of $bidAmount placed successfully.')),
+                      SnackBar(content: Text('Bid of $bidAmount € placed successfully.')),
                     );
                     _loadAuctions(loginUserEmail);
                   } else {
@@ -172,19 +177,19 @@ class _ViewAuctionsState extends State<ViewAuctions> {
                       children: [
                         IconButton(
                           icon: const Icon(Icons.delete),
-                          onPressed: isVendor && !isExpired
+                          onPressed: isVendor && !isExpired && auction.auctionStatus != 'Finished'
                               ? () => _deleteAuction(auction.idAuction)
                               : null,
                         ),
                         IconButton(
                           icon: const Icon(Icons.shopping_cart),
-                          onPressed: !isVendor && !isExpired
+                          onPressed: !isVendor && !isExpired  && auction.auctionStatus != 'Finished'
                               ? () => _buyAuction(auction.idAuction)
                               : null,
                         ),
                         IconButton(
                           icon: const Icon(Icons.euro),
-                          onPressed: !isVendor && !isExpired
+                          onPressed: !isVendor && !isExpired && auction.auctionStatus != 'Finished'
                               ? () => _showBidDialog(auction)
                               : null,
                         ),
@@ -198,8 +203,8 @@ class _ViewAuctionsState extends State<ViewAuctions> {
         },
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
         onPressed: _navigateToAddAuction,
+        child: const Icon(Icons.add),
       ),
     );
   }
