@@ -106,6 +106,7 @@ class _ViewAuctionsState extends State<ViewAuctions> {
                     );
                   } else if (newBid > double.parse(auction.actualValue) && newBid >= double.parse(auction.minimumValue)) {
                     auction.updateBid(newBid.toString());
+                    auction.buyerEmail = loginUserEmail;
                     await _auctionRepository.updateAuction(auction);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('Bid of $bidAmount € placed successfully.')),
@@ -128,7 +129,7 @@ class _ViewAuctionsState extends State<ViewAuctions> {
   }
 
   bool _isAuctionExpired(Auction auction) {
-    DateTime limitDate = DateFormat('dd/MM/yyyy').parse(auction.limitDate);
+  DateTime limitDate = DateFormat('dd/MM/yyyy').parse(auction.limitDate);
     return DateTime.now().isAfter(limitDate);
   }
 

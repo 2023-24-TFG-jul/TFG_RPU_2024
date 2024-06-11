@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Auction {
   final String idAuction;
   final String vendorEmail;
-  final String buyerEmail;
+  String buyerEmail;
   final String limitDate;
   final String auctionStatus;
   final String watchNickName;
