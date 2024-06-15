@@ -46,7 +46,7 @@ class _AddAuctionState extends State<AddAuction> {
               },
             ),
             const SizedBox(height: 20.0),
-                        TextField(
+            TextField(
               decoration: const InputDecoration(labelText: 'Maximum price'),
               keyboardType: TextInputType.number,
               onChanged: (value) {

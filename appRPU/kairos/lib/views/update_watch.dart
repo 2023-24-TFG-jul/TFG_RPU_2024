@@ -13,7 +13,8 @@ class UpdateWatch extends StatefulWidget {
 
 class _UpdateWatchState extends State<UpdateWatch> {
   final TextEditingController _conditionController = TextEditingController();
-  final TextEditingController _priceController = TextEditingController();
+  
+  late int _priceController;
 
   final WatchRepository _watchRepository = WatchRepository();
 
@@ -32,7 +33,7 @@ class _UpdateWatchState extends State<UpdateWatch> {
       Watch watch = await _watchRepository.getWatchByNickname(widget.watchNickName);
       setState(() {
         _conditionController.text = watch.condition;
-        _priceController.text = watch.price;
+        _priceController = watch.price;
       });
     } catch (e) {
       _showDialog('Error', 'Error loading watch data: $e');
@@ -41,6 +42,9 @@ class _UpdateWatchState extends State<UpdateWatch> {
 
   @override
   Widget build(BuildContext context) {
+
+    final bool isLargeScreen = MediaQuery.of(context).size.width > 600;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Update Your Watch Data'),
@@ -73,8 +77,17 @@ class _UpdateWatchState extends State<UpdateWatch> {
               children: [
                 Expanded(
                   child: TextField(
-                    controller: _priceController,
-                    decoration: const InputDecoration(labelText: 'New price'),
+                    decoration: InputDecoration(
+                      hintText: 'Price *',
+                      hintStyle: TextStyle(color: Colors.red, fontSize: isLargeScreen ? 18.0 : 14.0),
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: const OutlineInputBorder(),
+                    ),
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) {
+                      _priceController = int.tryParse(value) ?? 0;
+                    },
                   ),
                 ),
                 IconButton(
@@ -98,9 +111,7 @@ class _UpdateWatchState extends State<UpdateWatch> {
 
   void _updateWatch() async {
     String newCondition = _selectedCondition ?? '';
-    String newPrice = _priceController.text;
-
-    final priceRegex = RegExp(r'^\d+(\.\d+)?$');
+    int newPrice = _priceController;
 
     if (newCondition.isEmpty) {
       _showDialog('Missing fields', 'Please complete "New condition" fields.');
@@ -112,7 +123,7 @@ class _UpdateWatchState extends State<UpdateWatch> {
       return;
     }
 
-    if (!priceRegex.hasMatch(newPrice)) {
+    if (newPrice < 0) {
       _showDialog('Invalid price', 'Please enter an integer and positive price.');
       return;
     }

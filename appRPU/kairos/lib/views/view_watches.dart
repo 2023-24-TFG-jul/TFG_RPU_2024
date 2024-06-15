@@ -100,10 +100,10 @@ class _ViewWatchesState extends State<ViewWatches> {
                     DataCell(Text(watch.watchNickName)),
                     DataCell(Text(watch.brand)),
                     DataCell(Text(watch.model)),
-                    DataCell(Text(watch.yop)),
+                    DataCell(Text(watch.yop.toString())),
                     DataCell(Text(watch.condition)),
                     DataCell(Text(watch.sex)),
-                    DataCell(Text(watch.price)),
+                    DataCell(Text(watch.price.toString())),
                     DataCell(Text(watch.saleStatus)),
                     DataCell(
                       Row(

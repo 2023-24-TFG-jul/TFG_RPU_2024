@@ -9,10 +9,10 @@ class Watch {
   final String movement;
   final String casem;
   final String bracem;
-  final String yop; // Year of production
+  final int yop; // Year of production
   final String condition;
   final String sex;
-  final String price;
+  final int price;
   final String saleStatus; // State of sale of the watch according to the auction
 
   Watch({
@@ -43,10 +43,10 @@ class Watch {
       movement: data['movement'] ?? '',
       casem: data['casem'] ?? '',
       bracem: data['bracem'] ?? '',
-      yop: data['yop'] ?? '',
+      yop: data['yop'] ?? 1900,
       condition: data['condition'] ?? '',
       sex: data['sex'] ?? '',
-      price: data['price'] ?? '',
+      price: data['price'] ?? 0,
       saleStatus: data['saleStatus'] ?? '',
     );
   }
@@ -145,7 +145,7 @@ class WatchRepository {
 
   // Update watch information
   Future<void> updateWatch(
-      String watchNickName, String newCondition, String newPrice) async {
+      String watchNickName, String newCondition, int newPrice) async {
     QuerySnapshot querySnapshot = await _db
         .collection('watches')
         .where('watchNickName', isEqualTo: watchNickName)

@@ -8,7 +8,7 @@ class CsvService {
       List<List<dynamic>> csvTable = const CsvToListConverter().convert(rawData);
 
       List<Map<String, String>> data = [];
-      for (var row in csvTable.skip(1)) { // Saltar la fila de encabezado
+      for (var row in csvTable.skip(1)) { // disregard the first row
         if (row.length >= 2) {
           data.add({
             'brand': row[0].toString(),
