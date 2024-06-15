@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kairos/models/auction.dart';
+import 'package:kairos/models/user.dart';
 import 'package:kairos/models/watch.dart';
 import 'add_auction.dart';
 
@@ -15,6 +16,7 @@ class _ViewAuctionsState extends State<ViewAuctions> {
   
   final AuctionRepository _auctionRepository = AuctionRepository();
   final WatchRepository _watchRepository = WatchRepository();
+  final UserRepository _userRepository = UserRepository();
 
   late Future<List<Auction>> _auctionsFuture;
   late String loginUserEmail;
@@ -30,12 +32,11 @@ class _ViewAuctionsState extends State<ViewAuctions> {
 
 void _loadAuctions(String email) {
   setState(() {
-    _auctionsFuture = _auctionRepository.getAllAuctionsWithStatusUploaded().then((auctions) async {
+    _auctionsFuture = _auctionRepository.getAllAuctions().then((auctions) async {
       for (var auction in auctions) {
         if (_isAuctionExpired(auction) && auction.auctionStatus != 'Finished') {
           auction.auctionStatus = 'Finished';
           await _watchRepository.updateSaleStatusWatch(auction.watchNickName, 'Purchased');
-          await _auctionRepository.updateAuction(auction);
         }
       }
       return auctions;
@@ -73,7 +74,10 @@ void _loadAuctions(String email) {
       await _watchRepository.updateSaleStatusWatch(auction.watchNickName, 'Purchased');
       await _auctionRepository.buyWatch(auctionId, loginUserEmail, auction.maximumValue);
       await _auctionRepository.updateAuctionStatus(auction.watchNickName, 'Finished');
+      await _userRepository.updateUserWallet(loginUserEmail, auction.maximumValue);
+      await _userRepository.updateUserWallet(auction.vendorEmail, -auction.maximumValue); //para que sume
       _loadAuctions(loginUserEmail);
+      Navigator.pop(context, true);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Watch successfully acquired.')),
       );
@@ -85,7 +89,8 @@ void _loadAuctions(String email) {
   }
 
   void _showBidDialog(Auction auction) {
-    TextEditingController bidController = TextEditingController();
+    
+    late int _bidController;
 
     showDialog(
       context: context,
@@ -93,10 +98,12 @@ void _loadAuctions(String email) {
         return AlertDialog(
           title: const Text('Place a bid'),
           content: TextField(
-            controller: bidController,
-            decoration: const InputDecoration(labelText: 'Bid Amount (€)'),
-            keyboardType: TextInputType.number,
-          ),
+              decoration: const InputDecoration(labelText: 'Bid Amount (€)'),
+              keyboardType: TextInputType.number,
+              onChanged: (value) {
+                _bidController = int.tryParse(value) ?? 0;
+              },
+            ),
           actions: [
             TextButton(
               onPressed: () {
@@ -106,17 +113,15 @@ void _loadAuctions(String email) {
             ),
             TextButton(
               onPressed: () async {
-                String bidAmount = bidController.text;
-                if (double.tryParse(bidAmount) != null) {
-                  double newBid = double.parse(bidAmount);
-                  if (newBid >= double.parse(auction.maximumValue)) {
+                int bidAmount = _bidController;
+                if (bidAmount != 0) {
+                  int newBid = bidAmount;
+                  if (newBid >= auction.maximumValue) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('You cannot exceed the maximum value.')),
                     );
-                  } else if (newBid > double.parse(auction.actualValue) && newBid >= double.parse(auction.minimumValue)) {
-                    auction.updateBid(newBid.toString());
-                    auction.buyerEmail = loginUserEmail;
-                    await _auctionRepository.updateAuction(auction);
+                  } else if (newBid > auction.actualValue && newBid >= auction.minimumValue) {
+                    await _auctionRepository.updateBid(auction.watchNickName, newBid, loginUserEmail);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('Bid of $bidAmount € placed successfully.')),
                     );

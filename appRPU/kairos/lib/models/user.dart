@@ -3,12 +3,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class User {
   final String name;
   final String surname;
-  final String birthdate;   // no editable
+  final String birthdate;
   final String country;
-  final String email;       // no editable
+  final String email;       /// User's email address. Unique
   final String password;
   final String bankCode;
-  final String wallet;
+  final int wallet;         /// Amount of money the user has on his account
 
   User({
     required this.name,
@@ -18,10 +18,10 @@ class User {
     required this.email,
     required this.password,
     required this.bankCode,
-    required this.wallet
+    required this.wallet,
   });
 
-  // doc de Firestore en objeto User
+  /// Firestore Database -> Flutter
   factory User.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data() as Map<String, dynamic>;
     return User(
@@ -32,11 +32,11 @@ class User {
       email: data['email'] ?? '',
       password: data['password'] ?? '',
       bankCode: data['bankCode'] ?? '',
-      wallet: data['wallet'] ?? '',
+      wallet: data['wallet'] ?? 0,
     );
   }
 
-  // objeto User en doc para agregar a Firestore
+  /// Flutter -> Firestore Database
   Map<String, dynamic> toMap() {
     return {
       'name': name,
@@ -54,7 +54,7 @@ class User {
 class UserRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  // GET
+  /// Returns all users
   Future<List<User>> getAllUsers() async {
     List<User> users = [];
     QuerySnapshot querySnapshot = await _db.collection('users').get();
@@ -64,7 +64,22 @@ class UserRepository {
     return users;
   }
 
-  // user exist?
+  /// Returns the user associated with a given id
+  Future<User> getUserByEmail(String email) async {
+    QuerySnapshot querySnapshot = await _db
+        .collection('users')
+        .where('email', isEqualTo: email)
+        .limit(1)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      return User.fromFirestore(querySnapshot.docs.first);
+    } else {
+      throw Exception('User not found');
+    }
+  }
+
+  // Returns whether or not the user exists in the database
   Future<bool> checkUserExists(String email) async {
     QuerySnapshot querySnapshot = await _db
         .collection('users')
@@ -75,25 +90,26 @@ class UserRepository {
     return querySnapshot.docs.isNotEmpty;
   }
 
-  // ADD
+  /// Add a user
   Future<void> addUser(User user) async {
     await _db.collection("users").add(user.toMap());
   }
 
-  // UPDATE
-  Future<void> updateUser(String email, 
-                          String newName,
-                          String newSurname,
-                          String newCountry,
-                          String newPassword,
-                          String newBankCode,
-                          String newWallet) async {
+  /// Update user information
+  Future<void> updateUser(
+      String email,
+      String newName,
+      String newSurname,
+      String newCountry,
+      String newPassword,
+      String newBankCode,
+      int newWallet) async {
     QuerySnapshot querySnapshot = await _db
         .collection('users')
         .where('email', isEqualTo: email)
         .limit(1)
         .get();
-        
+
     if (querySnapshot.docs.isNotEmpty) {
       String uid = querySnapshot.docs.first.id;
       await _db.collection("users").doc(uid).update({
@@ -102,41 +118,41 @@ class UserRepository {
         "country": newCountry,
         "password": newPassword,
         "bankCode": newBankCode,
-        "wallet": newWallet
+        "wallet": newWallet,
       });
     } else {
       throw Exception('User not found');
     }
   }
 
-  // GET USER BY EMAIL
-  Future<User> getUserByEmail(String email) async {
+  // Returns money held by a user
+  Future<int> getWalletByEmail(String email) async {
     QuerySnapshot querySnapshot = await _db
         .collection('users')
         .where('email', isEqualTo: email)
         .limit(1)
         .get();
-        
+
     if (querySnapshot.docs.isNotEmpty) {
-      return User.fromFirestore(querySnapshot.docs.first);
+      return querySnapshot.docs.first['wallet'];
     } else {
       throw Exception('User not found');
     }
   }
 
-  
-  // GET WALLET BY EMAIL
-  Future<String> getWalletByEmail(String email) async {
-    QuerySnapshot querySnapshot = await _db
-        .collection('users')
-        .where('email', isEqualTo: email)
-        .limit(1)
-        .get();
-        
+  /// Updates the user's wallet after bidding or buying the watch
+  Future<void> updateUserWallet(String email, int amount) async {
+    QuerySnapshot querySnapshot =
+        await _db.collection('users').where('email', isEqualTo: email).get();
+
     if (querySnapshot.docs.isNotEmpty) {
-      return querySnapshot.docs.first['wallet'];
+      DocumentSnapshot userDoc = querySnapshot.docs.first;
+      Map<String, dynamic> userData = userDoc.data() as Map<String, dynamic>;
+      int currentWallet = userData['wallet'];
+      int updatedWallet = currentWallet - amount; // currentWallet - (- amount) -> vendorEmail
+      await userDoc.reference.update({'wallet': updatedWallet});
     } else {
-      throw Exception('User not found');
+      throw Exception('Failed to update wallet');
     }
   }
 }

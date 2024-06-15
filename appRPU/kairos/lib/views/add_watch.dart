@@ -277,7 +277,7 @@ class _AddWatchState extends State<AddWatch> {
     }
 
     // Watch existe?
-    bool watchExists = await _watchRepository.checkWatchExists(watchNickName);
+    bool watchExists = await _watchRepository.existWatch(watchNickName);
     if (watchExists) {
       _showDialog('Error', 'The watch already exists.');
       return;

@@ -17,8 +17,8 @@ class _AddAuctionState extends State<AddAuction> {
   DateTime? _selectedDate;
   
   final TextEditingController _watchNickNameController = TextEditingController();
-  final TextEditingController _minimumValueController = TextEditingController();
-  final TextEditingController _maximumValueController = TextEditingController();
+  late int _minimumValueController;
+  late int _maximumValueController;
   
   final AuctionRepository _auctionRepository = AuctionRepository();
   final WatchRepository _watchRepository = WatchRepository();
@@ -39,13 +39,19 @@ class _AddAuctionState extends State<AddAuction> {
             ),
             const SizedBox(height: 20.0),
             TextField(
-              controller: _minimumValueController,
               decoration: const InputDecoration(labelText: 'Minimum price'),
+              keyboardType: TextInputType.number,
+              onChanged: (value) {
+                _minimumValueController = int.tryParse(value) ?? 0;
+              },
             ),
             const SizedBox(height: 20.0),
                         TextField(
-              controller: _maximumValueController,
               decoration: const InputDecoration(labelText: 'Maximum price'),
+              keyboardType: TextInputType.number,
+              onChanged: (value) {
+                _maximumValueController = int.tryParse(value) ?? 0;
+              },
             ),
             const SizedBox(height: 20.0),
             ElevatedButton(
@@ -98,8 +104,8 @@ Future<void> _selectDate(BuildContext context) async {
   void _addAuction() async {
     
     String watchNickName = _watchNickNameController.text;
-    String minimumValue = _minimumValueController.text;
-    String maximumValue = _maximumValueController.text;
+    int minimumValue = _minimumValueController;
+    int maximumValue = _maximumValueController;
 
     if (watchNickName.isEmpty) {
       showDialog(
@@ -156,7 +162,7 @@ Future<void> _selectDate(BuildContext context) async {
           auctionStatus: 'Active',
           watchNickName: watchNickName,
           minimumValue: minimumValue,
-          actualValue: '0', // empieza en 0 porque puede que no compre nadie, pero la apuesta es la minima
+          actualValue: 0, // empieza en 0 porque puede que no compre nadie, pero la apuesta es la minima
           maximumValue: maximumValue
         ),
       );

@@ -11,7 +11,6 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  
   DateTime? _selectedDate;
 
   final TextEditingController _nameController = TextEditingController();
@@ -19,11 +18,17 @@ class _RegisterState extends State<Register> {
   final TextEditingController _countryController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _passwordRepeatController = TextEditingController();
+  final TextEditingController _passwordRepeatController =
+      TextEditingController();
   final TextEditingController _bankCodeController = TextEditingController();
-  final TextEditingController _walletController = TextEditingController();
+
+  late int _walletController;
 
   final UserRepository _userRepository = UserRepository();
+
+  // whether or not to hide the password
+  bool _isPasswordVisible = false;
+  bool _isRepeatPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -31,82 +36,212 @@ class _RegisterState extends State<Register> {
       appBar: AppBar(
         title: const Text('User registration'),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset(
+            'assets/kairos_wallpaper.png',
+            fit: BoxFit.cover,
+          ),
+          Container(
+            color: Colors.black.withOpacity(0.6),
+          ),
+          Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth:
+                      MediaQuery.of(context).size.width > 600 ? 500.0 : 400.0,
+                ),
+                child: registrationForm(context),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget registrationForm(BuildContext context) {
+    final bool isLargeScreen = MediaQuery.of(context).size.width > 600;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        TextField(
+          controller: _nameController,
+          style: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+          decoration: InputDecoration(
+            hintText: 'Name',
+            hintStyle: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+            fillColor: Colors.white,
+            filled: true,
+            border: const OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 20.0),
+        TextField(
+          controller: _surnameController,
+          style: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+          decoration: InputDecoration(
+            hintText: 'Surnames',
+            hintStyle: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+            fillColor: Colors.white,
+            filled: true,
+            border: const OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 20.0),
+        Row(
           children: [
-            TextField(
-              controller: _nameController,
-              decoration: const InputDecoration(labelText: 'Name'),
+            Expanded(
+              child: Text(
+                'Date of birth (over 18 years old)',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: isLargeScreen ? 20.0 : 16.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
             ),
-            const SizedBox(height: 20.0),
-            TextField(
-              controller: _surnameController,
-              decoration: const InputDecoration(labelText: 'Surnames'),
-            ),
-            const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () => _selectDate(context),
               child: Text(
                 _selectedDate != null
-                    ? 'Date of birth: ${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}'
+                    ? '${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}'
                     : 'Enter your date of birth',
+                style: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
               ),
-            ),
-            const SizedBox(height: 20.0),
-            TextField(
-              controller: _countryController,
-              decoration: const InputDecoration(labelText: 'Country'),
-            ),
-            const SizedBox(height: 20.0),
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(labelText: 'Email'),
-            ),
-            const SizedBox(height: 20.0),
-            TextField(
-              controller: _passwordController,
-              decoration: const InputDecoration(labelText: 'New password'),
-              obscureText: true,
-            ),
-            TextField(
-              controller: _passwordRepeatController,
-              decoration: const InputDecoration(labelText: 'Repeat your new password'),
-              obscureText: true,
-            ),
-            const SizedBox(height: 20.0),
-            TextField(
-              controller: _bankCodeController,
-              decoration: const InputDecoration(labelText: 'Bank code'),
-            ),
-            const SizedBox(height: 20.0),
-            Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: _walletController,
-                    decoration: const InputDecoration(labelText: 'Wallet'),
-                    obscureText: true,
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.info_outline),
-                  tooltip: 'This field collects the money you wish to debit your account for payments. You can change it in the "Update your personal data" section.',
-                  onPressed: () {},
-                ),
-              ],
-            ),
-            const SizedBox(height: 20.0),
-            ElevatedButton(
-              onPressed: () {
-                _addUser();
-              },
-              child: const Text('Sign up'),
             ),
           ],
         ),
-      ),
+        const SizedBox(height: 20.0),
+        TextField(
+          controller: _countryController,
+          style: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+          decoration: InputDecoration(
+            hintText: 'Country',
+            hintStyle: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+            fillColor: Colors.white,
+            filled: true,
+            border: const OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 20.0),
+        TextField(
+          controller: _emailController,
+          style: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+          decoration: InputDecoration(
+            hintText: 'Email',
+            hintStyle: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+            fillColor: Colors.white,
+            filled: true,
+            border: const OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 20.0),
+        TextField(
+          controller: _passwordController,
+          obscureText: !_isPasswordVisible,
+          style: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+          decoration: InputDecoration(
+            hintText: 'New password',
+            hintStyle: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+            fillColor: Colors.white,
+            filled: true,
+            border: const OutlineInputBorder(),
+            suffixIcon: IconButton(
+              icon: Icon(
+                _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                color: Colors.grey,
+              ),
+              onPressed: () {
+                setState(() {
+                  _isPasswordVisible = !_isPasswordVisible;
+                });
+              },
+            ),
+          ),
+        ),
+        const SizedBox(height: 20.0),
+        TextField(
+          controller: _passwordRepeatController,
+          obscureText: !_isRepeatPasswordVisible,
+          style: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+          decoration: InputDecoration(
+            hintText: 'Repeat your new password',
+            hintStyle: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+            fillColor: Colors.white,
+            filled: true,
+            border: const OutlineInputBorder(),
+            suffixIcon: IconButton(
+              icon: Icon(
+                _isRepeatPasswordVisible
+                    ? Icons.visibility
+                    : Icons.visibility_off,
+                color: Colors.grey,
+              ),
+              onPressed: () {
+                setState(() {
+                  _isRepeatPasswordVisible = !_isRepeatPasswordVisible;
+                });
+              },
+            ),
+          ),
+        ),
+        const SizedBox(height: 20.0),
+        TextField(
+          controller: _bankCodeController,
+          style: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+          decoration: InputDecoration(
+            hintText: 'Bank code',
+            hintStyle: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+            fillColor: Colors.white,
+            filled: true,
+            border: const OutlineInputBorder(),
+          ),
+        ),
+        const SizedBox(height: 20.0),
+        Row(
+          children: [
+            Expanded(
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'Wallet',
+                  hintStyle: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+                  fillColor: Colors.white,
+                  filled: true,
+                  border: const OutlineInputBorder(),
+                ),
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  _walletController = int.tryParse(value) ?? 0;
+                },
+                style: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+              ),
+            ),
+            IconButton(
+              icon: const Icon(Icons.info_outline),
+              tooltip:
+                  'This field collects the money you wish to debit your account for payments. You can change it in the "Update your personal data" section.',
+              onPressed: () {},
+              color: Colors.white,
+            ),
+          ],
+        ),
+        const SizedBox(height: 20.0),
+        ElevatedButton(
+          onPressed: () {
+            _addUser();
+          },
+          child: Text(
+            'Sign up',
+            style: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+          ),
+        ),
+      ],
     );
   }
 
@@ -124,6 +259,7 @@ class _RegisterState extends State<Register> {
     }
   }
 
+  // Check if the user to be registered is of legal age.
   bool _isUserAdult(DateTime birthdate) {
     final today = DateTime.now();
     final age = today.year - birthdate.year;
@@ -142,12 +278,12 @@ class _RegisterState extends State<Register> {
     String password = _passwordController.text;
     String passwordRepeat = _passwordRepeatController.text;
     String bankCode = _bankCodeController.text;
-    String wallet = _walletController.text;
+    int wallet = _walletController;
 
     final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
-    final passwordRegex = RegExp(r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W).+$');
+    final passwordRegex =
+        RegExp(r'^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*\W).+$');
     final nameSurnameCountryRegex = RegExp(r'^[^0-9]+$');
-    final walletRegex = RegExp(r'^\d+(\.\d+)?$');
 
     if (_selectedDate == null ||
         name.isEmpty ||
@@ -155,6 +291,7 @@ class _RegisterState extends State<Register> {
         country.isEmpty ||
         email.isEmpty ||
         password.isEmpty ||
+        passwordRepeat.isEmpty ||
         bankCode.isEmpty) {
       _showDialog('Missing fields', 'Please complete all fields.');
       return;
@@ -163,23 +300,30 @@ class _RegisterState extends State<Register> {
     if (!nameSurnameCountryRegex.hasMatch(name) ||
         !nameSurnameCountryRegex.hasMatch(surname) ||
         !nameSurnameCountryRegex.hasMatch(country) ||
-        name == 'null' || surname == 'null' || country == 'null') { // control para no inyectar null
-      _showDialog('Invalid fields', 'The fields name, surname and country cannot contain numbers.');
+        name == 'null' ||
+        surname == 'null' ||
+        country == 'null') {
+      // unable to inject null into database
+      _showDialog('Invalid fields',
+          'The fields name, surname and country cannot contain numbers.');
       return;
     }
 
     if (!_isUserAdult(_selectedDate!)) {
-      _showDialog('Underage user', 'You must be at least 18 years old to register.');
+      _showDialog(
+          'Underage user', 'You must be at least 18 years old to register.');
       return;
     }
 
     if (!emailRegex.hasMatch(email)) {
-      _showDialog('Invalid email address', 'Please enter an email address according to the general form.');
+      _showDialog('Invalid email address',
+          'Please enter an email address according to the general form.');
       return;
     }
 
     if (!passwordRegex.hasMatch(password)) {
-      _showDialog('Incorrect password', 'The password must contain at least one number, one lower case letter, one upper case letter and one special character.');
+      _showDialog('Incorrect password',
+          'The password must contain at least one number, one lower case letter, one upper case letter and one special character.');
       return;
     }
 
@@ -188,17 +332,18 @@ class _RegisterState extends State<Register> {
       return;
     }
 
-    if (bankCode == 'null') { // control para no inyectar null
+    if (bankCode == 'null') {
       _showDialog('Null error', 'There is no bank account with the term null.');
       return;
     }
 
-    if (!walletRegex.hasMatch(wallet)) {
-      _showDialog('Invalid wallet', 'Please enter an integer and positive money.');
+    if (wallet < 0) {
+      _showDialog(
+          'Invalid wallet', 'Enter an integer greater than or equal to 0.');
       return;
     }
 
-    // Usuario existe?
+    // Check if the user exists before creating it
     bool userExists = await _userRepository.checkUserExists(email);
     if (userExists) {
       _showDialog('Error', 'The user already exists.');
@@ -207,21 +352,22 @@ class _RegisterState extends State<Register> {
 
     try {
       await _userRepository.addUser(User(
-        name: name,
-        surname: surname,
-        birthdate: "${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}",
-        country: country,
-        email: email,
-        password: password,
-        bankCode: bankCode,
-        wallet: wallet
-      ));
+          name: name,
+          surname: surname,
+          birthdate:
+              "${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}",
+          country: country,
+          email: email,
+          password: password,
+          bankCode: bankCode,
+          wallet: wallet));
       _showDialog('Registration successful', 'User successfully registered.');
     } catch (e) {
       _showDialog('Error', 'Error registering user.: $e');
     }
   }
 
+  // Function defining the warning format of error messages.
   void _showDialog(String title, String content) {
     showDialog(
       context: context,

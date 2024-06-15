@@ -4,9 +4,7 @@ import 'package:collection/collection.dart';
 import 'add_user.dart';
 
 class Login extends StatefulWidget {
-  const Login({
-    super.key,
-  });
+  const Login({super.key});
 
   @override
   State<Login> createState() => _LoginState();
@@ -15,85 +13,116 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+
   final UserRepository _userRepository = UserRepository();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: pantallaGeneral(context),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset(
+            'assets/kairos_wallpaper.png',
+            fit: BoxFit.cover,
+          ),
+          Container(
+            color: Colors.black.withOpacity(0.4),
+          ),
+          Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16.0),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  // the size of the elements is adjusted according to the dimensions of the screen
+                  maxWidth:
+                      MediaQuery.of(context).size.width > 600 ? 500.0 : 400.0,
+                ),
+                child: loginScreen(context),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget pantallaGeneral(BuildContext context) {
+  Widget loginScreen(BuildContext context) {
+    final bool isLargeScreen = MediaQuery.of(context).size.width > 600;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        const Text(
+        Text(
           'Welcome to Kairos',
+          textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 32.0,
+            fontSize: isLargeScreen ? 40.0 : 32.0,
             fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
         ),
         const SizedBox(height: 20),
-        const Text(
+        Text(
           'Please enter your credentials to access the application.',
+          textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 16.0,
+            // the size of the text elements is adjusted according to the dimensions of the screen
+            fontSize: isLargeScreen ? 20.0 : 16.0,
             fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
         ),
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              boxEmail(),
-              boxPassword(),
-              const SizedBox(
-                height: 10,
-              ),
-              buttonLogIn(context),
-            ],
-          ),
-        ),
+        const SizedBox(height: 10),
+        boxEmail(isLargeScreen),
+        const SizedBox(height: 10),
+        boxPassword(isLargeScreen),
+        const SizedBox(height: 10),
+        buttonLogIn(context, isLargeScreen),
       ],
     );
   }
 
-  Widget boxEmail() {
+  Widget boxEmail(bool isLargeScreen) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
       child: TextField(
         controller: _emailController,
-        decoration: const InputDecoration(
+        style: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+        decoration: InputDecoration(
           hintText: "Email",
+          hintStyle: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
           fillColor: Colors.white,
           filled: true,
+          border: const OutlineInputBorder(),
         ),
       ),
     );
   }
 
-  Widget boxPassword() {
+  Widget boxPassword(bool isLargeScreen) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
       child: TextField(
         controller: _passwordController,
         obscureText: true,
-        decoration: const InputDecoration(
+        style: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+        decoration: InputDecoration(
           hintText: "Password",
+          hintStyle: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
           fillColor: Colors.white,
           filled: true,
+          border: const OutlineInputBorder(),
         ),
       ),
     );
   }
 
-  Widget buttonLogIn(BuildContext context) {
+  Widget buttonLogIn(BuildContext context, bool isLargeScreen) {
     return Column(
       children: [
         SizedBox(
-          width: double.infinity,
           child: ElevatedButton(
             onPressed: () {
               final String email = _emailController.text.trim();
@@ -131,14 +160,21 @@ class _LoginState extends State<Login> {
                 }
               });
             },
-            child: const Text("Log in"),
+            child: Text(
+              "Log in",
+              style: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+            ),
           ),
         ),
         const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Don't have an account yet? "),
+            Text(
+              "Don't have an account yet? ",
+              style: TextStyle(
+                  color: Colors.white, fontSize: isLargeScreen ? 16.0 : 14.0),
+            ),
             TextButton(
               onPressed: () {
                 Navigator.push(
@@ -151,7 +187,11 @@ class _LoginState extends State<Login> {
                   const TextStyle(decoration: TextDecoration.underline),
                 ),
               ),
-              child: const Text('Register'),
+              child: Text(
+                'Register',
+                style: TextStyle(
+                    color: Colors.white, fontSize: isLargeScreen ? 16.0 : 14.0),
+              ),
             ),
           ],
         ),

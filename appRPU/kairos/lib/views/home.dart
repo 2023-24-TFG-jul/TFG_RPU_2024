@@ -5,14 +5,34 @@ import 'package:kairos/models/user.dart';
 import 'view_watches.dart';
 import 'login.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   final String loginUserEmail;
 
   const Home({super.key, required this.loginUserEmail});
 
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  late Future<String> _walletFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _walletFuture = _getWallet();
+  }
+
   Future<String> _getWallet() async {
     UserRepository userRepository = UserRepository();
-    return await userRepository.getWalletByEmail(loginUserEmail);
+    int walletAmount = await userRepository.getWalletByEmail(widget.loginUserEmail);
+    return walletAmount.toString();
+  }
+
+  void _reloadHomeData() {
+    setState(() {
+      _walletFuture = _getWallet();
+    });
   }
 
   @override
@@ -36,7 +56,7 @@ class Home extends StatelessWidget {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    'Welcome, $loginUserEmail',
+                    'Welcome, ${widget.loginUserEmail}',
                     style: const TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
@@ -51,7 +71,7 @@ class Home extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => const ViewWatches(),
-                            settings: RouteSettings(arguments: loginUserEmail),
+                            settings: RouteSettings(arguments: widget.loginUserEmail),
                           ),
                         );
                       },
@@ -62,14 +82,18 @@ class Home extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
+                      onPressed: () async {
+                        final result = await Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const ViewAuctions(),
-                            settings: RouteSettings(arguments: loginUserEmail),
+                            settings: RouteSettings(arguments: widget.loginUserEmail),
                           ),
                         );
+
+                        if (result != null && result == true) {
+                          _reloadHomeData();
+                        }
                       },
                       child: const Text('See the auctions'),
                     ),
@@ -97,7 +121,7 @@ class Home extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => UpdateUser(userEmail: loginUserEmail),
+                            builder: (context) => UpdateUser(userEmail: widget.loginUserEmail),
                           ),
                         );
                       },
@@ -113,7 +137,7 @@ class Home extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: FutureBuilder<String>(
-                future: _getWallet(),
+                future: _walletFuture,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Text(
