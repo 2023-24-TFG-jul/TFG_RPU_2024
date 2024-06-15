@@ -16,6 +16,9 @@ class _LoginState extends State<Login> {
 
   final UserRepository _userRepository = UserRepository();
 
+  // whether or not to hide the password
+  bool _isPasswordVisible = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,7 +109,7 @@ class _LoginState extends State<Login> {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
       child: TextField(
         controller: _passwordController,
-        obscureText: true,
+        obscureText: !_isPasswordVisible,
         style: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
         decoration: InputDecoration(
           hintText: "Password",
@@ -114,6 +117,17 @@ class _LoginState extends State<Login> {
           fillColor: Colors.white,
           filled: true,
           border: const OutlineInputBorder(),
+          suffixIcon: IconButton(
+            icon: Icon(
+              _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+              color: Colors.grey,
+            ),
+            onPressed: () {
+              setState(() {
+                _isPasswordVisible = !_isPasswordVisible;
+              });
+            },
+          ),
         ),
       ),
     );

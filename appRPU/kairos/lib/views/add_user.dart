@@ -22,7 +22,7 @@ class _RegisterState extends State<Register> {
       TextEditingController();
   final TextEditingController _bankCodeController = TextEditingController();
 
-  late int _walletController;
+  late int _walletController = 0;
 
   final UserRepository _userRepository = UserRepository();
 
@@ -44,7 +44,7 @@ class _RegisterState extends State<Register> {
             fit: BoxFit.cover,
           ),
           Container(
-            color: Colors.black.withOpacity(0.6),
+            color: Colors.black.withOpacity(0.4),
           ),
           Center(
             child: SingleChildScrollView(
@@ -225,7 +225,7 @@ class _RegisterState extends State<Register> {
             IconButton(
               icon: const Icon(Icons.info_outline),
               tooltip:
-                  'This field collects the money you wish to debit your account for payments. You can change it in the "Update your personal data" section.',
+                  'This field collects the money you wish to debit your account for payments. You can change it in the "Update your personal data" section. If you do not enter any value, we understand that you start from zero.',
               onPressed: () {},
               color: Colors.white,
             ),
