@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Watch {
   final String id;
-  final String watchNickName; // Descriptive name of the watch as desired by the user
+  final String
+      watchNickName; // Descriptive name of the watch as desired by the user
   final String brand;
   final String model;
   final String reference; // Watch serial number
@@ -13,7 +14,8 @@ class Watch {
   final String condition;
   final String sex;
   final int price;
-  final String saleStatus; // State of sale of the watch according to the auction
+  final String
+      saleStatus; // State of sale of the watch according to the auction
 
   Watch({
     required this.id,

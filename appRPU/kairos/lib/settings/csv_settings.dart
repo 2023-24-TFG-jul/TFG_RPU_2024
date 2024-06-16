@@ -5,10 +5,12 @@ class CsvService {
   Future<List<Map<String, String>>> loadCsvData(String path) async {
     try {
       final rawData = await rootBundle.loadString(path);
-      List<List<dynamic>> csvTable = const CsvToListConverter().convert(rawData);
+      List<List<dynamic>> csvTable =
+          const CsvToListConverter().convert(rawData);
 
       List<Map<String, String>> data = [];
-      for (var row in csvTable.skip(1)) { // disregard the first row
+      for (var row in csvTable.skip(1)) {
+        // disregard the first row
         if (row.length >= 2) {
           data.add({
             'brand': row[0].toString(),

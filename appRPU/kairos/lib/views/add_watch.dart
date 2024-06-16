@@ -134,241 +134,253 @@ class _AddWatchState extends State<AddWatch> {
                       MediaQuery.of(context).size.width > 600 ? 500.0 : 400.0,
                 ),
                 child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  TextField(
-                    controller: _watchNickNameController,
-                    style: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
-                    decoration: InputDecoration(
-                      hintText: 'Watch nickname *',
-                      hintStyle: TextStyle(
-                          color: Colors.red, fontSize: isLargeScreen ? 18.0 : 14.0),
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: const OutlineInputBorder(),
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    TextField(
+                      controller: _watchNickNameController,
+                      style: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+                      decoration: InputDecoration(
+                        hintText: 'Watch nickname *',
+                        hintStyle: TextStyle(
+                            color: Colors.red,
+                            fontSize: isLargeScreen ? 18.0 : 14.0),
+                        fillColor: Colors.white,
+                        filled: true,
+                        border: const OutlineInputBorder(),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 20.0),
-                  DropdownButtonFormField<String>(
-                    value: _selectedBrand,
-                    items: _brands.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
-                      setState(() {
-                        _selectedBrand = newValue;
-                        _models = _getModelsForBrand(newValue);
-                        _selectedModel = null;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'Brand *',
-                      hintStyle: TextStyle(
-                          color: Colors.red, fontSize: isLargeScreen ? 18.0 : 14.0),
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: const OutlineInputBorder(),
+                    const SizedBox(height: 20.0),
+                    DropdownButtonFormField<String>(
+                      value: _selectedBrand,
+                      items: _brands.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) {
+                        setState(() {
+                          _selectedBrand = newValue;
+                          _models = _getModelsForBrand(newValue);
+                          _selectedModel = null;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Brand *',
+                        hintStyle: TextStyle(
+                            color: Colors.red,
+                            fontSize: isLargeScreen ? 18.0 : 14.0),
+                        fillColor: Colors.white,
+                        filled: true,
+                        border: const OutlineInputBorder(),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 20.0),
-                  DropdownButtonFormField<String>(
-                    value: _selectedModel,
-                    items: _models.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
-                      setState(() {
-                        _selectedModel = newValue;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'Model *',
-                      hintStyle: TextStyle(
-                          color: Colors.red, fontSize: isLargeScreen ? 18.0 : 14.0),
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: const OutlineInputBorder(),
+                    const SizedBox(height: 20.0),
+                    DropdownButtonFormField<String>(
+                      value: _selectedModel,
+                      items: _models.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) {
+                        setState(() {
+                          _selectedModel = newValue;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Model *',
+                        hintStyle: TextStyle(
+                            color: Colors.red,
+                            fontSize: isLargeScreen ? 18.0 : 14.0),
+                        fillColor: Colors.white,
+                        filled: true,
+                        border: const OutlineInputBorder(),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 20.0),
-                  TextField(
-                    controller: _referenceController,
-                    style: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
-                    decoration: InputDecoration(
-                      hintText: 'Reference',
-                      hintStyle: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: const OutlineInputBorder(),
+                    const SizedBox(height: 20.0),
+                    TextField(
+                      controller: _referenceController,
+                      style: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+                      decoration: InputDecoration(
+                        hintText: 'Reference',
+                        hintStyle:
+                            TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+                        fillColor: Colors.white,
+                        filled: true,
+                        border: const OutlineInputBorder(),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 20.0),
-                  DropdownButtonFormField<String>(
-                    value: _selectedMvmt,
-                    items: _mvmt.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
-                      setState(() {
-                        _selectedMvmt = newValue;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'Movement',
-                      hintStyle: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: const OutlineInputBorder(),
+                    const SizedBox(height: 20.0),
+                    DropdownButtonFormField<String>(
+                      value: _selectedMvmt,
+                      items: _mvmt.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) {
+                        setState(() {
+                          _selectedMvmt = newValue;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Movement',
+                        hintStyle:
+                            TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+                        fillColor: Colors.white,
+                        filled: true,
+                        border: const OutlineInputBorder(),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 20.0),
-                  DropdownButtonFormField<String>(
-                    value: _selectedCasem,
-                    items: _casem.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
-                      setState(() {
-                        _selectedCasem = newValue;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'Casem',
-                      hintStyle: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: const OutlineInputBorder(),
+                    const SizedBox(height: 20.0),
+                    DropdownButtonFormField<String>(
+                      value: _selectedCasem,
+                      items: _casem.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) {
+                        setState(() {
+                          _selectedCasem = newValue;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Casem',
+                        hintStyle:
+                            TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+                        fillColor: Colors.white,
+                        filled: true,
+                        border: const OutlineInputBorder(),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 20.0),
-                  DropdownButtonFormField<String>(
-                    value: _selectedBracem,
-                    items: _bracem.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
-                      setState(() {
-                        _selectedBracem = newValue;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'Bracem',
-                      hintStyle: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: const OutlineInputBorder(),
+                    const SizedBox(height: 20.0),
+                    DropdownButtonFormField<String>(
+                      value: _selectedBracem,
+                      items: _bracem.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) {
+                        setState(() {
+                          _selectedBracem = newValue;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Bracem',
+                        hintStyle:
+                            TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+                        fillColor: Colors.white,
+                        filled: true,
+                        border: const OutlineInputBorder(),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 20.0),
-                  TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Yop *',
-                      hintStyle: TextStyle(
-                          color: Colors.red, fontSize: isLargeScreen ? 18.0 : 14.0),
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: const OutlineInputBorder(),
+                    const SizedBox(height: 20.0),
+                    TextField(
+                      decoration: InputDecoration(
+                        hintText: 'Yop *',
+                        hintStyle: TextStyle(
+                            color: Colors.red,
+                            fontSize: isLargeScreen ? 18.0 : 14.0),
+                        fillColor: Colors.white,
+                        filled: true,
+                        border: const OutlineInputBorder(),
+                      ),
+                      keyboardType: TextInputType.number,
+                      onChanged: (value) {
+                        _yopController = int.tryParse(value) ?? 0;
+                      },
                     ),
-                    keyboardType: TextInputType.number,
-                    onChanged: (value) {
-                      _yopController = int.tryParse(value) ?? 0;
-                    },
-                  ),
-                  const SizedBox(height: 20.0),
-                  DropdownButtonFormField<String>(
-                    value: _selectedCondition,
-                    items: _condition.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
-                      setState(() {
-                        _selectedCondition = newValue;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'Condition *',
-                      hintStyle: TextStyle(
-                          color: Colors.red, fontSize: isLargeScreen ? 18.0 : 14.0),
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: const OutlineInputBorder(),
+                    const SizedBox(height: 20.0),
+                    DropdownButtonFormField<String>(
+                      value: _selectedCondition,
+                      items: _condition.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) {
+                        setState(() {
+                          _selectedCondition = newValue;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Condition *',
+                        hintStyle: TextStyle(
+                            color: Colors.red,
+                            fontSize: isLargeScreen ? 18.0 : 14.0),
+                        fillColor: Colors.white,
+                        filled: true,
+                        border: const OutlineInputBorder(),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 20.0),
-                  DropdownButtonFormField<String>(
-                    value: _selectedSex,
-                    items: _sex.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
-                      setState(() {
-                        _selectedSex = newValue;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      hintText: 'Sex',
-                      hintStyle: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
-                      fillColor: Colors.white,
-                      filled: true,
-                      border: const OutlineInputBorder(),
+                    const SizedBox(height: 20.0),
+                    DropdownButtonFormField<String>(
+                      value: _selectedSex,
+                      items: _sex.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (newValue) {
+                        setState(() {
+                          _selectedSex = newValue;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Sex',
+                        hintStyle:
+                            TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+                        fillColor: Colors.white,
+                        filled: true,
+                        border: const OutlineInputBorder(),
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 20.0),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          decoration: InputDecoration(
-                            hintText: 'Price',
-                            hintStyle: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
-                            fillColor: Colors.white,
-                            filled: true,
-                            border: const OutlineInputBorder(),
+                    const SizedBox(height: 20.0),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            decoration: InputDecoration(
+                              hintText: 'Price',
+                              hintStyle: TextStyle(
+                                  fontSize: isLargeScreen ? 18.0 : 14.0),
+                              fillColor: Colors.white,
+                              filled: true,
+                              border: const OutlineInputBorder(),
+                            ),
+                            keyboardType: TextInputType.number,
+                            onChanged: (value) {
+                              _priceController = int.tryParse(value) ?? 0;
+                            },
                           ),
-                          keyboardType: TextInputType.number,
-                          onChanged: (value) {
-                            _priceController = int.tryParse(value) ?? 0;
-                          },
                         ),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.euro),
-                        onPressed: () {
-                          // predict price
-                        },
-                        color: Colors.white,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20.0),
-                  ElevatedButton(
-                    onPressed: _addWatch,
-                    child: Text('Add your watch',
-                        style: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0)),
-                  ),
-                ],
-              ),
+                        IconButton(
+                          icon: const Icon(Icons.euro),
+                          onPressed: () {
+                            // predict price
+                          },
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20.0),
+                    ElevatedButton(
+                      onPressed: _addWatch,
+                      child: Text('Add your watch',
+                          style:
+                              TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0)),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -412,10 +424,10 @@ class _AddWatchState extends State<AddWatch> {
       return;
     }
 
-    if (brand.isEmpty ||
-        model.isEmpty ||
-        condition.isEmpty ||
-        watchNickName.isEmpty) {
+    if (brand.trim().isEmpty ||
+        model.trim().isEmpty ||
+        condition.trim().isEmpty ||
+        watchNickName.trim().isEmpty) {
       _showDialog('Missing fields', 'Please complete all fields.');
       return;
     }

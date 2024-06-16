@@ -147,7 +147,7 @@ class _RegisterState extends State<Register> {
           obscureText: !_isPasswordVisible,
           style: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
           decoration: InputDecoration(
-            hintText: 'New password',
+            hintText: 'Password',
             hintStyle: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
             fillColor: Colors.white,
             filled: true,
@@ -171,7 +171,7 @@ class _RegisterState extends State<Register> {
           obscureText: !_isRepeatPasswordVisible,
           style: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
           decoration: InputDecoration(
-            hintText: 'Repeat your new password',
+            hintText: 'Repeat your password',
             hintStyle: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
             fillColor: Colors.white,
             filled: true,
@@ -286,13 +286,13 @@ class _RegisterState extends State<Register> {
     final nameSurnameCountryRegex = RegExp(r'^[^0-9]+$');
 
     if (_selectedDate == null ||
-        name.isEmpty ||
-        surname.isEmpty ||
-        country.isEmpty ||
-        email.isEmpty ||
-        password.isEmpty ||
-        passwordRepeat.isEmpty ||
-        bankCode.isEmpty) {
+        name.trim().isEmpty ||
+        surname.trim().isEmpty ||
+        country.trim().isEmpty ||
+        email.trim().isEmpty ||
+        password.trim().isEmpty ||
+        passwordRepeat.trim().isEmpty ||
+        bankCode.trim().isEmpty) {
       _showDialog('Missing fields', 'Please complete all fields.');
       return;
     }

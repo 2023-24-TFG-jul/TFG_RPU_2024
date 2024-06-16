@@ -5,10 +5,14 @@ class User {
   final String surname;
   final String birthdate;
   final String country;
-  final String email;       /// User's email address. Unique
+  final String email;
+
+  /// User's email address. Unique
   final String password;
   final String bankCode;
-  final int wallet;         /// Amount of money the user has on his account
+  int wallet;
+
+  /// Amount of money the user has on his account
 
   User({
     required this.name,
@@ -149,7 +153,8 @@ class UserRepository {
       DocumentSnapshot userDoc = querySnapshot.docs.first;
       Map<String, dynamic> userData = userDoc.data() as Map<String, dynamic>;
       int currentWallet = userData['wallet'];
-      int updatedWallet = currentWallet - amount; // currentWallet - (- amount) -> vendorEmail
+      int updatedWallet =
+          currentWallet - amount; // currentWallet - (- amount) -> vendorEmail
       await userDoc.reference.update({'wallet': updatedWallet});
     } else {
       throw Exception('Failed to update wallet');

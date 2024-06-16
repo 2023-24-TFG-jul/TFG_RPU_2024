@@ -6,7 +6,6 @@ import 'view_watches.dart';
 import 'login.dart';
 
 class Home extends StatefulWidget {
-  
   final String loginUserEmail;
 
   const Home({super.key, required this.loginUserEmail});
@@ -16,7 +15,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  
   late Future<String> _walletFuture;
 
   @override
@@ -27,13 +25,13 @@ class _HomeState extends State<Home> {
 
   Future<String> _getWallet() async {
     UserRepository userRepository = UserRepository();
-    int walletAmount = await userRepository.getWalletByEmail(widget.loginUserEmail);
+    int walletAmount =
+        await userRepository.getWalletByEmail(widget.loginUserEmail);
     return walletAmount.toString();
   }
 
   @override
   Widget build(BuildContext context) {
-
     final bool isLargeScreen = MediaQuery.of(context).size.width > 600;
 
     return Scaffold(
@@ -52,7 +50,8 @@ class _HomeState extends State<Home> {
               padding: const EdgeInsets.all(16.0),
               child: ConstrainedBox(
                 constraints: BoxConstraints(
-                  maxWidth: MediaQuery.of(context).size.width > 600 ? 500.0 : 400.0,
+                  maxWidth:
+                      MediaQuery.of(context).size.width > 600 ? 500.0 : 400.0,
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -85,13 +84,15 @@ class _HomeState extends State<Home> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => const ViewWatches(),
-                              settings: RouteSettings(arguments: widget.loginUserEmail),
+                              settings: RouteSettings(
+                                  arguments: widget.loginUserEmail),
                             ),
                           );
                         },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 15.0),
-                          textStyle: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+                          textStyle:
+                              TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
                         ),
                         child: const Text('Consult your watches'),
                       ),
@@ -104,13 +105,15 @@ class _HomeState extends State<Home> {
                             context,
                             MaterialPageRoute(
                               builder: (context) => const ViewAuctions(),
-                              settings: RouteSettings(arguments: widget.loginUserEmail),
+                              settings: RouteSettings(
+                                  arguments: widget.loginUserEmail),
                             ),
                           );
                         },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 15.0),
-                          textStyle: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+                          textStyle:
+                              TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
                         ),
                         child: const Text('See the auctions'),
                       ),
@@ -123,7 +126,8 @@ class _HomeState extends State<Home> {
                         },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 15.0),
-                          textStyle: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+                          textStyle:
+                              TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
                         ),
                         child: const Text('How much is my watch worth?'),
                       ),
@@ -135,13 +139,15 @@ class _HomeState extends State<Home> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => UpdateUser(userEmail: widget.loginUserEmail),
+                              builder: (context) =>
+                                  UpdateUser(userEmail: widget.loginUserEmail),
                             ),
                           );
                         },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 15.0),
-                          textStyle: TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+                          textStyle:
+                              TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
                         ),
                         child: const Text('Update your personal data'),
                       ),
