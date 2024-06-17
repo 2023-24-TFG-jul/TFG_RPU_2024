@@ -67,78 +67,108 @@ class _ViewAuctionsState extends State<ViewAuctions> {
     }
   }
 
-  void _buyAuction(String auctionId) async {
-    try {
-      Auction auction = await _auctionRepository.getAuctionById(auctionId);
-      await _watchRepository.updateSaleStatusWatch(
-          auction.watchNickName, 'Purchased');
-      await _auctionRepository.buyWatch(
-          auctionId, loginUserEmail, auction.maximumValue);
-      await _auctionRepository.updateAuctionStatus(
-          auction.watchNickName, 'Finished');
-      await _userRepository.updateUserWallet(
-          loginUserEmail, auction.maximumValue);
-      await _userRepository.updateUserWallet(
-          auction.vendorEmail, -auction.maximumValue); //para que sume
+void _buyAuction(String auctionId) async {
+  try {
+    Auction auction = await _auctionRepository.getAuctionById(auctionId);
+    User user = await _userRepository.getUserByEmail(loginUserEmail);
+    int totalBidAmount = await _getTotalBidAmount(loginUserEmail);
+
+    if (user.wallet >= totalBidAmount + auction.maximumValue) {
+      await _watchRepository.updateSaleStatusWatch(auction.watchNickName, 'Purchased');
+      await _auctionRepository.buyWatch(auctionId, loginUserEmail, auction.maximumValue);
+      await _auctionRepository.updateAuctionStatus(auction.watchNickName, 'Finished');
+      await _userRepository.updateUserWallet(loginUserEmail, auction.maximumValue);
+      await _userRepository.updateUserWallet(auction.vendorEmail, -auction.maximumValue); //para que sume
       _loadAuctions(loginUserEmail);
       _showDialog('Correct purchase', 'Watch successfully acquired.');
       return;
-    } catch (e) {
-      _showDialog('Bad purchase', 'Error when purchasing the watch: $e');
+    } else {
+      _showDialog('Insufficient funds', 'You do not have enough money in your wallet to buy this watch and cover all your bids.');
+      return;
     }
+  } catch (e) {
+    _showDialog('Bad purchase', 'Error when purchasing the watch: $e');
   }
+}
 
-  void _showBidDialog(Auction auction) {
-    late int _bidController;
 
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Place a bid'),
-          content: TextField(
-            decoration: const InputDecoration(labelText: 'Bid Amount (€)'),
-            keyboardType: TextInputType.number,
-            onChanged: (value) {
-              _bidController = int.tryParse(value) ?? 0;
+
+void _showBidDialog(Auction auction) {
+  
+  late int _bidController;
+
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text('Place a bid'),
+        content: TextField(
+          decoration: const InputDecoration(labelText: 'Bid Amount (€)'),
+          keyboardType: TextInputType.number,
+          onChanged: (value) {
+            _bidController = int.tryParse(value) ?? 0;
+          },
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
             },
+            child: const Text('Cancel'),
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () async {
-                int bidAmount = _bidController;
-                if (bidAmount != 0) {
-                  int newBid = bidAmount;
-                  if (newBid >= auction.maximumValue) {
-                    _showDialog('Invalid data', 'You cannot exceed the maximum value.');
-                    return;
-                  } else if (newBid > auction.actualValue &&
-                      newBid >= auction.minimumValue) {
-                    await _auctionRepository.updateBid(
-                        auction.watchNickName, newBid, loginUserEmail);
-                    _showDialog('Correct bid', 'Bid of $bidAmount € placed successfully.');
-                    _loadAuctions(loginUserEmail);
-                    return;
-                  } else {
-                    _showDialog('Invalid data', 'Bid must be higher than current value.');
+          TextButton(
+            onPressed: () async {
+              int bidAmount = _bidController;
+              if (bidAmount != 0) {
+                int newBid = bidAmount;
+                if (newBid >= auction.maximumValue) {
+                  _showDialog('Invalid data', 'You cannot exceed the maximum value.');
+                  return;
+                } else if (newBid > auction.actualValue && newBid >= auction.minimumValue) {
+                  
+                  try {
+                    User user = await _userRepository.getUserByEmail(loginUserEmail);
+                    int totalBidAmount = await _getTotalBidAmount(loginUserEmail);
+                    if (user.wallet >= totalBidAmount + newBid) {
+                      await _auctionRepository.updateBid(auction.watchNickName, newBid, loginUserEmail);
+                      _showDialog('Correct bid', 'Bid of $bidAmount € placed successfully.');
+                      _loadAuctions(loginUserEmail);
+                      return;
+                    } else {  // He doesn't have the money to pay for everything he wants to bet.
+                      _showDialog('Insufficient funds', 'You do not have enough money in your wallet to cover all your bids.');
+                      return;
+                    }
+                  } catch (e) {
+                    _showDialog('Error', 'Error checking wallet balance: $e');
                     return;
                   }
+                } else {
+                  _showDialog('Invalid data', 'Bid must be higher than current value.');
+                  return;
                 }
-                Navigator.of(context).pop();
-              },
-              child: const Text('Place Bid'),
-            ),
-          ],
-        );
-      },
-    );
+              }
+              Navigator.of(context).pop();
+            },
+            child: const Text('Place Bid'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+// Returns all the current money the user has invested in auctions.
+Future<int> _getTotalBidAmount(String email) async {
+  List<Auction> auctions = await _auctionRepository.getAllAuctions();
+  int totalBidAmount = 0;
+  for (Auction auction in auctions) {
+    if (auction.buyerEmail == email) {
+      totalBidAmount += auction.actualValue;
+    }
   }
+  return totalBidAmount;
+}
+
 
   bool _isAuctionExpired(Auction auction) {
     DateTime limitDate = auction.limitDate;
