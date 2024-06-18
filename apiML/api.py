@@ -1,28 +1,24 @@
-from flask import Flask, request, jsonify
-import joblib
 import pandas as pd
+from flask import Flask, request, jsonify
+from joblib import load
 
 app = Flask(__name__)
 
-# Cargar el modelo
-model = joblib.load('watch_price_predictor.joblib')
+# Cargar el modelo entrenado
+model = load('ULTIMA_PRUEBA.joblib')
 
+# Endpoint para hacer predicciones
 @app.route('/predict', methods=['POST'])
 def predict():
-    data = request.json
-    df = pd.DataFrame(data, index=[0])
-    
-    # Convertir datos categóricos a numéricos si es necesario
-    df = pd.get_dummies(df)
-    
-    # Asegurarse de que las columnas del DataFrame coincidan con las que el modelo espera
-    missing_cols = set(X.columns) - set(df.columns)
-    for c in missing_cols:
-        df[c] = 0
-    df = df[X.columns]
-    
-    prediction = model.predict(df)
-    return jsonify({'price': prediction[0]})
+    data = request.get_json()
+    # Asegúrate de que los datos recibidos sean una lista de diccionarios
+    if isinstance(data, list) and all(isinstance(item, dict) for item in data):
+        new_data = pd.DataFrame(data)
+        predicted_price = model.predict(new_data)  # Asumiendo que 'model' está definido en otro lugar
+        return jsonify({'predicted_price': predicted_price.tolist()})
+    else:
+        return jsonify({'error': 'Los datos deben ser una lista de diccionarios'}), 400
 
 if __name__ == '__main__':
     app.run(debug=True)
+

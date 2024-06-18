@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'package:kairos/models/watch.dart';
 import 'package:kairos/settings/csv_settings.dart';
 
@@ -105,6 +107,56 @@ class _AddWatchState extends State<AddWatch> {
       _csvData = data;
       _brands = data.map((e) => e['brand']!).toSet().toList();
     });
+  }
+
+  void _predictPrice() async {
+    // Obtener los valores actuales
+    String brand = _selectedBrand ?? '';
+    String model = _selectedModel ?? '';
+    int yop = _yopController;
+    String condition = _selectedCondition ?? '';
+
+    // Validar que todos los campos necesarios estén completos
+    if (brand.isEmpty || model.isEmpty || condition.isEmpty || yop == 0) {
+      _showDialog('Missing fields', 'Please complete all fields.');
+      return;
+    }
+
+    // Crear el cuerpo de la solicitud
+    var requestBody = json.encode({
+      'brand': brand,
+      'model': model,
+      'yop': yop,
+      'condition': condition,
+    });
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://tfg-rpu-2024.onrender.com/predict'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        // Parsear la respuesta JSON
+        var responseData = json.decode(response.body);
+        int predictedPrice = responseData['price'];
+
+        // Actualizar el campo de precio (_priceController)
+        setState(() {
+          _priceController = predictedPrice;
+        });
+
+        _showDialog('Price Prediction', 'Predicted price: \$${predictedPrice}');
+      } else {
+        _showDialog('Prediction Error', 'Failed to predict price.');
+      }
+    } catch (e) {
+      print('Error predicting price: $e');
+      _showDialog('Prediction Error', 'Failed to predict price: $e');
+    }
   }
 
   @override
@@ -366,7 +418,7 @@ class _AddWatchState extends State<AddWatch> {
                         IconButton(
                           icon: const Icon(Icons.euro),
                           onPressed: () {
-                            // predict price
+                            _predictPrice();
                           },
                           color: Colors.white,
                         ),
