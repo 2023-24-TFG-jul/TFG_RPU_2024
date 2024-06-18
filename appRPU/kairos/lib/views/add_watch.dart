@@ -109,55 +109,57 @@ class _AddWatchState extends State<AddWatch> {
     });
   }
 
+  // Function to call the model and predict the price of the watch.
   void _predictPrice() async {
-  // Obtener los valores actuales
-  String brand = _selectedBrand ?? '';
-  String model = _selectedModel ?? '';
-  int yop = _yopController;
-  String condition = _selectedCondition ?? '';
+    
+    String brand = _selectedBrand ?? '';
+    String model = _selectedModel ?? '';
+    int yop = _yopController;
+    String condition = _selectedCondition ?? '';
 
-  // Validar que todos los campos necesarios estén completos
-  if (brand.isEmpty || model.isEmpty || condition.isEmpty || yop == 0) {
-    _showDialog('Missing fields', 'Please complete all fields.');
-    return;
-  }
-
-  // Crear el cuerpo de la solicitud
-  var requestBody = json.encode({
-    'watchBrand': brand,
-    'watchModel': model,
-    'watchYop': yop,
-    'watchCondition': condition,
-  });
-
-  try {
-    final response = await http.post(
-      Uri.parse('https://tfg-rpu-2024.onrender.com/predict'),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: requestBody,
-    );
-
-    if (response.statusCode == 200) {
-      // Parsear la respuesta JSON
-      var responseData = json.decode(response.body);
-      double predictedPrice = responseData['predicted_price'][0];
-
-      // Actualizar el campo de precio (_priceController)
-      setState(() {
-        _priceController = predictedPrice.toInt();
-      });
-
-      _showDialog('Price Prediction', 'Predicted price: \$$predictedPrice');
-    } else {
-      _showDialog('Prediction Error', 'Failed to predict price.');
+    
+    if (brand.isEmpty || model.isEmpty || condition.isEmpty || yop == 0) {
+      _showDialog('Missing fields', 'Please complete all fields.');
+      return;
     }
-  } catch (e) {
-    _showDialog('Prediction Error', 'Failed to predict price: $e');
-  }
-}
 
+    var requestBody = json.encode([ // The structure is a list of dictionaries
+      {
+        'watchBrand': brand,
+        'watchModel': model,
+        'watchYop': yop,
+        'watchCondition': condition,
+      }
+    ]);
+
+    try {
+      final response = await http.post(
+        Uri.parse('https://tfg-rpu-2024.onrender.com/predict'), // Address of the api loaded in Render.
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: requestBody,
+      );
+
+      if (response.statusCode == 200) {
+        
+        var responseData = json.decode(response.body);
+        double predictedPrice = responseData['predicted_price'][0];
+
+        int roundedPrice = predictedPrice.round();
+
+        setState(() { //update price field ?????
+          _priceController = roundedPrice;
+        });
+
+        _showDialog('Price Prediction', 'Predicted price: $roundedPrice €');
+      } else {
+        _showDialog('Prediction Error', 'Failed to predict price.');
+      }
+    } catch (e) {
+      _showDialog('Prediction Error', 'Failed to predict price: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
