@@ -82,10 +82,29 @@
 %VersionOne & X & X & X & X\\
 %}
 
-\section{Parte teórica Machine Learning}
-
-	Tras varios momentos pensando como esta aplicación podría situarse como una clara competidora en el mercado, me di cuenta de que muchas aplicaciones no se centran en lo que de verdad importa: el cliente. Siempre se ha dicho que el cliente tiene la razón, que el cliente debe encontrarse cómodo... pero a la hora de la verdad, las aplicaciones no destinan el esfuerzo suficiente a dejar todo lo más sencillo, amigable y accesible que el cliente merece. Por ello, lo primero que hice fue ponerme en su piel y pensar que me gustaría encontrarme en mi aplicación, que problemas podría a llegar a tener... y di con ello: desconozco cuánto vale mi reloj. Sé que puede sonar raro, pero es así. Son tantos los precios que se estipulan a un mismo reloj que sé, a ciencia cierta, que sería incapaz de marcar un precio de venta directa donde consiguiese el mayor valor de venta posible. De aquí nace la idea de investigar acerca del aprendizaje automático o Machine Learning. Mi objetivo principal es crear un modelo capaz de predecir cuál es el precio más recomendable para la venta de mi reloj, apoyándome en un dataset de más de 280000 relojes de diferentes marcas, estados, géneros, precios... pero no nos adelantemos. Veamos que es todo esto.
+	En este apartado del informe trataré de abordar los puntos teóricos necesarios para afrontar de manera más clara el resto de secciones. La razón principal de que aparezcan unos sí y otros no es puramente personal. El objetivo de este apartado es resumir puntos clave que me han servido a mí para conseguir los objetivos marcados en el punto anterior.
 	
+\section{Definición de subasta y tipos de subastas}
+
+	El término subasta se define como la situación donde dos o más compradores pujan distintas cantidades de dinero por un mismo producto, siendo uno de ellos el comprador final. Para llevarla a cabo, se deben seguir una serie de reglas y directrices marcadas antes del comienzo de la subasta. El objetivo de este tipo de ventas es conseguir una mejor venta posible, llegando a un acuerdo justo entre vendedor y comprador.
+	
+	Actualmente, existen muchos tipos de subasta, pero todas ellas se basan en cuatro pilares fundamentales o tipos:
+	
+	\begin{description}
+		\item[Precio descendente u holandesa:] la subasta comienza con un precio elevado y va disminuyendo a medida que nadie interrumpe al subastador. En el momento que alguien quiere aplicar, para al subastador en el precio que desee. Este hombre será el ganador de la subasta.
+		\item[Precio ascendente o inglesa:] la subasta comienza con un precio mínimo y va subiendo a medida que los posibles compradores lanzan pujas de igual o mayor precio de lo que el subastador indica. El ganador de la subasta será aquella persona que lance la puja más alta.
+		\item[De sobre cerrado a primer precio:] los pujadores introducen el precio en un sobre cerrado. Una vez estén todos listos, se abren los sobres y gana la persona que marcó la puja más alta, teniendo que pagar tal cantidad por lo subastado.
+		\item[De sobre cerrado a segundo precio o Vickrey:] la dinámica es igual que el anterior tipo de subasta, pero con una diferencia: la persona con la puja más alta pagará el segundo precio más alto por el producto.
+	\end{description}
+	
+	Una pregunta que puede surgirnos es por qué existen tantos tipos si el objetivo es el mismo. ¿Por diversión? ¿Por cambiar? La respuesta reside en el objetivo de alcanzar el mejor acuerdo posible vendedor-comprador, es decir, sacar el máximo grado de objetividad a la venta. 
+	
+	En una subasta podemos diferenciar entre las pujas normales y el precio reserva, este último siendo nuestra máxima cantidad a pujar. Referenciando a los tipos explicados hace unas líneas, la subasta de sobre cerrado a primer precio no es una subasta del todo óptima. El pujador no trata de lanzar su precio de reserva y esto puede hacer que, si la subasta se repitiese, el precio se ajuste mucho y el mercado se vuelva volátil. Sin embargo, la subasta de sobre cerrado a segundo precio o Vickrey incita al pujador a adoptar una estrategia dominante y lanzar su puja máxima, obteniendo un grado de venta muy satisfactorio para ambas partes.
+	
+	
+
+\section{Definición de Machine Learning, algoritmos y evaluación}
+
 	El aprendizaje automático o Machine Learning es una parte de la informática muy ligada al concepto de AI o Inteligencia Artificial. Definir el objetivo de esta es simple: conseguir que una máquina se comporte como un ser humano. Conseguir el objetivo de esto es algo más complicado. Principalmente se busca entrenar a la máquina con el uso de algoritmos y datos de forma que esta aprenda de manera gradual. No hay que decir que cuánto mayor sea el número de datos y cuánto mayor sea la calidad de estos, mayor precisión se conseguirá. 
 	
 	El término Machine Learning podemos atribuírselo a Arthur Samuel quien, en 1952, creo un software capaz de aprender y jugar a las damas. Aun así, este campo ha evolucionado a pasos agigantados, siendo actualmente uno de los puntos más relevantes dentro del campo de la informática. Entre los hitos más significativos, destacan principalmente unos estudiantes de la Universidad de Stanford. Estos alumnos consiguieron desarrollar en 1979 un software capaz de pilotar un carro de manera autónoma sin que este chocara con ningún obstáculo.  No podemos olvidarnos de uno de los momentos más significativos de nuestra época cuando el gran Garri Kaspárov fue derrotado por Deeper Blue en una partida de ajedrez en 1997, siendo la primera vez que el ajedrecista perdía contra una máquina.
@@ -94,25 +113,74 @@
 	
 	El aprendizaje supervisado es una rama del aprendizaje automático donde se entrena a un modelo con una serie de datos que contienen cuál es su entrada y cómo debe ser su salida. Un ejemplo de ello es la venta de un local: el modelo recibe como variables de entrada el número de baños, los metros cuadrados, el año de edificación... y el modelo procesa todo dando como salida el precio del local. Dentro de este tipo de aprendizaje pueden abordarse dos tipos de problemas: regresión si lo que devuelve la máquina es un valor justo (siguiendo con el ejemplo anterior, el precio del local), o clasificación si lo que devuelve es una categoría (clasificar imágenes de vehículos entre coches o camiones). Hay que añadir que son muchos los algoritmos de los que consta, aunque destacan principalmente:
 	
-\begin{description}
-	\item[Regresión lineal:] se modela la relación de una variable dependiente con una o varias variables independientes.
-	\item[Regresión logística:] se modela para solventar problemas de clasificación binaria.
-	\item[Regresión logística:] se modela para solventar problemas de clasificación binaria.
-	\item[SVM:] se utiliza tanto en regresión como en clasificación. El objetivo es separar las clases en el espacio de características a través de la búsqueda del hiperplano.
-	\item[Árboles de decisión:] el objetivo es dividir el espacio de características en regiones y asignar una etiqueta a cada una de ellas.
-	\item[Random forest:] conjunto de árboles de decisión que trabajan de manera combinada para alcanzar una mayor precisión y así evitar el sobreajuste.
-\end{description}
+	\begin{description}
+		\item[Regresión lineal:] se modela la relación de una variable dependiente con una o varias variables independientes.
+		\item[Regresión logística:] se modela para solventar problemas de clasificación binaria.
+		\item[SVM:] se utiliza tanto en regresión como en clasificación. El objetivo es separar las clases en el espacio de características a través de la búsqueda del hiperplano.
+		\item[Árboles de decisión:] el objetivo es dividir el espacio de características en regiones y asignar una etiqueta a cada una de ellas.
+		\item[Random forest:] conjunto de árboles de decisión que trabajan de manera combinada para alcanzar una mayor precisión y así evitar el sobreajuste.
+	\end{description}
 
 	Por otro lado estaría el aprendizaje no supervisado donde los datos no tienen ni etiquetas ni salidas asociadas. Su objetivo es que la máquina aprenda a base de identificar patrones en los datos y extraer información útil de ellos. Para explicar mejor esto, pongamos un ejemplo: teniendo un conjunto de transacciones bancarias, determinar grupos de personas según las similitudes de compras. Dentro de ello podemos distinguir tres tipos de problemas:
 	
-\begin{description}
-	\item[Clustering:] el objetivo es agrupar los datos en conjuntos o clusters según existan similitudes entre ellos. Por indicar alguno de los algoritmos dentro de este tipo, destacan K-Means, Clustering Jerárquico o DBSCAN.
-	\item[Reducción de dimensionalidad:] el objetivo es reducir el número de variables en un conjunto de datos sin perder la mayor parte de la información. Ejemplos de algoritmos son Análisis de Componentes Principales (PCA) y T-Distributed Stochastic Neighbor Embedding (t-SNE)
-	\item[Asociación:] el objetivo de la máquina es que aprenda a base de relacionar variables en un conjunto de datos determinado. Un ejemplo dominante dentro de este grupo son la sección de recomendación de webs de compras. Ejemplos de algoritmos dentro de ello son Eclat y FP-Growth.
-\end{description}
+	\begin{description}
+		\item[Clustering:] el objetivo es agrupar los datos en conjuntos o clusters según existan similitudes entre ellos. Por indicar alguno de los algoritmos dentro de este tipo, destacan:
+			\begin{enumerate}
+				\item K-Means
+				\item Clustering Jerárquico
+				\item DBSCAN
+			\end{enumerate}
+		\item[Reducción de dimensionalidad:] el objetivo es reducir el número de variables en un conjunto de datos sin perder la mayor parte de la información. Ejemplos de algoritmos son:
+			\begin{enumerate}
+				\item Análisis de Componentes Principales (PCA)
+				\item T-Distributed Stochastic Neighbor Embedding (t-SNE)
+			\end{enumerate}
+		\item[Asociación:] el objetivo de la máquina es que aprenda a base de relacionar variables en un conjunto de datos determinado. Un ejemplo dominante dentro de este grupo son la sección de recomendación de webs de compras. Ejemplos de algoritmos dentro de ello son:
+			\begin{enumerate}
+				\item Eclat
+				\item FP-Growth
+			\end{enumerate}
+	\end{description}
 
 	Si combinamos las ideas fundamentales de estos dos aprendizajes anteriores, damos lugar al aprendizaje semisupervisado. Simplemente permite que la máquina aprenda a base de datos sin etiqueta y con ella.
 	
-	Otro tipo de Machine Learning es el conocido como aprendizaje por refuerzo. La idea fundamental de este tipo de aprendizaje es que la respuesta del modelo mejore a partir de una retroalimentación en forma de recompensas. En otras palabras, el algoritmo va a aprender basándose en lo que le rodea y siguiendo la filosofía “ensayo-error”. Se utiliza en infinidad de sectores y los algoritmos por excelencia dentro de este aprendizaje son Q-Learning, SARSA, Algoritmo de Policy Gradient...
+	Otro tipo de Machine Learning es el conocido como aprendizaje por refuerzo. La idea fundamental de este tipo de aprendizaje es que la respuesta del modelo mejore a partir de una retroalimentación en forma de recompensas. En otras palabras, el algoritmo va a aprender basándose en lo que le rodea y siguiendo la filosofía “ensayo-error”. Se utiliza en infinidad de sectores y los algoritmos por excelencia dentro de este aprendizaje son:
+			\begin{enumerate}
+				\item Q-Learning
+				\item SARSA
+				\item Algoritmo de Policy Gradient
+			\end{enumerate}
 	
 	Por último, otro aprendizaje muy presente en diversos sectores es el Deep Learning. El objetivo de este campo es emular el comportamiento de un cerebro humano a partir de algoritmos de redes neuronales artificiales formadas por múltiples capas de procesamiento capaces de representar datos de alto nivel. Ejemplos muy característicos son el reconocimiento de imágenes, detección de objetos, detección de fraudes, traducción automática...
+	
+\section{Arquitectura de aplicaciones móviles}
+
+	Cuando hablamos de la arquitectura de aplicaciones móviles hablamos tanto de los componentes y su interacción como de la estructura y diseño que albergan dentro de ellas. Para explicarlo de una manera óptima, podemos dividir esta estructura en una serie de capas:
+	
+	\begin{description}
+		\item[Capa visual o Frontend:] esta capa recoge todo lo relacionado con la interfaz y la experiencia de usuario (UI y UX respectivamente). Sus componentes principales (siguiendo el patrón MVC explicado en el punto 4 de este informe: Técnicas y herramientas) son:
+			\begin{enumerate}
+				\item Controladores : albergan la lógica de presentación de la aplicación.
+				\item Vistas: muestran al usuario la información que les llega desde los controladores.
+			\end{enumerate}
+		\item[Capa lógica]: dentro de esta capa se encuentran los modelos según el patrón MVC. No soy partidario de meterlo ni en la capa anterior ni en la posterior porque no responde como tal a ninguna de las dos. En este caso, los modelos son el puente entre ambas partes, pues se encargan del manejo de los datos.
+		\item[Capa de datos o Backend:] capa que tiene como objetivo almacenar datos y prepararlos para su posterior uso en la aplicación. Dentro de esta capa encontramos componentes como:
+			\begin{enumerate}
+				\item APIs : permiten hacer llamadas a servicios externos con el fin de recuperar datos.
+				\item Bases de datos: almacenan datos de manera persistente.
+			\end{enumerate}
+	\end{description}
+	
+\section{Bases de datos en la Nube}
+
+	Como hemos apuntado en la sección anterior, una base de datos es un conjunto de datos almacenados y que tienen relación entre sí. Los SGBD o Sistemas Gestores de Bases de datos son los programas que gestionan todo esto. Dentro de las bases de datos, podemos diferenciar dos grandes tipos:
+	
+	\begin{enumerate}
+		\item Bases de datos SQL o relacionales
+		\item Bases de datos NoSQL o no relacionales
+	\end{enumerate}
+	
+	Las bases de datos SQL almacenan una serie de datos y sus relaciones con otras tablas a través de claves, datos que son los mismos en tablas distintas. Cada registro se ve representado por filas mientras que las columnas representan los campos de cada registro. Esta filosofía de almacenamiento nos permite acceder de manera sencilla a cualquier dato. Para ello, contamos con el lenguaje SQL.
+	
+	Por otro lado se encuentran las bases de datos NoSQL, las cuales surgen por la necesidad de almacenar la información sin seguir una estructura determinada. Se utilizan cuando el número de datos a albergar es muy grande y necesitamos rapidez en el tratamiento de estos datos, cosa que las anteriores, en general, no permiten.
+	

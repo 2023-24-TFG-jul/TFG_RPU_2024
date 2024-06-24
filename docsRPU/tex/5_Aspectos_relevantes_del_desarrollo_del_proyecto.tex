@@ -26,42 +26,174 @@
 %  proyecto.
 %\end{enumerate}
 
-Como se ha marcado antes, es necesario preparar bien nuestro dataset. Revisando previamente el archivo, existen múltiples datos que nos van a dificultar nuestro trabajo tal y como vienen definidos. Por esta razón, se procede a hacer un estudio previo desde la aplicación de Microsoft Excel. El proceso consiste en crear una tabla dinámica con todos los datos y con los encabezados (estos últimos completos), de forma que se pueda ver los distintos nombres o números que forman el rango de datos:
- 
-	 Observando cada columna de esta forma, vemos los siguientes problemas:
+	Con todo introducido, pasamos a desarrollar uno de los puntos clave de la memoria de este trabajo: explicar cómo y por qué se ha realizado el trabajo de esta forma. Aunque es cierto que se podría explicar todo el proceso seguido, creo que es conveniente centrarnos en los aspectos que han sido claves para llegar al proceso final y que, muchos de ellos, han sido verdaderos quebraderos de cabeza.
+	
+	Si algo define este trabajo es la capacidad de una persona para conseguir realizar una aplicación y un modelo de Machine Learning comenzando completamente de cero, pues partía de no conocer absolutamente nada de lo que hoy es el resultado final. 
+	
+	A modo de ser ordenado, vamos a dividir este apartado en tres partes clave:
+	\begin{itemize}
+		\item Preparación del dataset
+		\item Entrenamiento del modelo y conexión con aplicación
+		\item Estructura general de la aplicación
+	\end{itemize}
+	
+\section{Creación y conexión del modelo}
+	
+	Como apuntaba al principio de este apartado, mis conocimientos en el ámbito del Machine Learning eran ínfimos. Había leído algún artículo relacionado con ello, pero nunca había entrado en detalle. Por esta razón, la parte de creación del modelo de predicción de precios fue la primera en realizarse. 
+	
+	Tras hablar con mis tutores como podríamos afrontarla, marcamos como primer objetivo la búsqueda de un dataset que respondiera de manera eficaz a nuestras necesidades. Fueron muchos los que encontramos, teniendo como palabras clave de búsqueda "E-commerce" o "Watches", entre otras. La búsqueda no fue sencilla pues mi desconocimiento de la matería y la gran cantidad de dataset presentes en la red no me permitía elegir con precisión cual podía ser un buen punto de partida.
+	
+	Tras varios días de búsqueda, el sitio web "Kaggle" me brindó el dataset definitivo: "Luxury Watch Listings". Este dataset contenía nada más y nada menos que más de 280000 relojes con sus características y su precio de venta. Tras ponerlo en común, fue el elegido.
+	
+	Una vez elegido, busqué toda información necesaria para tratarlo y poder crear un modelo que devolviese una predicción del precio de cualquier reloj. Leyendo en diversas fuentes de información pude darme cuenta que el problema principal a la hora de entrenar un modelo es la presencia de valores nulos. Concretamente, nuestro dataset poseía:
 
-1)	Columna unnamed
-	Esta columna, a primera vista, parece que marca de manera incremental el número de filas del archivo. Sin embargo, cuando cambiamos de marca de reloj, vuelve a comenzar en uno. Por lo tanto, trata de marcar el número de relojes por marca. Resumiendo, es inútil trabajar con ella para conseguir nuestro objetivo. La solución que se plantea es el borrado de esta columna.
-2)	Columna name
-	Sin duda es la columna más problemática de todo el archivo. Más que ser el nombre del reloj, es una descripción de este. El problema principal es que la descripción no sigue ninguna estructura: marca los datos que quiere, como quiere, repite datos de otras columnas... En resumen, ha sido y es una columna intratable. Por tanto, la solución es su borrado.
-3)	Columna price
-	Esta columna no presenta apenas errores. Simplemente marca el precio de cada reloj en dólares. Sin embargo, aquel producto que no se le haya sido marcado un precio, adquiere el valor “Price on request” o directamente se encuentra en blanco. La solución que se plantea es dar a estas dos excepciones el valor -1 para entender que no existe información relativa sobre ese reloj. Hay que añadir que se quitará el símbolo “$” para evitar errores.
-4)	Columna brand
-	No presenta ningún error. Simplemente, se categorizará para su posterior uso en el modelo a crear. Las celdas sin información pasarán a valer -1.
-5)	Columna model
-	No presenta ningún error. Simplemente, se categorizará para su posterior uso en el modelo a crear. Las celdas sin información pasarán a valer -1.
-6)	Columna ref
-	Siendo como soy, un apasionado de los relojes, sé que tener la referencia del reloj que buscamos es uno de los puntos más claves a la hora de reconocer el reloj. Sin embargo, la columna de nuestro dataset no está del todo limpia. Aun así, no quise perder tan valiosa información y me di cuenta de que toda referencia que lleva una letra siempre aparecerá en mayúscula. Por tanto, la solución que se da es eliminar toda aquella palabra que tenga al menos una minúscula.
-7)	Columna mvmt
-	No presenta ningún error. Simplemente, se categorizará para su posterior uso en el modelo a crear. Las celdas sin información pasarán a valer -1.
+	\begin{tabular}{|c|c|c|c|}
+  		\hline
+  		Nombre & Campos vacíos & Nombre & Campos vacíos \\
+  		\hline
+  		Unnamed & 0 & name & 72585 \\
+  		\hline
+  		price & 406 & brand & 131 \\
+  		\hline
+  		model & 30466 & ref & 43152 \\
+  		\hline
+  		mvmt & 196685 & casem & 164271 \\
+  		\hline
+  		bracem & 174896 & yop & 134 \\
+  		\hline
+  		cond & 75987 & sex & 95805 \\
+  		\hline
+  		size & 23597 & condition & 212922 \\
+  		\hline
+	\end{tabular}
+	
+	Aparentemente no eran muchos los campos nulos en proporción a las 280000 lineas del dataset. Sin embargo, esto no fue del todo cierto. Revisando previamente el archivo, vi que existian múltiples datos que nos iban a dificultar nuestro trabajo. Por esta razón, se procedió a hacer un estudio previo desde la aplicación Microsoft Excel. El proceso consistió en crear una tabla dinámica con todos los datos y encabezados, de forma que se pudiera ver los distintos nombres o números que formaban el rango de datos. 
+	
+	Tras estudiar los datos y saber que la siguiente fase del proceso era convertir todo esa información en números para poder entrenar el modelo, se llegó a una serie de soluciones a problemas que se plantean a continuación:
+	
+\begin{description}
+	\item[Columna unnamed:] esta columna, a primera vista, parecía que marcaba de manera incremental el número de filas del archivo. Sin embargo, cuando cambiabamos de marca de reloj, volvía a comenzar en uno. Por tanto, trataba de marcar el número de relojes por marca. Resumiendo, fue inútil trabajar con ella para conseguir nuestro objetivo. La solución que se planteó fue el borrado de esta.
+	\item[Columna name:] sin duda fue la columna más problemática de todo el archivo. Más que ser el nombre del reloj, era una descripción de este. El problema principal fue que la descripción no seguía ninguna estructura: marcaba los datos que quería, como quería, repetía datos de otras columnas... En resumen, ha sido y es una columna intratable. Por tanto, la solución fue su borrado.
+	\item[Columna price:] esta columna no presentaba apenas errores. Simplemente marcaba el precio de cada reloj. Sin embargo, aquel producto que no se le fuese marcado un precio, adquería el valor “Price on request” o directamente se encontraba en blanco. La solución que se planteó fue dar a estas dos excepciones el valor -1 para entender que no existe información relativa sobre ese reloj. Hay que añadir que se eliminó el símbolo dolar para evitar errores.
+	\item[Columna brand:] no presentó ningún error. Simplemente, se categorizó para su posterior uso en el modelo a crear. Las celdas sin información pasaron a valer -1.
+	\item[Columna model:] no presentó ningún error. Simplemente, se categorizó para su posterior uso en el modelo a crear. Las celdas sin información pasaron a valer -1.
+	\item[Columna ref:] siendo como soy, un apasionado de los relojes, sabía que tener la referencia del reloj que buscamos es uno de los puntos más claves a la hora de reconocer el reloj. Sin embargo, la columna de nuestro dataset no se encontraba del todo limpia. Aun así, no quise perder tan valiosa información y me di cuenta de que toda referencia que lleva una letra siempre aparecería en mayúscula. Por tanto, la solución que se dió fue eliminar toda aquella palabra que tuviera al menos una minúscula.
+	\item[Columna mvmt:] no presentó ningún error. Simplemente, se categorizó para su posterior uso en el modelo a crear. Las celdas sin información pasaron a valer -1.
+	\item[Columna casem:] no presentó ningún error. Simplemente, se categorizó para su posterior uso en el modelo a crear. Las celdas sin información pasaron a valer -1.
+	\item[Columna bracem:] no presentó ningún error. Simplemente, se categorizó para su posterior uso en el modelo a crear. Las celdas sin información pasaron a valer -1.
+	\item[Columna yop:] la información se brindaba de cuatro formas diferentes:
+		\begin{description}
+			\item - Un único año (Ej. 2024)
+			\item - Varios años separado por comas (Ej. 2021, 2022, 2023)
+			\item - Un año seguido de la palabra aproximación (Ej. 2020 (Approximation))
+			\item - No se sabe el año y se marca como Unknown, o se deja en blanco.
+		\end{description}
+	La solución que se aportó fue únicamente marcar un año por celda. Por tanto, para el primer caso no se hizo nada; el segundo caso se hizo la media entre todos los años que se marcaban; para el tercero se quitó la palabra “Approximation”; y para el último se cambió el valor “Unknown” o celda blanca por -1.
+	\item[Columna cond:] esta columna tenía los datos perfectamente dispuestos para ser categorizados. Sin embargo, se vió que terminaba a mitad de camino, siendo la columna “condition” quien seguía el trabajo de esta. La solución que se aportó fue combinar ambas columnas en una misma y categorizar, marcando como -1 aquellas celdas que se encontraban vacías.
+	\item[Columna sex:] no presentó ningún error. Simplemente, se categorizó para su posterior uso en el modelo a crear. Las celdas sin información pasaron a valer -1.
+	\item[Columna size:] debido a que fue un campo que oposu muchas dificultades, la solución que se aportó fue simple: borrar la columna. No es un campo que aportara información útil comparado con otros campos como la marca, el estado, el precio... que son variables que van a definir casi por completo la predicción objetivo.
+	\item[Columna condition:] explicada en apartado "Columna cond".
+\end{description}
+	
+	Para llegar a este momento pasaron par de semanas hasta que creí encontrar la solución más óptima para poder empezar a crear y entrenar un modelo. Realicé dos líneas de entrenamiento: Regresion Lineal y Random-Forest-Regresor. Los resultados de las métricas fueron:
+	
+	\begin{tabular}{|c|c|c|c|}
+  		\hline
+  		  & Regresion Lineal & Random-Forest-Regresor \\
+  		\hline
+  		Mean-Squared-Error & 2033534792.8564095 & 1380488875.0762675 \\
+  		\hline
+  		Root-Mean-Squared-Error & 45094.73132037056 & 37154.930696695796 \\
+  		\hline
+  		R2-score & 0.4078856446303635 & 0.598036245442073 \\
+  		\hline
+  		R2-score-ajustado & 0.4078464450275924 & 0.5980096343333164 \\
+  		\hline
+  		Mean-absolute-percentage-error & 1.2132659733005473 & 0.23691091500423903 \\
+  		\hline
+	\end{tabular}
+	
+	Tras una reunión vimos que la métrica "Mean Absolute Percentage error" era muy buena, mientras que las demás no lo eran tanto. Esto nos hizo dudar de cómo se estaban tratando, llegando tras varios días a la conclusión de que había cuatro errores clave en la forma de tratar mis datos:
+	
+	\begin{description}
+		\item - Al categorizar por mi cuenta, estaba queriendo decir al modelo de alguna forma que la marca de relojes que recibia el valor 1 era peor que la marca de relojes que recibía el valor 2, y esto no tenía por qué ser así.
+		\item - Dar el valor -1 a aquellos campos nulos o sin información relevante no fue una buena práctica para entrenar al modelo.
+		\item - Durante la realización de esta parte, la consola me devolvía error con el tipo de datos. Tras dos semanas intentado ver que ocurría vi que estaba cometiendo un error: los valores int no tienen soporte directo para representar NaN, sin embargo float sí. Esto me hizo tener que volver a empezar de nuevo y pensar de manera distinta el proceso.
+		\item - La libreria pandas trata los valores faltantes de diferente forma que la libreria numpy, siendo pandas pd.NA y numpy np.NaN.
+	\end{description}
+	
+	En conclusión, tuvimos que cambiar de nuevo la forma de trabajar. Dicen que a veces es más fácil desaprender y volver a realizar las cosas de nuevo. En mi caso, me surgió efecto.
+	
+		Lo primero que hice fue ver como podía limpiar los datos, cosa que reutilicé parte de lo que ya había pensado anteriormente. No traté de categorizar, simplemente me quedé con lo que me interesaba y lo que no lo vacié. Con esto listo, pensé en como podía completar los campos vacíos: 
+		\begin{description}
+		\item - Para la columna precio, intenté aplicar la media de aquellos que comparten marca y modelo. No sirvió, pues existen relojes de la misma marca y modelo que se diferencian mucho, bien por la correa, la edición, el año...
+		\item - No podía dar valores porque sí al sexo, brazalete, caja, año...
+	\end{description}
+	Debido a no tener forma de dar valores a los campos faltantes, me salieron bastantes campos sin información. Sin embargo, empecé a probar combinaciones de columnas para ver con cuantas me podía quedar sin perder parte de las filas del dataset. Tras varias pruebas, las candidatas fueron:
+		\begin{description}
+		\item - brand
+		\item - model
+		\item - condition
+		\item - yop
+		\item - price
+	\end{description}
+	
+	El resultado final fue un dataset de 160000 líneas con tres columnas que pasarían a ser categóricas en un futuro, una columna númerica y una columna objetivo.
+	
+		
+\section{Entrenamiento del modelo y conexión con aplicación}
 
+	Referenciando al apartado anterior, nos situamos en el dataset final. Tras semanas de trabajo y reuniones con tutores, vimos que debíamos centrarnos en cómo ibamos a comunicar el modelo de Machine Learning con la aplicación de Flutter. Este proceso fue uno de los más duros, pues la información que había en la red era escasa y diferente. Si tuviera que definir este apartado en una frase sería: prueba y error.
+	
+	Con el dataset preparado, descubrí OneHotEncoder (explicado en parte teórica) y entrené al modelo, consiguiendo un modelo que predecía el precio del reloj. Tras revisar las pocas fuentes de información disponibles, vie que existía una herramienta para conectar el modelo: tflite. Al parecer, todo era muy sencillo. Simplemente debía conseguir guardar el modelo con la extensión .h5, agregar una serie de dependencias en mi programa y descargar algún que otro paquete. Sin embargo, esto o fue así. Cada vez que lanzaba de alguna manera peticiones al modelo, el problema con los tipos de datos afloraba.
+	
+	Esto no fue el único problema. Un error mío fue entrenar siempre por completo el modelo cada vez que intentaba una cosa nueva. Esto me suponía cerca de tres cuartos de hora esperando a que terminara, muchas veces con el resultado final de no poder ni guardar el modelo. 
+	
+	Al igual que con el dataset, dar con el problema fue un mundo. Traté de cambiar el tipo de datos, traté hacer conversiones extensiones sobre el modelo... pero nada. El modelo no respondía. Volviendo un poco al primer apartado, pensé que podía ser problema de las versiones de "tensorflow", "Flask"... y así fue: cada vez que realizaba un "pip install tensorflow" se decargaba por detrás una librería "tensorflow-intel" que descuadraba la compatibilidad de unas librerías con otras. Resumiendo, había que buscar otra forma.
+	
+	Ojeando par de vídeos y leyendo en algún sitio web, ví que podía conseguir mi objetivo dando algo más de vuelta. Como veía que entrenar mi modelo suponía una gran cantidad de tiempo, tomé el consejo de mis tutores y traté de reducir el número de líneas de entrenamiento ya que mi objetivo era que se conectase a la aplicación como fuera.
+	
+	La extensión elegida fue ".joblib". Una vez conseguida, realicé un pequeño script en python para poder lanzar en local. Con todo ello, conseguí que el script funcionase, pero tuve problemas con la forma de lanzar peticiones desde la terminal. Esto fue un poco frustante, ya que veía como siguiendo la información disponible en red funcionaba y yo no lo conseguía.
+	
+	No podía destinar el tiempo del que no disponía en ello, así que intenté trabajar con Postman, herramienta muy intuitiva que yo había utilizado tanto en el mundo estudiantil como en el mundo laboral. Tras un tiempo configurando todo y corrigiendo errores, conseguí dar respuesta a mi petición POST, cosa que celebré como un gol en el ambito futbolístico.
+	
+	La siguiente fase era desplegarlo de alguna forma para que mi aplicación Flutter pudiera hacer la llamada que había conseguido con Postman. Muchos vídeos me recomendaban Fly.io y Heroku. Ambas presumían de ser entornos gratuitos, pero a la hora de la verdad, te obligaban a ingresar un método de pago. Aun así, comenté mi problema con algún compañero y me recomendó Render, el cual sería mi opción final.
+	
+	El camino de Render era aparentemente sencillo: conectar con mi repositorio de Git y desplegar. Como marqué al principio del apartado, el proceso fue prueba y error. Tras varios commits, horas de intentos y pruebas, dí con los cuatro archivos necesarios para conseguir desplegar la API que haría las peticiones al modelo: Procfile.txt, requirements.txt, el modelo con extensión .joblib y el script con extensión .py.
+	
+	Con todo listo, la predicción y conexión con mi aplicación estaban listas.
+	
 
-8)	Columna casem
-	No presenta ningún error. Simplemente, se categorizará para su posterior uso en el modelo a crear. Las celdas sin información pasarán a valer -1.
-9)	Columna bracem
-	No presenta ningún error. Simplemente, se categorizará para su posterior uso en el modelo a crear. Las celdas sin información pasarán a valer -1.
-10)	Columna yop
-	Se da la información de cuatro formas diferentes:
--	Un único año (Ej. 2024)
--	Varios años separado por comas (Ej. 2021, 2022, 2023)
--	Un año seguido de la palabra aproximación (Ej. 2020 (Approximation))
--	No se sabe el año y se marca como Unknown, o se deja en blanco.
-	La solución que se aporta es únicamente marcar un año por celda. Por tanto, para el primer caso no se haría nada; el segundo caso haríamos la media entre todos los años que se marquen; para el tercero quitaremos la palabra “Approximation”; y para el último cambiaremos el valor “Unknown” o celda blanca por -1.
-11)	Columna cond
-	Esta columna tiene los datos perfectamente dispuestos para ser categorizados. Sin embargo, vemos que termina a mitad de camino, siendo la columna “condition” quien siga el trabajo de esta. La solución que se aporta es combinar ambas columnas en una misma y categorizar, marcando como -1 aquellas celdas que se encuentren vacías.
-12)	Columna condition
-	Explicada en apartado anterior.
-13)	Columna sex
-	No presenta ningún error. Simplemente, se categorizará para su posterior uso en el modelo a crear. Las celdas sin información pasarán a valer -1.
-14)	Columna size
-	Aunque es un campo que opone muchas dificultades, la solución que se aporta es simple: borrar la columna. No es un campo que aporte información útil comparado con otros campos como la marca, el estado, el precio... que son variables que van a definir casi por completo la predicción objetivo.
+%2)	Columna name
+%	
+%3)	Columna price
+%	
+%4)	Columna brand
+%	
+%5)	Columna model
+%	No presenta ningún error. Simplemente, se categorizará para su posterior uso en el modelo a crear. Las celdas sin información pasarán a valer -1.
+%6)	Columna ref
+%	Siendo como soy, un apasionado de los relojes, sé que tener la referencia del reloj que buscamos es uno de los puntos más claves a la hora de reconocer el reloj. Sin embargo, la columna de nuestro dataset no está del todo limpia. Aun así, no quise perder tan valiosa información y me di cuenta de que toda referencia que lleva una letra siempre aparecerá en mayúscula. Por tanto, la solución que se da es eliminar toda aquella palabra que tenga al menos una minúscula.
+%7)	Columna mvmt
+%	No presenta ningún error. Simplemente, se categorizará para su posterior uso en el modelo a crear. Las celdas sin información pasarán a valer -1.
+%
+%
+%8)	Columna casem
+%	No presenta ningún error. Simplemente, se categorizará para su posterior uso en el modelo a crear. Las celdas sin información pasarán a valer -1.
+%9)	Columna bracem
+%	No presenta ningún error. Simplemente, se categorizará para su posterior uso en el modelo a crear. Las celdas sin información pasarán a valer -1.
+%10)	Columna yop
+%	Se da la información de cuatro formas diferentes:
+%-	Un único año (Ej. 2024)
+%-	Varios años separado por comas (Ej. 2021, 2022, 2023)
+%-	Un año seguido de la palabra aproximación (Ej. 2020 (Approximation))
+%-	No se sabe el año y se marca como Unknown, o se deja en blanco.
+%	La solución que se aporta es únicamente marcar un año por celda. Por tanto, para el primer caso no se haría nada; el segundo caso haríamos la media entre todos los años que se marquen; para el tercero quitaremos la palabra “Approximation”; y para el último cambiaremos el valor “Unknown” o celda blanca por -1.
+%11)	Columna cond
+%	Esta columna tiene los datos perfectamente dispuestos para ser categorizados. Sin embargo, vemos que termina a mitad de camino, siendo la columna “condition” quien siga el trabajo de esta. La solución que se aporta es combinar ambas columnas en una misma y categorizar, marcando como -1 aquellas celdas que se encuentren vacías.
+%12)	Columna condition
+%	Explicada en apartado anterior.
+%13)	Columna sex
+%	No presenta ningún error. Simplemente, se categorizará para su posterior uso en el modelo a crear. Las celdas sin información pasarán a valer -1.
+%14)	Columna size
+%	Aunque es un campo que opone muchas dificultades, la solución que se aporta es simple: borrar la columna. No es un campo que aporte información útil comparado con otros campos como la marca, el estado, el precio... que son variables que van a definir casi por completo la predicción objetivo.
