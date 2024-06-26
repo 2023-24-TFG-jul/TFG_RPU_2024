@@ -32,9 +32,9 @@
 	
 	A modo de ser ordenado, vamos a dividir este apartado en tres partes clave:
 	\begin{itemize}
-		\item Preparación del dataset
-		\item Entrenamiento del modelo y conexión con aplicación
-		\item Estructura general de la aplicación
+		\item Preparación del dataset.
+		\item Entrenamiento del modelo y conexión con aplicación.
+		\item Estructura general de la aplicación y control de estados.
 	\end{itemize}
 	
 \section{Creación y conexión del modelo}
@@ -149,39 +149,37 @@
 	
 	Con todo listo, la predicción y conexión con mi aplicación estaban listas.
 	
-\section{Estructura general de la aplicación}
+\section{Estructura general de la aplicación y control de estados}
 	
+	Como se ha indicado en el punto 4 de este informe, se ha intentado aplicar el patrón MVC en el trabajo. Al tener tres tablas en nuestra base de datos, es necesario crear tres modelos en nuestro programa. Estos han recibido los nombres de:
+	\begin{enumerate}
+		\item user.dart (usuario)
+		\item watch.dart (reloj)
+		\item auction.dart (subasta)
+	\end{enumerate}
 
-%2)	Columna name
-%	
-%3)	Columna price
-%	
-%4)	Columna brand
-%	
-%5)	Columna model
-%	No presenta ningún error. Simplemente, se categorizará para su posterior uso en el modelo a crear. Las celdas sin información pasarán a valer -1.
-%6)	Columna ref
-%	Siendo como soy, un apasionado de los relojes, sé que tener la referencia del reloj que buscamos es uno de los puntos más claves a la hora de reconocer el reloj. Sin embargo, la columna de nuestro dataset no está del todo limpia. Aun así, no quise perder tan valiosa información y me di cuenta de que toda referencia que lleva una letra siempre aparecerá en mayúscula. Por tanto, la solución que se da es eliminar toda aquella palabra que tenga al menos una minúscula.
-%7)	Columna mvmt
-%	No presenta ningún error. Simplemente, se categorizará para su posterior uso en el modelo a crear. Las celdas sin información pasarán a valer -1.
-%
-%
-%8)	Columna casem
-%	No presenta ningún error. Simplemente, se categorizará para su posterior uso en el modelo a crear. Las celdas sin información pasarán a valer -1.
-%9)	Columna bracem
-%	No presenta ningún error. Simplemente, se categorizará para su posterior uso en el modelo a crear. Las celdas sin información pasarán a valer -1.
-%10)	Columna yop
-%	Se da la información de cuatro formas diferentes:
-%-	Un único año (Ej. 2024)
-%-	Varios años separado por comas (Ej. 2021, 2022, 2023)
-%-	Un año seguido de la palabra aproximación (Ej. 2020 (Approximation))
-%-	No se sabe el año y se marca como Unknown, o se deja en blanco.
-%	La solución que se aporta es únicamente marcar un año por celda. Por tanto, para el primer caso no se haría nada; el segundo caso haríamos la media entre todos los años que se marquen; para el tercero quitaremos la palabra “Approximation”; y para el último cambiaremos el valor “Unknown” o celda blanca por -1.
-%11)	Columna cond
-%	Esta columna tiene los datos perfectamente dispuestos para ser categorizados. Sin embargo, vemos que termina a mitad de camino, siendo la columna “condition” quien siga el trabajo de esta. La solución que se aporta es combinar ambas columnas en una misma y categorizar, marcando como -1 aquellas celdas que se encuentren vacías.
-%12)	Columna condition
-%	Explicada en apartado anterior.
-%13)	Columna sex
-%	No presenta ningún error. Simplemente, se categorizará para su posterior uso en el modelo a crear. Las celdas sin información pasarán a valer -1.
-%14)	Columna size
-%	Aunque es un campo que opone muchas dificultades, la solución que se aporta es simple: borrar la columna. No es un campo que aporte información útil comparado con otros campos como la marca, el estado, el precio... que son variables que van a definir casi por completo la predicción objetivo.
+	Los tres archivos siguen la misma filosofía:
+	\begin{enumerate}
+		\item Se declaran cada uno de los objetos.
+		\item Se estipula cómo se recibe y envía información a la base de datos.
+		\item Se declara cualquier función que trate los datos.
+	\end{enumerate}
+	
+	Por otro lado, se han definido las vistas y los controladores en el mismo script ya que Flutter requiere de ello. Como indicábamos en otros apartados, Flutter trabaja con widgets y estos necesitan que las funciones sean definidas para recargarlas cada vez que se producen cambios por diversas acciones, aunque esto lo hablaremos con más detalle en el apartado del manual de usuario.
+	
+	Un aspecto importante de este trabajo es controlar muy bien los estados de cada reloj y subastas tras realizar una acción cualquiera. Por ello, se enumera a continuación todos los casos tenidos en cuenta:
+	\begin{enumerate}
+		\item Cuando un usuario crea un reloj, no puede crear dos relojes con un mismo watch nickname ya que luego van a depender de este campo a la hora de crear una subasta.
+		\item Una vez creado el reloj, el estado del reloj pasará a estar subido, lo que indicará que ni se encuentra en subasta ni nunca ha sido partícipe de una. Por tanto, el usuario podrá editar y/o eliminar el reloj sin ningún problema.
+		\item Cuando un usuario quiera crear una subasta, deberá crearla con un nombre de los relojes asociados a su cuenta. En el momento de su creación, el estado de la subasta pasará a activa y el estado del reloj pasará a estar en subasta. Por tanto, se deben bloquear los botones de editar y eliminar del reloj. En cuanto a la subasta, el creador de la subasta tendrá bloqueados los botones tanto de compra directa como el botón de puja, mientras que el botón de eliminar estará disponible siempre que no haya aplicado nadie a la subasta. En cuanto a otros usuarios distintos al creador, tendrán disponibles los botones de manera contraria a este.
+		\item Si el creador de una subasta elimina esta, el estado de la subasta pasará a finalizado y el estado del reloj pasará a disponible, volviendo a habilitar de nuevo los botones de edición y eliminación del reloj.
+		\item Si por la razón que sea la subasta terminase, el estado de esta pasaría también ha finalizado, pero el estado del reloj pasaría a vendido y los botones seguirían deshabilitados.
+	\end{enumerate}
+	
+	Estos no han sido los únicos condicionantes a la hora de realizar acciones. Uno muy importante ha sido controlar bien las pujas de los usuarios. Siempre que usuario iba a realizar una puja o la compra directa del reloj, se han tenido en cuenta dos condicionantes:
+	\begin{enumerate}
+		\item El monedero del usuario debe ser mayor que la cantidad a pujar o la cantidad de compra directa.
+		\item El monedero del usuario debe ser mayor al sumatorio de todas las pujas realizadas por un usuario.
+	\end{enumerate}
+	
+	Refiriéndome al último condicionante, nos ponemos en el supuesto de que un usuario gane todas las pujas que aplica. Si ganase todas, debe poder pagar todas. De ahí que se haga la comprobación y, si no pudiese hacer frente a ello, se le avise con una alerta informativa explicando el porqué de todo.

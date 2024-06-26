@@ -44,3 +44,16 @@
 		\item Es gratuita. Las otras parecen ofrecer servicios gratis pero acaban pidiendo un método de pago.
 		\item Si tenemos conectado nuestro espacio a un repositorio de Git, se realizará un autodeploy cuando esta detecte algún commit en la carpeta indicada.
 	\end{enumerate}
+	
+\section{MVC}
+
+	Las siglas MVC responden al patrón Modelo-Vista-Controlador utilizado con el objetivo de llevar a cabo una aplicación con una arquitectura concreta. Se compone de tres partes:
+	\begin{description}
+		\item [Modelo:] podríamos definirlo como el script donde se van a definir las consultas a la base de datos. Representa a la capa lógica de nuestro programa.
+		\item [Controlador:] es el puente intermedio entre el modelo y la vista. Recibe los datos introducidos por el usuario a través de la vista, los lleva al modelo para realizar las acciones necesarias, los recupera de nuevo y los envía a la vista.
+		\item [Vista:] es la interfaz de usuario. Su objetivo es presentar al usuario los datos que le envía el controlador.
+	\end{description}
+	
+	Para ser más fácil su asimilación, se puede apreciar el flujo de datos en la Figura 4.1. Se ha intentado seguir este patrón debido a que lo he aprendido en mis prácticas curriculares y quería intentar seguirlo, pero Flutter no permite aplicarlo tan puro como otros lenguajes como PHP.
+	
+\imagen{basic_mvc}{Esquema patrón MVC}{1}
