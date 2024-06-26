@@ -107,7 +107,7 @@ class _AddAuctionState extends State<AddAuction> {
                     const SizedBox(height: 20.0),
                     TextField(
                       decoration: InputDecoration(
-                        hintText: 'Maximum price *',
+                        hintText: 'Direct sale price *',
                         hintStyle: TextStyle(
                             color: Colors.red,
                             fontSize: isLargeScreen ? 18.0 : 14.0),

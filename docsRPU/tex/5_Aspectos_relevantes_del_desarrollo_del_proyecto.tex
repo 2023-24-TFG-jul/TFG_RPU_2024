@@ -45,28 +45,20 @@
 	
 	Tras varios días de búsqueda, el sitio web "Kaggle" me brindó el dataset definitivo: "Luxury Watch Listings". Este dataset contenía nada más y nada menos que más de 280000 relojes con sus características y su precio de venta. Tras ponerlo en común, fue el elegido.
 	
-	Una vez elegido, busqué toda información necesaria para tratarlo y poder crear un modelo que devolviese una predicción del precio de cualquier reloj. Leyendo en diversas fuentes de información pude darme cuenta que el problema principal a la hora de entrenar un modelo es la presencia de valores nulos. Concretamente, nuestro dataset poseía:
-
-	\begin{tabular}{|c|c|c|c|}
-  		\hline
-  		Nombre & Campos vacíos & Nombre & Campos vacíos \\
-  		\hline
-  		Unnamed & 0 & name & 72585 \\
-  		\hline
-  		price & 406 & brand & 131 \\
-  		\hline
-  		model & 30466 & ref & 43152 \\
-  		\hline
-  		mvmt & 196685 & casem & 164271 \\
-  		\hline
-  		bracem & 174896 & yop & 134 \\
-  		\hline
-  		cond & 75987 & sex & 95805 \\
-  		\hline
-  		size & 23597 & condition & 212922 \\
-  		\hline
-	\end{tabular}
+	Una vez elegido, busqué toda información necesaria para tratarlo y poder crear un modelo que devolviese una predicción del precio de cualquier reloj. Leyendo en diversas fuentes de información pude darme cuenta que el problema principal a la hora de entrenar un modelo es la presencia de valores nulos. Concretamente, nuestro dataset poseía los datos nulos indicados en la Tabla 5.1.
 	
+\tablaSmall{Campos vacíos en los datos}{|c|c|c|c|}{campos-vacios}{
+  Nombre & Campos vacíos & Nombre & Campos vacíos \\
+  \midrule
+  Unnamed & 0 & name & 72585 \\
+  price & 406 & brand & 131 \\
+  model & 30466 & ref & 43152 \\
+  mvmt & 196685 & casem & 164271 \\
+  bracem & 174896 & yop & 134 \\
+  cond & 75987 & sex & 95805 \\
+  size & 23597 & condition & 212922 \\
+}
+
 	Aparentemente no eran muchos los campos nulos en proporción a las 280000 lineas del dataset. Sin embargo, esto no fue del todo cierto. Revisando previamente el archivo, vi que existian múltiples datos que nos iban a dificultar nuestro trabajo. Por esta razón, se procedió a hacer un estudio previo desde la aplicación Microsoft Excel. El proceso consistió en crear una tabla dinámica con todos los datos y encabezados, de forma que se pudiera ver los distintos nombres o números que formaban el rango de datos. 
 	
 	Tras estudiar los datos y saber que la siguiente fase del proceso era convertir todo esa información en números para poder entrenar el modelo, se llegó a una serie de soluciones a problemas que se plantean a continuación:
@@ -95,23 +87,17 @@
 	\item[Columna condition:] explicada en apartado "Columna cond".
 \end{description}
 	
-	Para llegar a este momento pasaron par de semanas hasta que creí encontrar la solución más óptima para poder empezar a crear y entrenar un modelo. Realicé dos líneas de entrenamiento: Regresion Lineal y Random-Forest-Regresor. Los resultados de las métricas fueron:
+	Para llegar a este momento pasaron par de semanas hasta que creí encontrar la solución más óptima para poder empezar a crear y entrenar un modelo. Realicé dos líneas de entrenamiento: Regresion Lineal y Random-Forest-Regresor. Los resultados de las métricas fueron los indicados en la Tabla 5.2.
 	
-	\begin{tabular}{|c|c|c|c|}
-  		\hline
-  		  & Regresion Lineal & Random-Forest-Regresor \\
-  		\hline
-  		Mean-Squared-Error & 2033534792.8564095 & 1380488875.0762675 \\
-  		\hline
-  		Root-Mean-Squared-Error & 45094.73132037056 & 37154.930696695796 \\
-  		\hline
-  		R2-score & 0.4078856446303635 & 0.598036245442073 \\
-  		\hline
-  		R2-score-ajustado & 0.4078464450275924 & 0.5980096343333164 \\
-  		\hline
-  		Mean-absolute-percentage-error & 1.2132659733005473 & 0.23691091500423903 \\
-  		\hline
-	\end{tabular}
+\tablaSmall{Comparación de métricas}{|c|c|c|}{comparacion-metricas}{
+   & Regresion Lineal & Random-Forest-Regresor \\
+  \midrule
+  Mean-Squared-Error & 2033534792.8564095 & 1380488875.0762675 \\
+  Root-Mean-Squared-Error & 45094.73132037056 & 37154.930696695796 \\
+  R2-score & 0.4078856446303635 & 0.598036245442073 \\
+  R2-score-ajustado & 0.4078464450275924 & 0.5980096343333164 \\
+  Mean-absolute-percentage-error & 1.2132659733005473 & 0.23691091500423903 \\
+}
 	
 	Tras una reunión vimos que la métrica "Mean Absolute Percentage error" era muy buena, mientras que las demás no lo eran tanto. Esto nos hizo dudar de cómo se estaban tratando, llegando tras varios días a la conclusión de que había cuatro errores clave en la forma de tratar mis datos:
 	
@@ -162,6 +148,8 @@
 	El camino de Render era aparentemente sencillo: conectar con mi repositorio de Git y desplegar. Como marqué al principio del apartado, el proceso fue prueba y error. Tras varios commits, horas de intentos y pruebas, dí con los cuatro archivos necesarios para conseguir desplegar la API que haría las peticiones al modelo: Procfile.txt, requirements.txt, el modelo con extensión .joblib y el script con extensión .py.
 	
 	Con todo listo, la predicción y conexión con mi aplicación estaban listas.
+	
+\section{Estructura general de la aplicación}
 	
 
 %2)	Columna name

@@ -3,33 +3,44 @@
 %Esta parte de la memoria tiene como objetivo presentar las técnicas metodológicas y las herramientas de desarrollo que se han utilizado para llevar a cabo el proyecto. Si se han estudiado diferentes alternativas de metodologías, herramientas, bibliotecas se puede hacer un resumen de los aspectos más destacados de cada alternativa, incluyendo comparativas entre las distintas opciones y una justificación de las elecciones realizadas. 
 %No se pretende que este apartado se convierta en un capítulo de un libro dedicado a cada una de las alternativas, sino comentar los aspectos más destacados de cada opción, con un repaso somero a los fundamentos esenciales y referencias bibliográficas para que el lector pueda ampliar su conocimiento sobre el tema.
 
-\section{Técnicas y herramientas en Machine Learning}
-
-	Habiendo introducido los aspectos clave del Machine Learning, podemos afirmar que nuestro caso corresponde a un modelo de regresión. Voy a realizar mi tratamiento del dataset de relojes con el fin de encontrar cual es el precio de venta más recomendable para cualquier reloj. Para ello, las dos herramientas clave que utilizaré son: Python (aprovechando la biblioteca de data science Panda) y mi dataset en formato .csv.
+	Habiendo definido los aspectos teóricos más clave para entender un poco mejor el trabajo, se define a continuación cuáles han sido las técnicas y herramientas utilizadas para alcanzar nuestro objetivo. Aunque las hemos nombrado en alguno de los apartados anteriores, esta sección del informe explica de manera más particular qué nos aportan y cuáles son las ventajas frente a otras.
 	
-	Las tres fases fundamentales dentro de esta labor práctica son:
+\section{Flutter}
 
-\begin{itemize}
-	\item Puesta a punto de los datos
-	\item Entrenamiento de nuestro modelo
-	\item Predicciones
-\end{itemize}
+	Flutter es un SDK (Software Development Kit) de código abierto desarrollado por Google. Su objetivo principal es la creación de aplicaciones multiplataforma con un único código base. Se basa en el lenguaje de programación Dart, el cual es un lenguaje de programación orientado a objetos desarrollado por Google con el fin de crear aplicaciones web y de escritorio de una manera rápida y sencilla.
+	
+	Volviendo al framework, Flutter es una herramienta que permite crear interfaces de usuario atractivas visualmente y de una alta personalización. Hay que añadir que dispone de una amplia gama de widgets predefinidos y listos para ser utilizados por cualquier usuario.
+	
+	En cuanto a su rendimiento, Flutter destaca por poseer su propio motor de renderizado eliminando así la necesidad de dependencia de componentes de interfaz de usuarios nativos.
+	
+	Aún que son muchas las ventajas  que presenta esta herramienta, hay que destacar una frente a las demás: la posibilidad de crear multiplataforma. Flutter nos va a permitir reutilizar el mismo código para crear nuestra aplicación en las plataformas iOS, Android, web, Windows, MacOS y Linux. A esta ventaja, añadir la posibilidad de recargar el código en caliente, aspecto muy demandado por cualquier persona que se dedique a la programación.
+	
+	Para explicarlo de una manera sencilla, la unidad mínima de este lenguaje es el widget. Estos objetos son los que van a conformar cualquiera de las vistas que tenga nuestra aplicación. Estos widgets pueden estar formados a su vez por dos o más widgets, consiguiendo una libertad de edición y reutilización de widgets enorme. A esto añadir la gran cantidad de librerías con widgets ya predefinidos y listos para ser usados.
+	
+	En lo que a este trabajo respecta, no todo son ventajas. La curva de aprendizaje de Flutter tiene muy poca pendiente y esto hace que conseguir una aplicación base llegue a ser frustrante. Solo para poder descargar el entorno debes tener unos requisitos e instalar una serie de programas previos que hacen que la probabilidad de error sea elevada. A esto hay que añadir que desde los últimos años, debido a la aparición de otros competidores, Flutter ha dejado de ser protagonista y su comunidad y documentación a disminuido de manera drástica, llegando a salir noticias actuales como el despido de gran parte del equipo de Flutter en Google.
+	
+	
+\section{Firestore database}
 
-	El dataset que voy a utilizar ha sido importado de Kaggle, cuyo link dejo marcado a continuación: https://www.kaggle.com/datasets/philmorekoung11/luxury-watch-listings . Siguiendo el orden que marcan las columnas del archivo, podemos crear una leyenda tal que:
+	Siguiendo un poco la herramienta utilizada en la capa visual, buscamos qué Sistema de Gestión de Base de Datos podría ser el óptimo para trabajar con Flutter. La verdad que encontrarlo resuelto sencillo pues Firestore Database también está desarrollado por Google y ofrece facilidades siempre que lo conectes a un SDK como Flutter.
+	
+	Firestore Database es una base de datos alojada en la nube que responde al tipo NoSQL. Entre sus características principales destacan la rapidez de respuesta y su sincronización de datos en tiempo real. La información se organiza en colecciones y documentos, los cuales podríamos comparar con tablas y registros respectivamente. Sin embargo, es una base de datos que no requiere de esquemas predefinidos, permitiendo así cambios en la estructura de los datos.
+	
+	Si tuviésemos que definir alguna ventaja más, podríamos afirmar que Firestore es capaz de gestionar grana cantidad de datos y sincronizarlos de manera rápida, así como una gran seguridad a la hora de autenticarnos. Sin embargo, existen algún que otra desventaja difícil de evitar durante este trabajo.
+	
+	Nunca había tratado directamente con una base de datos distinta al formato SQL, lo que provocó que mi forma de definir las tablas y tratar los datos no fuese del todo correcta en varios momentos críticos del trabajo. Por otro lado, la conexión con la base de datos es una etapa con muchos pequeños pasos intermedios que, al igual que la preparación de Flutter, pueden desembocar en errores si no se cumplen al pie de la letra.
 
-\begin{description}
-	\item[unnamed:] número de línea predefinido
-	\item[name:] nombre del reloj
-	\item[price:] precio del reloj
-	\item[brand:] marca del reloj
-	\item[model:] modelo del reloj
-	\item[ref:] número de referencia del reloj
-	\item[mvmt:] tipo de movimiento del reloj
-	\item[casem:] material de la caja
-	\item[bracem:] material del brazalete
-	\item[yop:] año de producción
-	\item[cond:] estado
-	\item[sex:] género
-	\item[size:] tamaño
-	\item[condition:] estado
-\end{description}
+
+\section{Machine Learning con Visual Studio Code}
+
+	Aunque existen otras formas de realizarlo, la parte de preparación de los datos y entrenamiento del modelo lo he realizado con Visual Studio Code. En otras asignaturas de esta carrera hemos utilizado Anaconda para trabajar sobre Jupyter Notebook, pero gracias a una extensión he trabajado de manera más sencilla así. 
+	
+	Por otro lado, tanto el script para lanzar ejecutar el modelo y la API han sido realizados con la misma herramienta pero con extensión .py	
+	
+\section{Render}
+
+	Render es un sitio web que permite desplegar infinidad de aplicaciones web, servicios backend, bases de datos... de una manera sencilla. Aunque hablaremos más a fondo en otros apartados de cómo ha sido la conexión, me gustaría destacar dos ventajas frente a otros competidores como Fly o Heroku:
+	\begin{enumerate}
+		\item Es gratuita. Las otras parecen ofrecer servicios gratis pero acaban pidiendo un método de pago.
+		\item Si tenemos conectado nuestro espacio a un repositorio de Git, se realizará un autodeploy cuando esta detecte algún commit en la carpeta indicada.
+	\end{enumerate}

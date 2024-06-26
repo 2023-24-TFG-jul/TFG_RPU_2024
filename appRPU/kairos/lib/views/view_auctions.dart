@@ -220,9 +220,9 @@ Future<int> _getTotalBidAmount(String email) async {
                             children: [
                               _buildRichText('Vendor:\n', auction.vendorEmail),
                               _buildRichText('Buyer:\n', auction.buyerEmail),
-                              _buildRichText('Start Value:\n',
+                              _buildRichText('Start bid:\n',
                                   auction.minimumValue.toString()),
-                              _buildRichText('Actual Value:\n',
+                              _buildRichText('Current bid:\n',
                                   auction.actualValue.toString()),
                               _buildRichText('Direct Sale Price:\n',
                                   auction.maximumValue.toString()),

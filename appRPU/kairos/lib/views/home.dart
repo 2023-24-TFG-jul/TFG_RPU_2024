@@ -119,20 +119,20 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    SizedBox(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // Placeholder for 'How much is my watch worth?' functionality
-                        },
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 15.0),
-                          textStyle:
-                              TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
-                        ),
-                        child: const Text('How much is my watch worth?'),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
+                    // SizedBox(
+                    //   child: ElevatedButton(
+                    //     onPressed: () {
+                    //       // Placeholder for 'How much is my watch worth?' functionality
+                    //     },
+                    //     style: ElevatedButton.styleFrom(
+                    //       padding: const EdgeInsets.symmetric(vertical: 15.0),
+                    //       textStyle:
+                    //           TextStyle(fontSize: isLargeScreen ? 18.0 : 14.0),
+                    //     ),
+                    //     child: const Text('How much is my watch worth?'),
+                    //   ),
+                    // ),
+                    // const SizedBox(height: 10),
                     SizedBox(
                       child: ElevatedButton(
                         onPressed: () {

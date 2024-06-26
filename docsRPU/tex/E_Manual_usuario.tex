@@ -2,10 +2,126 @@
 
 \section{Introducción}
 
+	En esta sección del documento, se hará un exhaustivo repaso de cómo el usuario puede realizar cualquier acción disponible en la aplicación. Para ser más precisos, la documentación contará con imágenes y explicaciones relativas a estas.
+
 \section{Requisitos de usuarios}
+
+	Como ya se ha indicado a lo largo de este trabajo, la aplicación es multiplataforma, por lo que el usuario podrá acceder desde cualquier dispositivo móvil u ordenador. La aplicación tiene unos caminos lógicos muy claros y que se han pensado para que cualquier persona, ya tenga o no conocimientos informáticos, puede desempeñar cualquier tarea.
 
 \section{Instalación}
 
+	La instalación no es necesaria, pues todo se encuentra desplegado en la red. Sin embargo, si quisiera instalarse con el objetivo de escalar la aplicación, toda la información está disponible en el apéndice D de este documento: Manual del programador.
+
 \section{Manual del usuario}
+
+	Una vez se sitúe el futuro usuario, su primera toma de contacto será con la ventana representada en la Figura E.1. Esta ventana corresponde con el inicio de sesión. El usuario deberá introducir sus datos personales, concretamente su correo electrónico, su contraseña y pulsar en el botón Log in. Si la información introducida es correcta, significará que el usuario tiene una cuenta en nuestra aplicación y pasará a encontrarse con la ventana representada en la Figura E.3.
+	
+\imagen{manual_usuario_1}{Inicio de sesión}{1}
+	
+	Si por el contrario el inicio de sesión no fuese correcto, la aplicación lanzará un mensaje de alerta indicando que los datos introducidos no son correctos. Esto puede deberse a dos factores:
+	\begin{enumerate}
+		\item El correo electrónico y/o la contraseña son incorrectas.
+		\item El usuario no se encuentra registrado en la base de datos.
+	\end{enumerate}
+	
+	La primera opción es simple y solo tendría que introducirse las credenciales tal y cómo se definieron al principio. Si la opción es la segunda, el futuro usuario podrá llegar a la ventana de registro pulsando en el botón Register. Tras esta acción, el usuario llegará a la venta representada en la figura E.2, donde tendrá que cumplimentar los campos con sus datos personales.
+
+\imagen{manual_usuario_2}{Registro de usuario}{1}
+	
+	El registro no da lugar a error, pues cuenta con mensajes de alerta estipulando donde se encuentra el fallo a la hora de introducir los datos. Para ser más concretos, se definen las condiciones de cada uno de los campos:
+	\begin{enumerate}
+		\item El campo name no puede contener números.
+		\item El campo surnames no puede contener números.
+		\item La fecha de nacimiento debe corresponder a una fecha con una diferencia mínima de 18 años respecto a la fecha actual.
+		\item El campo country no puede contener números.
+		\item El campo email debe seguir la forma general de cualquier correo electrónico: no empezar por un número, tener letra antes y después del símbolo @, contener el punto después del texto precedido por el símbolo @ y acabar con una extensión.
+		\item El campo password debe contener al menos 8 caracteres, una mayuscula, una minúscula, un caracter especial y un número.
+		\item El campo repeat password debe formarse con la misma información que el campo password.
+		\item El campo wallet solo debe contener números enteros positivos.
+		\item Todos los campos deben ser completados.
+	\end{enumerate}
+	Una vez listo, el futuro usuario debe pulsar en el botón Sign up y la aplicación mostrará una ventana confirmando el registro de la cuenta. Para volver a la ventana de inicio de sesión, solo debe pulsar en la flecha situada en la parte superior izquierda y rehacer los pasos de inicio de sesión explicados antes. Siguiendo estos pasos, el usuario llegará a la venta representada en la Figura E.3 conocida como página principal.
+
+\imagen{manual_usuario_3}{Página principal}{1}
+
+	La página principal muestra un mensaje de bienvenida al usuario, dirigiéndose a él por su correo electrónico. Como puede apreciarse, en la parte inferior izquierda se encuentra la cantidad de dinero que el usuario tiene ingresado en su cuenta. En la parte inferior derecha se encuentra un botón que permite al usuario cerrar su sesión.
+	
+	En la parte central de la página principal se pueden apreciar tres botones en columna que realizan tres acciones totalmente distintas:
+	\begin{enumerate}
+		\item Edición de la información personal
+		\item Listado de relojes del usuario
+		\item Listado de las subastas
+	\end{enumerate}
+	
+	Si pulsamos sobre el primer botón empezando desde abajo, viajaremos a la ventana representada en la Figura E.4. o denominada edición de la información del usuario. En ella el usuario podrá editar los datos que considere oportunos, así como recargar y/o sacar dinero de su monedero.
+	
+\imagen{manual_usuario_10}{Edición de la información del usuario}{1}
+
+	Al igual que en el registro, los campos cuentan con las mismas validaciones para asegurarnos de que no se da lugar al error. Una característica a tener en cuenta es la obligatoriedad a introducir la contraseña de nuevo por motivos de seguridad. Para ser más precisos, la ventana cuenta con un botón de información a la derecha del campo password explicando exactamente esta información. Una vez completado los campos correctamente, pulsando en el botón Update, la aplicación nos llevará de nuevo a la página principal.
+	
+	El primer botón de la página principal empezando por el principio, lleva a la ventana representada en la Figura E.5 y denominada listado de relojes del usuario. Aquí el usuario podrá ver los relojes que ha introducido y eliminarlos y/o editarlos si no se encuentran presentes en alguna subasta con estado activo. Por el contrario, si el usuario quisiera añadir un nuevo reloj a su lista, se debe pulsar en el botón con el símbolo + ubicado en la parte inferior derecha. Si se pulsa sobre ello, el usuario viajará a la ventana representada en la Figura E.6 denominada registro de un reloj.
+
+\imagen{manual_usuario_5}{Página listado de relojes}{1}
+\imagen{manual_usuario_4}{Registro de un reloj}{1}
+
+	Para que el usuario registre de manera satisfactoria un reloj, debe completar los campos siguiendo los siguientes criterios:
+	
+	\begin{enumerate}
+		\item El campo watch nickname debe ser completado con un nombre descriptivo a juicio del usuario para el reloj.
+		\item Los campos de tipo desplegable deben ser completados eligiendo uno de los que se dan como opción.
+		\item El campo yop debe contener solo números enteros positivos.
+		\item El campo precio debe contener solo números enteros positivos.
+		\item Los campos que sean acompañados de un asterisco imponen obligatoriedad de ser completados para el registro de un reloj.
+	\end{enumerate}
+	
+	A la derecha del campo price se aprecia un botón con el símbolo €. Si el usuario pulsa sobre ello y no ha completado los campos brand, model, yop y condition, la aplicación lanzará un mensaje marcando que los campos necesarios para la predicción del precio del reloj se encuentran vacíos. Si los campos están completos y se pulsa sobre ello, la aplicación lanzará un mensaje indicando el precio del reloj predicho tras la consulta al modelo creado y explicado en anteriores apartados.
+	
+	Con todo listo, si pulsamos sobre el botón Add your watch, la aplicación lanzará un mensaje de verificación de la creación del reloj y podremos volver a la vista del listado de relojes pulsando sobre la flecha de la parte superior izquierda.
+
+	Si nuestra necesidad es editar y/o eliminar un reloj de nuestra lista, pueden darse dos casos en cuanto al bloqueo de botones:
+	\begin{enumerate}
+		\item Si el reloj no se encuentra en subasta, los botones del lapicero y de la papelera no estarán bloqueados y podrán realizarse las acciones de edición y eliminación respectivamente.
+		\item Si el reloj se encuentra en subasta, ambos botones estarán deshabilitados y no será posible realizar ninguna de las dos acciones.
+	\end{enumerate}
+	
+	Referenciando a la primera situación, si el usuario desease eliminar el reloj, simplemente se lanzaría un mensaje de confirmación y el reloj no aparecería de nuevo en el listado. Si el usuario desease editar la información del reloj, se pulsaría sobre el botón con forma de lapicero y llevaría a la ventana representada en la Figura E.7.
+
+\imagen{manual_usuario_6}{Edición de un reloj}{1}
+	
+	Hasta aquí toda la información relativa a las acciones relacionadas con un reloj. Volviendo a la página principal, el segundo botón empezando desde arriba nos llevaría a la Figura E.8 denominada listado de subastas.
+
+\imagen{manual_usuario_8}{Página listado de subastas}{1}
+	
+	Una vez pulsado sobre el botón y situados en la página del listado de subastas, el usuario podrá crear una subasta pulsando sobre el botón con símbolo + situado en la parte inferior derecha de la vista. Este llevará a la ventana representada en la Figura E.9 denominada creación de subasta.
+
+\imagen{manual_usuario_7}{Creación de una subasta}{1}
+
+	Para que la creación de la subasta se lleve a cabo de manera satisfactoria, deben cumplirse las siguientes condiciones:
+	\begin{enumerate}
+		\item El campo watch nickname debe completarse con el watch nickname de un reloj existente.
+		\item Debe introducirse una fecha mayor a la actual.
+		\item Los campos minimum value y direct sale price deben contener números enteros positivos.
+		\item El campo minimum value debe ser menor que el direct sale price.
+		\item Todos los campos son obligatorios.
+	\end{enumerate}
+	
+	Si no se cumpliese alguna de estas condiciones, la aplicación lanzaría mensajes informativos explicando donde se encuentra el error. Si se ha cumplimentado todo de manera satisfactoria, al pulsar en el botón Add new auction, la aplicación no lanzaría un mensaje de confirmación de que la subasta se ha creado correctamente. El usuario podría volver a la vista de listado de subasta pulsando en la flecha situada en la parte superior izquierda de la ventana.
+	
+	Por último, se puede apreciar en la Figura E.7 como cada una de las tarjetas que engloban las subastas disponen de tres botones:
+	\begin{description}
+		\item [Papelera:] permite eliminar una subasta. Solo podrá estar disponible para el creador de la subasta y solo podrá borrarla si aun nadie ha aplicado a ella. Si alguien hubiera aplicado, el botón se deshabilitaría. Para los demás usuarios, este botón aparecerá bloqueado.
+		\item [Carrito de compra:] permite comprar de manera directa el reloj. Estará disponible para cualquier usuario a excepción del creador de la subasta, quien verá el botón deshabilitado. Si la cantidad a pagar es superior al monedero del usuario o a la suma de todas sus pujas, la aplicación respondería con un mensaje informativo.
+		\item [Símbolo de euro:] permite pujar a la subasta del reloj. Estará disponible para cualquier usuario a excepción del creador de la subasta, quien verá el botón deshabilitado. Para pujar, la aplicación lanzará un modal donde debe introducir la cantidad a pujar. Si la cantidad a pagar es superior al monedero del usuario o a la suma de todas sus pujas, la aplicación respondería con un mensaje informativo. Otras condiciones a tener en cuenta dentro de este punto son:
+		\begin{enumerate}
+			\item No puede pujarse menos que el valor inicial.
+			\item No puede pujarse menos que el valor actual de la subasta.
+			\item No puede pujarse por encima del precio de venta directa de la subasta.
+		\end{enumerate}
+	\end{description}
+	
+	Un ejemplo de cómo otro usuario ve las subastas de otros usuarios se ve reflejado en la Figura E.10
+	
+
+\imagen{manual_usuario_9}{Vista de subasta respecto a otro usuario}{1}
 
 

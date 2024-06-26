@@ -101,6 +101,8 @@
 	
 	En una subasta podemos diferenciar entre las pujas normales y el precio reserva, este último siendo nuestra máxima cantidad a pujar. Referenciando a los tipos explicados hace unas líneas, la subasta de sobre cerrado a primer precio no es una subasta del todo óptima. El pujador no trata de lanzar su precio de reserva y esto puede hacer que, si la subasta se repitiese, el precio se ajuste mucho y el mercado se vuelva volátil. Sin embargo, la subasta de sobre cerrado a segundo precio o Vickrey incita al pujador a adoptar una estrategia dominante y lanzar su puja máxima, obteniendo un grado de venta muy satisfactorio para ambas partes.
 	
+	En nuestro caso, el tipo de subasta elegido para nuestra aplicación será subasta de precio ascendente o inglesa, sin duda el tipo de subasta más frecuente.
+	
 	
 
 \section{Definición de Machine Learning, algoritmos y evaluación}
@@ -125,33 +127,35 @@
 	
 	\begin{description}
 		\item[Clustering:] el objetivo es agrupar los datos en conjuntos o clusters según existan similitudes entre ellos. Por indicar alguno de los algoritmos dentro de este tipo, destacan:
-			\begin{enumerate}
-				\item K-Means
-				\item Clustering Jerárquico
-				\item DBSCAN
-			\end{enumerate}
+			\begin{description}
+				\item [K-Means:] divide los datos en k grupos teniendo en cuenta la minimización de la varianza. El objetivo es que los centros de estos grupos se vayan actualizando de manera iterativa minimizando así el sumatorio de las distancias cuadradas entre los datos y el centro más cercano.
+				\item [Clustering Jerárquico:] consiste en agrupar datos a través de la fusión iterativa de los clusteres más similares. El resultado suele ser representado con un dendrograma.
+				\item [Density-Based Spatial Clustering of Applications with Noise (DBSCAN):] agrupa los datos en función de la densidad. Destaca por ser un algoritmo de gran ayuda a la hora de detectar ruido.
+			\end{description}
 		\item[Reducción de dimensionalidad:] el objetivo es reducir el número de variables en un conjunto de datos sin perder la mayor parte de la información. Ejemplos de algoritmos son:
-			\begin{enumerate}
-				\item Análisis de Componentes Principales (PCA)
-				\item T-Distributed Stochastic Neighbor Embedding (t-SNE)
-			\end{enumerate}
+			\begin{description}
+				\item [Análisis de Componentes Principales (PCA):] reduce dimensionalidad transformando los datos en nuevas variables ordenadas según al cantidad de varianza que explican.
+				\item [T-Distributed Stochastic Neighbor Embedding (t-SNE):] reduce la dimensionalidad disminuyendo el espacio y manteniendo las relaciones de proximidad locales. Muy útil para la búsqueda de patrones.
+			\end{description}
 		\item[Asociación:] el objetivo de la máquina es que aprenda a base de relacionar variables en un conjunto de datos determinado. Un ejemplo dominante dentro de este grupo son la sección de recomendación de webs de compras. Ejemplos de algoritmos dentro de ello son:
-			\begin{enumerate}
-				\item Eclat
-				\item FP-Growth
-			\end{enumerate}
+			\begin{description}
+				\item [Equivalence Class Clustering and bottom-up Lattice Traversal (Eclat):] permite encontrar conjuntos de datos frecuentes en bases de datos transaccionales.
+				\item [Frequent Pattern Growth (FP-Growth):] mismo objetivo que el anterior pero la dinámica consiste en la contrucción de un árbol de patrones frecuentes.
+			\end{description}
 	\end{description}
 
 	Si combinamos las ideas fundamentales de estos dos aprendizajes anteriores, damos lugar al aprendizaje semisupervisado. Simplemente permite que la máquina aprenda a base de datos sin etiqueta y con ella.
 	
 	Otro tipo de Machine Learning es el conocido como aprendizaje por refuerzo. La idea fundamental de este tipo de aprendizaje es que la respuesta del modelo mejore a partir de una retroalimentación en forma de recompensas. En otras palabras, el algoritmo va a aprender basándose en lo que le rodea y siguiendo la filosofía “ensayo-error”. Se utiliza en infinidad de sectores y los algoritmos por excelencia dentro de este aprendizaje son:
-			\begin{enumerate}
-				\item Q-Learning
-				\item SARSA
-				\item Algoritmo de Policy Gradient
-			\end{enumerate}
+			\begin{description}
+				\item [Q-Learning:] actualiza los valores teniendo en cuenta las recompensas recibidas y las estimaciones futuras.
+				\item [State-Action-Reward-State-Action (SARSA):] actualiza los valores teniendo en cuenta las acciones presentes y las futuras.
+				\item [Algoritmo de Policy Gradient:] actualiza los valores según la dirección del gradiente de la recompensa esperada.
+			\end{description}
 	
 	Por último, otro aprendizaje muy presente en diversos sectores es el Deep Learning. El objetivo de este campo es emular el comportamiento de un cerebro humano a partir de algoritmos de redes neuronales artificiales formadas por múltiples capas de procesamiento capaces de representar datos de alto nivel. Ejemplos muy característicos son el reconocimiento de imágenes, detección de objetos, detección de fraudes, traducción automática...
+	
+	En nuestro caso, nuestro problema responde a un aprendizaje supervisado. Aunque lo veremos más adelante, se han probado dos algoritmos distintos, siendo Regresión Lineal el definitivo.
 	
 \section{Arquitectura de aplicaciones móviles}
 
@@ -171,6 +175,8 @@
 			\end{enumerate}
 	\end{description}
 	
+	En nuestro caso, Flutter será quién protagonice la capa visual y la capa lógica, mientras que Firestore Database será quien marque la capa de datos.
+	
 \section{Bases de datos en la Nube}
 
 	Como hemos apuntado en la sección anterior, una base de datos es un conjunto de datos almacenados y que tienen relación entre sí. Los SGBD o Sistemas Gestores de Bases de datos son los programas que gestionan todo esto. Dentro de las bases de datos, podemos diferenciar dos grandes tipos:
@@ -183,4 +189,6 @@
 	Las bases de datos SQL almacenan una serie de datos y sus relaciones con otras tablas a través de claves, datos que son los mismos en tablas distintas. Cada registro se ve representado por filas mientras que las columnas representan los campos de cada registro. Esta filosofía de almacenamiento nos permite acceder de manera sencilla a cualquier dato. Para ello, contamos con el lenguaje SQL.
 	
 	Por otro lado se encuentran las bases de datos NoSQL, las cuales surgen por la necesidad de almacenar la información sin seguir una estructura determinada. Se utilizan cuando el número de datos a albergar es muy grande y necesitamos rapidez en el tratamiento de estos datos, cosa que las anteriores, en general, no permiten.
+	
+	Siguiendo con nuestro ejemplo, la base de datos a utilizar es Firestore Database, base de datos NoSQL.
 	
