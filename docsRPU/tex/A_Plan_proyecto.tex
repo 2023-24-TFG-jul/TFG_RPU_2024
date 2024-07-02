@@ -2,12 +2,200 @@
 
 \section{Introducción}
 
+	Este apartado del informe recoge cual ha sido la planificación temporal estipulada, así como el estudio de viabilidad tanto económica como legal llevado a cabo. Es importante marcar que Kairos nace de un proyecto educativo sin recursos, por lo que se ha buscado utilizar herramientas en sus versiones gratuitas. En cuanto a la planificación temporal, el número de días por sprint ha sido bastante uniforme, pero el número de horas ha variado mucho debido a factores externos a este trabajo.	
+
 \section{Planificación temporal}
-explicar Scrummmmmm
+
+	Tras la primera reunión con los tutores, decidimos llevar a cabo el proyecto siguiendo la metodología ágil \emph{Scrum}, vista en diversas asignaturas del grado. Sin embargo, debido a ser un proyecto con un único desarrollador y con un contexto cambiante, los ciclos de trabajo han sido diferentes. Al trabajar con GitHub, los \emph{sprints} se han definido como \emph{milestones}, tal y como se representa en la Figura A.1.
+	
+\imagen{sprints}{Registro de sprints}
+
+\subsection{Sprint iniciación : 14/02/2024 - 28/02/2024}
+
+	El primer \emph{sprint} duró dos semanas. El conjunto de tareas realizadas acabo fueron:
+	\begin{enumerate}
+		\item Buscar información teórica sobre Flutter.
+		\item Crear el repositorio del trabajo en GitHub.
+		\item Aprender cómo crear un proyecto Flutter.
+		\item Aprender a subir los cambios en GitHub a través de comandos.
+		\item Definir mi primer \emph{milestone} en GitHub.
+		\item Crear mi primera \emph{issue} y adjudicarla \emph{labels} creadas por mí mismo.
+		\item Completar documentos necesarios para la universidad relacionados con este trabajo.
+	\end{enumerate}
+	En cuanto a problemas encontrados, la tarea más complicada fue la instalación de Flutter y la conexión del equipo con la cuenta de GitHub. Flutter consta de muchos requerimientos para su instalación y su documentación de creación de proyectos es algo compleja, cosa que ralentizó el trabajo.
+	
+\subsection{Sprint 1 : 28/02/2024 - 13/03/2024}
+
+	Este \emph{sprint} duró también dos semanas. Las tareas realizadas durante ello fueron:
+	\begin{enumerate}
+		\item Buscar un \emph{dataset} adecuado para la realización de un modelo de predicción de precios de un producto.
+		\item Buscar alternativas para afrontar la parte \emph{back-end} del proyecto.
+		\item Una vez completa la tarea anterior, conectar la base de datos con el proyecto.
+		\item Configurar LaTeX para el desarrollo del informe.
+		\item Seguir trabajando con la herramienta Flutter.
+	\end{enumerate}
+	La mayor parte del tiempo fue destinada a la búsqueda de un \emph{dataset} con mucha información. El desconocimiento en la materia hizo que no se supiera bien qué características debía tener un buen \emph{dataset}. Tras varias opciones, se decidió centrar la aplicación en el mundo de relojes y se eligió el óptimo para ello.
+	
+\subsection{Sprint 2 : 13/03/2024 - 03/04/2024}
+
+	El tercer \emph{sprint} del proyecto se dedicó únicamente a la parte del aprendizaje automático. Duró tres semanas y las tareas realizadas durante este fueron:
+	\begin{enumerate}
+		\item Buscar información teórica relativa al aprendizaje automático.
+		\item Conseguir un \emph{dataset} donde los valores fueran numéricos en vez de cadenas de texto.
+	\end{enumerate}
+	Durante este sprint se invirtió mucho tiempo para entender qué era el aprendizaje automático y cómo podía ser empleado en este proyecto. El problema principal que surgió fue la gran cantidad de información no relevante que albergaba el \emph{dataset}. En esta tarea se invirtió mucho tiempo en estudiar la estipulación de las características de más de 280000 registros de relojes.
+
+\subsection{Sprint 3 : 03/04/2024 - 24/04/2024}
+
+	El cuarto \emph{sprint} del trabajo fue también dedicado al aprendizaje automático. Al igual que el anterior, duró tres semanas. Las tareas realizadas fueron:
+	\begin{enumerate}
+		\item Buscar una forma de completar aquellos datos sin valor en el \emph{dataset}.
+		\item Intentar aplicar \emph{cross validation} al futuro modelo.
+		\item Crear un modelo y entrenarlo.
+		\item Definir métricas para valoración del modelo.
+	\end{enumerate}
+	El tiempo invertido en este \emph{sprint} fue mucho ya que, como se ha indicado en otros puntos del trabajo, muchas de las cosas aprendidas han sido a base de prueba y error. Se consiguió crear un preprocesamiento de los datos, la creación de un modelo y la obtención de unos resultados al aplicar distintas métricas, Tras la reunión, la métrica que más nos interesaba devolvía unos resultados esperanzadores, por lo que decidimos comenzar con la parte principal del proyecto.
+	
+\subsection{Sprint 4 : 24/04/2024 - 08/05/2024}
+
+	El quinto \emph{sprint} duró dos semanas y se decidió comenzar a ver la parte protagonista del trabajo y para con la creación del modelo. Las tareas llevadas a cabo fueron:
+	\begin{enumerate}
+		\item Documentar los requisitos de la aplicación.
+		\item Conseguir las funciones \emph{get} y \emph{add} en Flutter relacionadas con el usuario.
+		\item Documentar todo el trabajo del aprendizaje automático realizado hasta la fecha.
+		\item Crear bocetos que representasen las futuras vistas de la aplicación.
+	\end{enumerate}
+	En cuanto a los requisitos y los bocetos, realizarlos fue una tarea importante para establecer con claridad que se buscaba ver en la aplicación. Por otra parte, la tarea relacionada con las funciones \emph{get} y \emph{add} llevó bastante tiempo ya que, aunque las funciones fueran sencillas al final, llegar hasta ese momento necesitaba de conocer cosas previas no vistas. Un problema a destacar fue el archivo de dependencias del proyecto, el cual es bastante complejo de configurar sin saber nada acerca de la materia.
+	
+\subsection{Sprint 5 : 08/05/2024 - 22/05/2024}
+
+	El sexto \emph{sprint} duró dos semanas y siguió la dinámica del anterior. Las tareas realizadas fueron:
+	\begin{enumerate}
+		\item Desarrollo de la vista de inicio de sesión
+		\item Desarrollo del registro de un usuario.
+		\item Corrección de errores en la documentación.
+	\end{enumerate}
+	El trabajo de este \emph{sprint} no fue sencillo, pero mereció mucho la pena para entender ciertas cosas sobre Flutter que se desconocían hasta el momento. Tras la reunión de este ciclo de trabajo, vimos que había una serie de errores que eran necesarios tener en cuenta y corregir para el siguiente \emph{sprint}. El problema más destacable fue la incapacidad por mi parte de llevar variables de una ventana a otra, lo que ralentizó todo buscando distintas formas de conseguir esta parte fundamental.
+	
+\subsection{Sprint 6 : 22/05/2024 - 31/05/2024}
+
+	El séptimo \emph{sprint} duró solo una semana debido a la gran cantidad de tiempo que tuve para afrontarlo. Las tareas realizadas durante este fueron:
+	\begin{enumerate}
+		\item Crear acciones relacionadas con relojes.
+		\item Crear acciones relacionadas con subastas.
+		\item Crear la vista de la lista de relojes.
+		\item Crear la vista de la lista de subastas.
+	\end{enumerate}
+	Debido al buen momento que atravesaba, fueron surgiendo tareas intermedias que significaban nuevas implementaciones al trabajo. Lo más complicado del \emph{sprint} fue la forma de relacionar los relojes con las subastas, ya que la base de datos utilizada era NoSQL y mis conocimientos se centraban en bases de datos SQL.
+	
+\subsection{Sprint 7 : 31/05/2024 - 13/06/2024}
+
+	Tras una demo con los tutores y una puesta en común de las tareas a afrontar, se realizó un \emph{sprint} de dos semanas donde se realizaron las siguientes tareas:
+	\begin{enumerate}
+		\item Incluir campo \emph{wallet} al usuario.
+		\item Tratar cambios en los estados de los relojes y subastas tras realizar distintas acciones.
+		\item Mejorar validaciones de la creación de relojes.
+		\item Insertar desplegables con opciones para completar el registro de relojes.
+	\end{enumerate}
+	Lo más complicado de este sprint fue la conexión de un archivo externo al proyecto para poder crear los desplegable de los campos como \emph{brand} o \emph{model}. Lo más satisfactorio de este ciclo de trabajo fue ver como conseguía realizar una subasta con distintos usuarios.
+	
+\subsection{Sprint 8 : 13/06/2024 - 19/06/2024}
+
+	El noveno y último \emph{sprint} duró una semana. Las tareas realizadas fueron:
+	\begin{enumerate}
+		\item Resolver errores tenidos en el anterior sprint.
+		\item Incluir condicionantes al campo \emph{wallet} del usuario para controlar mejor las subastas.
+		\item Tratar la decoración y respuesta de la aplicación a cualquier tipo de dispositivo.
+		\item Conectar modelo a la aplicación.
+	\end{enumerate}
+	Las tres primeras tareas no me llevaron mucho tiempo y pude dedicar casi todas las horas a la conexión del modelo. Sin duda, la conexión del modelo a la aplicación ha sido el punto más problemático de todo el trabajo. Tras los resultados ``esperanzadores'' obtenidos en anteriores \emph{sprints}, vimos que no iban a servir de mucho porque no me fue posible conectarlo como yo creía hacerlo. Se intentaron diversas formas de conectar, ya sea cambiando el formato, la limpieza de datos... llegando a definir un sencillo modelo de predicción que se tuvo que lanzar a producción para que llegase información a la aplicación. Puede que el camino fueran escasos pasos, pero el desconocimiento de esto hizo que el trabajo se complicase mucho.
+	
 \section{Estudio de viabilidad}
 
+	Definir un estudio de viabilidad del trabajo realizado es una tarea difícil cuando se trata de una aplicación con carácter educativo. Sin embargo, se intentará explicar con un ejemplo como podría haberse dado tal caso si la aplicación hubiera sido requerida a una empresa externa.
+
 \subsection{Viabilidad económica}
+	
+	Cuando estudiamos la viabilidad económica de un proyecto, debemos centrarnos en tres puntos fundamentales:
+	\begin{enumerate}
+		\item Costes iniciales
+		\item Costes operativos
+		\item Ingresos y análisis de rentabilidad
+	\end{enumerate}
+	
+	En cuanto a los costes iniciales, se debe tener en cuenta el número de desarrolladores necesarios para llevar a cabo el trabajo. En este caso he sido yo mismo el único desarrollador pero podría ser necesario contratar más desarrolladores si quisiera escalarse la aplicación. A estos costes debemos añadir el precio de adquisición de licencias y herramientas de software. En nuestro caso:
+	\begin{enumerate}
+		\item Visual Studio Code
+		\item Android Studio
+		\item Flutter
+		\item Firebase Firestore
+		\item Render
+	\end{enumerate}
+	Todas han sido utilizadas en sus versiones gratuitas aunque alguna de ellas ofrece planes con costes añadidos si la aplicación lo requiriese. Ejemplos de programas son Adobe XD para el diseño y prototipado o Google Ads para la realización de campañas.
+	
+	En cuanto al coste operativo, englobamos costes destinados al mantenimiento de la aplicación y actualizaciones de seguridad. También entran dentro de estos costes el personal para atender al cliente, lanzamiento de campañas para mantener vivo el marketing de la aplicación y/o comisiones de distintas plataformas de pago.
+	
+	Si nos centramos tanto en los ingresos como en el análisis de rentabilidad, ambos pilares van ligados. Por un lado, es importante tener en cuenta las comisiones de venta, estipulación de tarifas para la publicación de productos y/o espacios publicitarios dentro de la aplicación. De esta forma podríamos generar ingresos pasivos que ayudaran al mantenimiento de esta.
+	
+	Por tanto, según datos recientes, los costes anuales serían:
+	\begin{enumerate}
+		\item Sueldo medio de un desarrollador \emph{web} en España : 30000 euros
+		\item Coste del ordenador donde se realiza el trabajo: 500 euros
+		\item Coste del \emph{Hosting} y dominio: 200 euros
+		\item Costes de marketing y publicidad (campaña básica): 1000 euros
+		\item Costes de mantenimiento: 500 euros
+	\end{enumerate}
+	
+	Por otro lado, los supuestos ingresos anuales esperados son:
+	\begin{enumerate}
+		\item Publicidad : 500 euros
+		\item Tarifas para publicación de productos: 100 usuarios a 5 euros el mes
+		\item Comisiones por venta: varía mucho porque se definiría un porcentaje del precio total. Suponemos 300 ventas de 1000 a un 10 por ciento de comisión.
+	\end{enumerate}
+	
+	Por tanto:
+	
+	\begin{equation}
+		\text{Costes\ Totales\ Anuales} = 30,000 + 500 + 200 + 1,000 + 500 = 32,200 \ \text{euros}
+	\end{equation}
+	\begin{align}
+		\text{Ingresos\ por\ Publicidad} &= 500 \ \text{euros} \\
+		\text{Ingresos\ por\ Tarifas} &= 100 \times 5 \times 12 = 6,000 \ \text{euros} \\
+		\text{Ingresos\ por\ Comisiones} &= 50 \times 1,000 \times 0.10 = 5,000 \ \text{euros} \\
+		\text{Ingresos\ Totales\ Anuales} &= 500 + 6,000 + 5,000 = 11,500 \ \text{euros}
+	\end{align}
+	\begin{equation}
+		\text{Balance\ Anual} = \text{Ingresos\ Totales\ Anuales} - \text{Costes\ Totales\ Anuales}
+	\end{equation}
+
+	\begin{equation}
+		\text{Balance\ Anual} = 11,500 - 32,200 = -20700 \ \text{euros}
+	\end{equation}
+	
+	Según los cálculos, el proyecto no es viable con una pérdida el primer año de 20700 euros. Sin embargo, la ayuda de futuros inversores para comenzar con algo más de capital y ofreciendo mejoras tras ese ingreso, cambiaría mucho el balance ofrecido.
 
 \subsection{Viabilidad legal}
+
+	Al igual que el apartado anterior, para estudiar la viabilidad legal del proyecto también es importante definir cinco pilares clave para tomar una decisión tras este estudio:
+	\begin{enumerate}
+		\item Registro de empresa y regulación de las subastas.
+		\item Protección al consumidor
+		\item Propiedad intelectual
+		\item Seguridad
+		\item Aspectos fiscales
+	\end{enumerate}
+	
+	Como la aplicación va a ser desplegada en España y está siendo lanzada por una empresa, es necesario que esta se encuentre registrada en el país donde vaya a operar. Hay que añadir que, además del registro, es necesario la adquisición de licencias como Licencia Comercial o Registro de IVA entre otras. Por otro lado, al ser una aplicación de subastas, es necesario el cumplimiento de las leyes de subastas locales y nacionales, así como atender a las regulaciones específicas sobre venta de productos de lujo. Ejemplos de ellas son:
+	\begin{enumerate}
+		\item Ley de Contratos del Sector Público (LCSP) según Real Decreto Legislativo 3/2011, de 14 de noviembre.
+		\item Ley de Enjuiciamiento Civil (LEC) según Ley 1/2000, de 7 de enero.
+		\item Reglamento General de la Ley de Contratos de las Administraciones Públicas según Real Decreto 1098/2001, de 12 de octubre.
+	\end{enumerate}
+	
+	En cuanto a la protección del consumidor, se deben establecer de manera clara tanto los términos de uso como las políticas de devolución y reembolsos. Las políticas de privacidad deben ser claras y se deben cumplir la ley de protección de datos poniendo como ejemplo la \emph{General Data Protection Regulation} (GDPR) para la protección de datos de individuos dentro de la UE.
+	
+	La defensa por la propiedad intelectual también es importante tenerla en cuenta a la hora de estudiar este punto. Se deben tomar medidas para la protección de usuarios y, ya que Kairos realiza transacciones, estas deben cumplirse según los estándares de seguridad en transacciones en línea.
+	
+	Por último, no debemos olvidar aspectos fiscales como el cumplimiento de las obligaciones fiscales tanto locales como internacionales, así como la gestión de impuestos sobre ventas ingresos y demás de aspectos relacionados.	
 
 

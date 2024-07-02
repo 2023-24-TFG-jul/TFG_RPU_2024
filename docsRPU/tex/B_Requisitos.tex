@@ -2,13 +2,13 @@
 
 \section{Introducción}
 
-	Una buena práctica a la hora de realizar cualquier proyecto es definir previamente que se busca. En cuanto al desarrollo software, es muy importante definir previamente información esencial que, bien estructurada, va a ser de gran ayuda para afrontar mejor el proyecto. Como marcabamos en anteriores apartados, durante la realización del trabajo se ha explicado la metodología ágil a seguir. Sin embargo, existen ciertos conceptos que deben conocerse para entender el porqué de este apartado.	
+	Una buena práctica a la hora de realizar cualquier proyecto es definir previamente qué se busca. En cuanto al desarrollo software, es muy importante definir previamente información esencial que, bien estructurada, va a ser de gran ayuda para afrontar mejor el proyecto. Como marcabamos en anteriores apartados, durante la realización del trabajo se ha explicado la metodología ágil a seguir. Sin embargo, existen ciertos conceptos que deben conocerse para entender el porqué de este apartado.	
 	
-	Una vez reunidos tanto tutores como alumno, se decide definir en grupo cuáles son los requisitos del programa. Denominamos "requisitos funcionales" a todo aquello que esperamos que sea realizado por nuestro programa final. Un ejemplo es: "el programa debe permitir crear una cuenta". Por otro lado, los "requisitos no funcinales" complementan a los anteriores marcando cómo un software debe realizar ciertas actividades. En este caso, un ejemplo sería: "el cambio de una página a otra de la aplicación no puede ser mayor de 4 segundos".
+	Una vez reunidos tanto tutores como alumno, se decide definir en grupo cuáles son los requisitos del programa. Denominamos ``requisitos funcionales'' a todo aquello que esperamos que sea realizado por nuestro programa final. Un ejemplo es: ``el programa debe permitir crear una cuenta''. Por otro lado, los ``requisitos no funcinales'' complementan a los anteriores marcando cómo un software debe realizar ciertas actividades. En este caso, un ejemplo sería: ``el cambio de una página a otra de la aplicación no puede ser mayor de 4 segundos''.
 	
-	Definir previamente esto nos ayuda a entender mejor que queremos como usuario final y nos permite estructurar mejor el desarrollo del proyecto. Sin embargo, esto es solo un parte. A esto debe sumar la definición de las historias de usuario, los casos de uso y los diagramas de interacción.
+	Definir previamente esto nos ayuda a entender mejor qué queremos como usuario final y nos permite estructurar mejor el desarrollo del proyecto. Sin embargo, esto es solo un parte. A esto debe sumar la definición de las historias de usuario, los casos de uso y los diagramas de interacción.
 	
-	Una "historia de usuario" no es más que la explicación del requisito funcional en un lenguaje comprensible para el usuario. Por otra parte, conocemos como "casos de uso" a la forma de describir como el usuario realiza una actividad dentro del sistema, mientras que los "diagramas de interacción" representan als interacciones que se dan dentro de este.
+	Una ``historia de usuario'' no es más que la explicación del requisito funcional en un lenguaje comprensible para el usuario. Por otra parte, conocemos como ``casos de uso'' a la forma de describir como el usuario realiza una actividad dentro del sistema, mientras que los ``diagramas de interacción'' representan als interacciones que se dan dentro de este.
 	
 	Con todo esto definido, podemos dar comienzo a la definición de objetivos, definición de los requisitos y desarrollo de estos, así como un esquema gráfico de cómo debería ser la aplicación final.
 
@@ -46,44 +46,465 @@
 	Como indicamos en la presentación formal de la idea para este trabajo, los objetivos de este proyecto podrían resumirse como:
 	
 \begin{itemize}
-	\item Se realizará una aplicación multiplataforma apoyándose en el uso de un SDK denominado Flutter.
-	\item La aplicación permitirá al usuario subir su producto y marcar qué tipo de subasta aplicar para la venta de este, así como un precio de venta directa si el comprador no quiere aplicar a la subasta y conseguir el producto directamente
-	\item Los tipos de subasta recogidos son: Subasta dinámica ascendente o inglesa, Subasta dinámica descendente o holandesa, Subasta en sobre cerrado de primer precio, y subasta en sobre cerrado de segundo precio o Vickrey
-	\item El trabajo incorporará un apartado de recomendación de precios a estipular para la venta directa del objeto basándose en los precios de otros productos ya vendidos, así como subastas ya realizadas.
+	\item Realizar una aplicación multiplataforma apoyándose en el uso de un SDK denominado Flutter.
+	\item Permitir al usuario subir su producto y crear una subasta para la venta de este, así como un precio de venta directa si el comprador no quiere aplicar a la subasta y conseguir el producto directamente.
+	\item Incorporar un apartado de predicción de precios de un reloj según sus características.
 \end{itemize}
+
+	Se detallan con más precisión en el documento memoria de este trabajo.
 
 \section{Catálogo de requisitos}
 
 	A modo de ser lo más ordenado posible, se enumeran a continuación todos los requisitos establecidos durante el proyecto:
 	
+\subsection{Requisitos funcionales}
+	
 \begin{itemize}
-	\item 1) Un usuario accederá a la aplicación introduciendo su email y su contraseña en una pantalla de inicio de sesión.
-	\item 2) La pantalla de inicio de sesión mostrará un mensaje de error si el nombre de usuario no existe y/o si la contraseña es errónea.
-	\item 3) Un usuario podrá registrarse accediendo desde un botón específico para ello situado en la pantalla de inicio de sesión.	
-	\item 4) El registro de un usuario debe contener los siguientes datos personales: nombre, apellidos, fecha de nacimiento, país, email, password y número de cuenta donde se realizarán las transacciones.
-	\item 5) Tanto el número de cuenta como el email deben ser únicos en la aplicación.
-	\item 6) La contraseña del usuario debe seguir las siguientes directrices: longitud mínima de 8 caracteres y contener al menos una mayúscula, una minúscula, un número y un caracter especial.
-	\item 7) Si no se completa de manera correcta el registro, la aplicación lanzará un mensaje de error indicando el origen del problema.
-	\item 8) La aplicación contará con una pantalla principal donde dispondrá de las siguientes funcionalidades: mis relojes, estado de mis ventas, compra de un reloj, consultar precio de reloj y configuración.
-	\item 9) Un usuario podrá subir su reloj a la aplicación marcando: nombre, modelo, referencia, movimiento, material de la caja, material del brazalete, año de fabricación, estado y género. Son obligatorios marca, modelo, año y estado.
-	\item 10) Un usuario podrá eliminar un reloj.
-	\item 11) Un usuario podrá editar la información de un reloj.
-	\item 12) Un usuario podrá vender su reloj previamente subido a través de uno de los cuatro posibles métodos de subasta explicados anteriormente.
-	\item 13) Un usuario podrá vender su reloj de manera directa marcando un precio de venta directa.	
-	\item 14) Un usuario podrá eliminar una venta en curso siempre que no se haya recibido una primera respuesta a la subasta.
-	\item 15) Un usuario podrá editar una venta en curso siempre que no se haya recibido una primera respuesta a la subasta.
-	\item 16) Un usuario podrá comprar un reloj a través de uno de los cuatro posibles métodos de subasta explicados anteriormente.
-	\item 17) Un usuario podrá comprar un reloj de manera directa aceptando el precio de venta directa.	
-	\item 18) Un usuario podrá editar una compra en curso siempre que otros compradores no hayan respondido a dicha puja.
-	\item 19) Un usuario podrá cancelar una puja si esta es la más alta durante la realización de la subasta.
-	\item 20) La aplicación integrará una IA que marque cuál es el precio recomendado de venta directa de un producto.
-	\item 21) La aplicación contará con un apartado donde se introduciran los siguientes datos para la estimación de un precio de un reloj: nombre, modelo, referencia, movimiento, material de la caja, material del brazalete, año de fabricación, estado y género. Son obligatorios marca, modelo, año y estado.
-	\item 22) La aplicación contará con buscadores para llegar a la compras, ventas o productos de manera cómoda.
-	\item 23) Se habilitará un modal al hora de fijar un precio de venta una nota donde se marque que la organización se lleva un porcentaje de la venta realizada.
-	\item 24) La aplicación contará con un apartado de edición de datos personales.
-	\item 25) La aplicación contará con un apartado de edición de contraseña.
+	\item RF-1) Un usuario accederá a la aplicación introduciendo su email y su contraseña en una pantalla de inicio de sesión.
+	\item RF-2) La pantalla de inicio de sesión mostrará un mensaje de error si el nombre de usuario no existe y/o si la contraseña es errónea.
+	\item RF-3) Un usuario podrá registrarse accediendo desde un botón específico para ello situado en la pantalla de inicio de sesión.	
+	\item RF-4) El registro de un usuario debe contener los siguientes datos personales: nombre, apellidos, fecha de nacimiento, país, email, \emph{password}, número de cuenta donde se realizarán las transacciones y monedero.
+	\item RF-5) El email deben ser único en la aplicación.
+	\item RF-6) La contraseña del usuario debe seguir las siguientes directrices: longitud mínima de 8 caracteres y contener al menos una mayúscula, una minúscula, un número y un caracter especial.
+	\item RF-7) Si no se completa de manera correcta el registro, la aplicación lanzará un mensaje de error indicando el origen del problema.
+	\item RF-8) La aplicación contará con una pantalla principal donde dispondrá de las siguientes funcionalidades: listado de mis relojes, listado de subastas y actualización de la información de usuario.
+	\item RF-9) Un usuario podrá subir su reloj a la aplicación marcando: nombre, modelo, referencia, movimiento, material de la caja, material del brazalete, año de fabricación, estado y género. Son obligatorios marca, modelo, año y estado.
+	\item RF-10) Un usuario podrá eliminar un reloj.
+	\item RF-11) Un usuario podrá editar la información de un reloj.
+	\item RF-12) Un usuario podrá vender su reloj previamente subido a través de una subasta creada por él.
+	\item RF-13) Un usuario podrá vender su reloj de manera directa marcando un precio de venta directa.	
+	\item RF-14) Un usuario podrá eliminar una venta en curso siempre que no se haya recibido una primera respuesta a la subasta.
+	\item RF-15) Un usuario podrá comprar un reloj pujando una cantidad de dinero a través de una subasta.
+	\item RF-16) Un usuario podrá comprar un reloj de manera directa aceptando el precio de venta directa.	
+	\item RF-17) La aplicación integrará un modelo que marque cuál es el precio recomendado de venta directa de un producto.
+	\item RF-18) La aplicación contará con un apartado donde se introduciran los siguientes datos para la estimación de un precio de un reloj: nombre, modelo, referencia, movimiento, material de la caja, material del brazalete, año de fabricación, estado y género. Son obligatorios marca, modelo, año y estado.
+	\item RF-19) La aplicación contará con un apartado de edición de datos personales.
+	\item RF-20) La aplicación contará con un apartado de edición de contraseña.
+\end{itemize}
+
+\subsection{Requisitos no funcionales}
+
+\begin{itemize}
+	\item RNF-1) Los cargos en los monederos deben ser seguros.
+	\item RNF-2) La aplicación debe ser intuitiva y al alcance de todo tipo de persona mayor de edad.
 \end{itemize}
 
 \section{Especificación de requisitos}
+
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-1} & \textbf{Iniciar sesión}\\
+		\toprule
+		\textbf{Versión} & 1.0 \\
+		\textbf{Autor} & Rodrigo Pérez Ubierna \\
+		\textbf{Requisitos asociados} & RF-1, RF-2 \\
+		\textbf{Descripción} & El usuario inicia sesión introduciendo su correo electrónico y su contraseña \\
+		\textbf{Precondición} & El usuario debe tener una cuenta registrada. \\
+		\textbf{Acciones} &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario abre la aplicación.
+			\item El usuario introduce su email y contraseña donde corresponda.
+			\item El usuario pulsa el botón ``Iniciar Sesión''.
+		\end{enumerate}\\
+		\textbf{Postcondición} & El usuario accede a la pantalla principal de la aplicación. \\
+		\textbf{Excepciones} & 
+			\begin{itemize}
+				\item Si el email no existe, se muestra un mensaje de error.
+				\item Si la contraseña es incorrecta, se muestra un mensaje de error.
+			\end{itemize} \\
+		\textbf{Importancia} & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Caso de Uso 1: Iniciar sesión}
+\end{table}
+
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-2} & \textbf{Registrar usuario}\\
+		\toprule
+		\textbf{Versión} & 1.0 \\
+		\textbf{Autor} & Rodrigo Pérez Ubierna \\
+		\textbf{Requisitos asociados} & RF-3, RF-4, RF-5, RF-6, RF-7 \\
+		\textbf{Descripción} & Un futuro usuario se registra en la aplicación aportando sus datos personales \\
+		\textbf{Precondición} & El usuario no estar registrado en la aplicación. \\
+		\textbf{Acciones} &
+			\begin{enumerate}
+				\def\labelenumi{\arabic{enumi}.}
+				\tightlist
+				\item El usuario accede a la pantalla de inicio de sesión.
+				\item El usuario pulsa el botón ``Registrarse''.
+				\item El usuario introduce sus datos personales (nombre, apellidos, fecha de nacimiento, país, email, contraseña, número de cuenta, monedero).
+				\item El usuario pulsa en el botón ``Registrarse''.
+			\end{enumerate}\\
+			\textbf{Postcondición} & Se crea la cuenta y ya puede iniciar sesión. \\
+			\textbf{Excepciones} &
+				\begin{itemize}
+					\item Si el email ya está registrado, se muestra un mensaje de error.
+					\item Si la contraseña no cumple con los criterios, se muestra un mensaje de error.
+					\item Si faltan datos obligatorios, se muestra un mensaje de error.
+					\item Si es menor de edad, se muestra un mensaje de error.
+				\end{itemize} \\
+			\textbf{Importancia} & Alta \\
+			\bottomrule
+		\end{tabularx}
+		\caption{Caso de Uso 2: Registrar usuario}
+\end{table}
+
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-3} & \textbf{Ver pantalla principal}\\
+		\toprule
+		\textbf{Versión} & 1.0 \\
+		\textbf{Autor} & Rodrigo Pérez Ubierna \\
+		\textbf{Requisitos asociados} & RF-8 \\
+		\textbf{Descripción} & El usuario puede acceder a la pantalla principal donde verá sus relojes, subastas y opciones de actualización de información. \\
+		\textbf{Precondición} & El usuario debe haber iniciado sesión. \\
+		\textbf{Acciones} &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario inicia sesión.
+			\item La aplicación muestra la pantalla principal con las funcionalidades disponibles.
+		\end{enumerate}\\
+		\textbf{Postcondición} & El usuario puede interactuar con las funcionalidades de la pantalla principal. \\
+		\textbf{Excepciones} &
+			\begin{itemize}
+				\item Si el usuario no ha iniciado sesión, se redirige a la pantalla de inicio de sesión.
+			\end{itemize} \\
+		\textbf{Importancia} & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Caso de Uso 3: Ver pantalla principal}
+\end{table}
+
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-4} & \textbf{Registrar reloj}\\
+		\toprule
+		\textbf{Versión} & 1.0 \\
+		\textbf{Autor} & Rodrigo Pérez Ubierna \\
+		\textbf{Requisitos asociados} & RF-9 \\
+		\textbf{Descripción} & El usuario puede subir un reloj a la aplicación proporcionando los datos necesarios. \\
+		\textbf{Precondición} & El usuario debe haber iniciado sesión. \\
+		\textbf{Acciones} &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario accede a la pantalla principal.
+			\item El usuario selecciona la opción ver listado de relojes.
+			\item El usuario selecciona la opción de subir un reloj.
+			\item El usuario introduce los datos del reloj (nombre, marca, modelo, referencia, movimiento, material de la caja, material del brazalete, año de fabricación, estado, género y precio).
+			\item El usuario envía el formulario para subir el reloj.
+		\end{enumerate}\\
+		\textbf{Postcondición} & El reloj es añadido a la colección del usuario en la aplicación.\\
+		\textbf{Excepciones} &
+			\begin{itemize}
+				\item Si faltan datos obligatorios, se muestra un mensaje de error.
+			\end{itemize} \\
+		\textbf{Importancia} & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Caso de Uso 4: Registrar reloj}
+\end{table}
+
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-5} & \textbf{Eliminar reloj}\\
+		\toprule
+		\textbf{Versión} & 1.0 \\
+		\textbf{Autor} & Rodrigo Pérez Ubierna \\
+		\textbf{Requisitos asociados} & RF-10 \\
+		\textbf{Descripción} & El usuario puede eliminar un reloj de su colección. \\
+		\textbf{Precondición} & El usuario debe haber iniciado sesión y tener relojes en su colección. \\
+		\textbf{Acciones} &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario accede a la pantalla principal.
+			\item El usuario selecciona la opción ver listado de relojes.
+			\item El usuario selecciona el reloj que desea eliminar.
+			\item El usuario pulsa el botón ``Eliminar''.
+		\end{enumerate}\\
+		\textbf{Postcondición} & El reloj es eliminado de la colección del usuario. \\
+		\textbf{Excepciones} &
+			\begin{itemize}
+				\item Si existe algún contratiempo, el reloj no se elimina.
+			\end{itemize} \\
+		\textbf{Importancia} & Media \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Caso de Uso 5: Eliminar reloj}
+\end{table}
+
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-6} & \textbf{Editar reloj}\\
+		\toprule
+		\textbf{Versión} & 1.0 \\
+		\textbf{Autor} & Rodrigo Pérez Ubierna \\
+		\textbf{Requisitos asociados} & RF-11 \\
+		\textbf{Descripción} & El usuario puede editar la información de un reloj en su colección. \\
+		\textbf{Precondición} & El usuario debe haber iniciado sesión y tener relojes en su colección. \\
+		\textbf{Acciones} &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario accede a la pantalla principal.
+			\item El usuario selecciona la opción ver listado de relojes.
+			\item El usuario selecciona el reloj que desea editar.
+			\item El usuario pulsa el botón ``Editar''.
+			\item El usuario modifica la información del reloj.
+			\item El usuario guarda los cambios.
+		\end{enumerate}\\
+		\textbf{Postcondición} & La información del reloj se actualiza en la colección del usuario. \\
+		\textbf{Excepciones} &
+			\begin{itemize}
+				\item Si faltan datos obligatorios, se muestra un mensaje de error.
+			\end{itemize} \\
+		\textbf{Importancia} & Media \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Caso de Uso 6: Editar reloj}
+\end{table}
+
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-7} & \textbf{Vender reloj en subasta}\\
+		\toprule
+		\textbf{Versión} & 1.0 \\
+		\textbf{Autor} & Rodrigo Pérez Ubierna \\
+		\textbf{Requisitos asociados} & RF-12\\
+		\textbf{Descripción} & El usuario puede vender un reloj creando una subasta. \\
+		\textbf{Precondición} & El usuario debe haber iniciado sesión y tener relojes en su colección. \\
+		\textbf{Acciones} &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario accede a la pantalla principal.
+			\item El usuario accede a la lista de subastas.
+			\item El usuario accede al apartado ``Crear subasta''
+			\item El usuario completa los detalles de la subasta (nombre del reloj, precio inicial, precio de venta directa y fecha de cierre).
+			\item El usuario confirma la creación de la subasta pulsando en el botón ``Crear''.
+		\end{enumerate}\\
+		\textbf{Postcondición} & La subasta se crea y el reloj se pone a la venta. \\
+		\textbf{Excepciones} &
+			\begin{itemize}
+				\item Si faltan datos obligatorios para la subasta, se muestra un mensaje de error.
+			\end{itemize} \\
+		\textbf{Importancia} & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Caso de Uso 7: Vender reloj en subasta}
+\end{table}
+
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-9} & \textbf{Eliminar venta en curso}\\
+		\toprule
+		\textbf{Versión} & 1.0 \\
+		\textbf{Autor} & Rodrigo Pérez Ubierna \\
+		\textbf{Requisitos asociados} & RF-14 \\
+		\textbf{Descripción} & El usuario puede eliminar una venta en curso si no se ha recibido una oferta en la subasta. \\
+		\textbf{Precondición} & El usuario debe haber iniciado sesión y tener una venta en curso sin ofertas. \\
+		\textbf{Acciones} &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario accede a la pantalla principal.
+			\item El usuario accede a la lista de subastas.
+			\item El usuario selecciona la venta que desea eliminar.
+			\item El usuario pulsa el botón ``Eliminar Venta''.
+		\end{enumerate}\\
+		\textbf{Postcondición} & La venta es eliminada y el reloj se retira de la venta. \\
+		\textbf{Excepciones} &
+			\begin{itemize}
+				\item Si la venta ya tiene una oferta, no se puede eliminar y el botón aparece bloqueado.
+			\end{itemize} \\
+		\textbf{Importancia} & Media \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Caso de Uso 9: Eliminar venta en curso}
+\end{table}
+
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-10} & \textbf{Pujar en subasta}\\
+		\toprule
+		\textbf{Versión} & 1.0 \\
+		\textbf{Autor} & Rodrigo Pérez Ubierna \\
+		\textbf{Requisitos asociados} & RF-15 \\
+		\textbf{Descripción} & El usuario puede pujar una cantidad de dinero en una subasta para comprar un reloj. \\
+		\textbf{Precondición} & El usuario debe haber iniciado sesión y la subasta debe estar activa. \\
+		\textbf{Acciones} &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario accede a la pantalla principal.
+			\item El usuario accede a la lista de subastas.
+			\item El usuario selecciona una subasta activa.
+			\item El usuario introduce una cantidad para pujar.
+			\item El usuario confirma la puja.
+		\end{enumerate}\\
+		\textbf{Postcondición} & La puja del usuario se registra en la subasta. \\
+		\textbf{Excepciones} &
+			\begin{itemize}
+				\item Si la subasta no está activa, se muestra un mensaje de error.
+				\item Si la puja es menor que el mínimo y/o valor actual, se muestra un mensaje de error.
+				\item Si la puja es mayor o igual al precio de venta directa, se muestra un mensaje de error.
+				\item Si el usuario no tiene suficiente dinero para afrontar todas sus pujas, se muestra un mensaje de error.
+				\item Si el usuario tiene menos dinero en su monedero que la cantidad a pujar, se muestra un mensaje de error.
+			\end{itemize} \\
+		\textbf{Importancia} & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Caso de Uso 10: Pujar en subasta}
+\end{table}
+
+
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-11} & \textbf{Comprar reloj de manera directa}\\
+		\toprule
+		\textbf{Versión} & 1.0 \\
+		\textbf{Autor} & Rodrigo Pérez Ubierna \\
+		\textbf{Requisitos asociados} & RF-13, RF-16 \\
+		\textbf{Descripción} & El usuario puede comprar un reloj directamente al aceptar el precio de venta directa establecido. \\
+		\textbf{Precondición} & El usuario debe haber iniciado sesión y el reloj debe estar a la venta. \\
+		\textbf{Acciones} &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario accede a la pantalla principal.
+			\item El usuario accede a la lista de subastas.
+			\item El usuario selecciona una subasta.
+			\item El usuario confirma la compra directa pulsando sobre el botón de ``Compra directa''.
+		\end{enumerate}\\
+		\textbf{Postcondición} & El reloj es comprado por el usuario. \\
+		\textbf{Excepciones} &
+			\begin{itemize}
+				\item Si el usuario no tiene suficientes fondos o la transacción no es posible por alguna razón, se muestra un mensaje de error.
+				\item Si el usuario no tiene suficiente dinero para afrontar todas sus pujas, se muestra un mensaje de error.
+			\end{itemize} \\
+		\textbf{Importancia} & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Caso de Uso 11: Comprar reloj de manera directa}
+\end{table}
+
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-12} & \textbf{Estimar precio de un reloj}\\
+		\toprule
+		\textbf{Versión} & 1.0 \\
+		\textbf{Autor} & Rodrigo Pérez Ubierna \\
+		\textbf{Requisitos asociados} & RF-17 \\
+		\textbf{Descripción} & El usuario puede obtener una estimación del precio de un reloj ingresando sus detalles a la hora de querer subirlo a la aplicación. \\
+		\textbf{Precondición} & El usuario debe haber iniciado sesión. \\
+		\textbf{Acciones} &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario accede a la pantalla principal.
+			\item El usuario selecciona la opción ver listado de relojes.
+			\item El usuario selecciona la opción de subir un reloj.
+			\item El usuario introduce los datos del reloj (marca, modelo, año de fabricación y estado).
+			\item El usuario pulsa sobre el botón ``Predecir precio''.
+		\end{enumerate}\\
+		\textbf{Postcondición} & El sistema proporciona un mensaje con una estimación del precio del reloj introducido. \\
+		\textbf{Excepciones} &
+			\begin{itemize}
+				\item Si no se pueden calcular los datos necesarios para la estimación, se muestra un mensaje de error.
+				\item Si hubiera fallos en la conexión con el modelo y/o la API, se muestra un mensaje de error.
+			\end{itemize} \\
+		\textbf{Importancia} & Media \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Caso de Uso 12: Estimar precio de un reloj}
+\end{table}
+
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-13} & \textbf{Editar datos personales}\\
+		\toprule
+		\textbf{Versión} & 1.0 \\
+		\textbf{Autor} & Rodrigo Pérez Ubierna \\
+		\textbf{Requisitos asociados} & RF-18 \\
+		\textbf{Descripción} & El usuario puede editar sus datos personales en la aplicación. \\
+		\textbf{Precondición} & El usuario debe haber iniciado sesión. \\
+		\textbf{Acciones} &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario accede a la pantalla de edición de datos personales.
+			\item El usuario modifica los campos deseados.
+			\item EL usuario introduce la contraseña a modo de seguridad.
+			\item El usuario guarda los cambios.
+		\end{enumerate}\\
+		\textbf{Postcondición} & Los datos personales del usuario se actualizan en la aplicación. \\
+		\textbf{Excepciones} &
+			\begin{itemize}
+				\item Si hay algún problema con la modificación de datos, se muestra un mensaje de error.
+			\end{itemize} \\
+		\textbf{Importancia} & Media \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Caso de Uso 13: Editar datos personales}
+\end{table}
+
+\begin{table}[p]
+	\centering
+	\begin{tabularx}{\linewidth}{ p{0.21\columnwidth} p{0.71\columnwidth} }
+		\toprule
+		\textbf{CU-14} & \textbf{Cambiar contraseña}\\
+		\toprule
+		\textbf{Versión} & 1.0 \\
+		\textbf{Autor} & Rodrigo Pérez Ubierna \\
+		\textbf{Requisitos asociados} & RF-19 \\
+		\textbf{Descripción} & El usuario puede cambiar su contraseña en la aplicación. \\
+		\textbf{Precondición} & El usuario debe haber iniciado sesión. \\
+		\textbf{Acciones} &
+		\begin{enumerate}
+			\def\labelenumi{\arabic{enumi}.}
+			\tightlist
+			\item El usuario accede a la pantalla de edición de datos personales.
+			\item El usuario introduce su contraseña actual y la nueva contraseña.
+			\item El usuario confirma la nueva contraseña.
+		\end{enumerate}\\
+		\textbf{Postcondición} & La contraseña del usuario se actualiza en la aplicación. \\
+		\textbf{Excepciones} &
+			\begin{itemize}
+				\item Si la nueva contraseña no cumple con los requisitos, se muestra un mensaje de error.
+			\end{itemize} \\
+		\textbf{Importancia} & Alta \\
+		\bottomrule
+	\end{tabularx}
+	\caption{Caso de Uso 14: Cambiar contraseña}
+\end{table}
 
 

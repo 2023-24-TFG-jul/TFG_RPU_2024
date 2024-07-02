@@ -30,20 +30,21 @@
 	
 	Si algo define este trabajo es la capacidad de una persona para conseguir realizar una aplicación y un modelo de Machine Learning comenzando completamente de cero, pues partía de no conocer absolutamente nada de lo que hoy es el resultado final. 
 	
-	A modo de ser ordenado, vamos a dividir este apartado en tres partes clave:
+	A modo de ser ordenado, vamos a dividir este apartado en cuatro partes clave:
 	\begin{itemize}
 		\item Preparación del dataset.
 		\item Entrenamiento del modelo y conexión con aplicación.
 		\item Estructura general de la aplicación y control de estados.
+		\item Gestión del proyecto.
 	\end{itemize}
 	
 \section{Creación y conexión del modelo}
 	
 	Como apuntaba al principio de este apartado, mis conocimientos en el ámbito del Machine Learning eran ínfimos. Había leído algún artículo relacionado con ello, pero nunca había entrado en detalle. Por esta razón, la parte de creación del modelo de predicción de precios fue la primera en realizarse. 
 	
-	Tras hablar con mis tutores como podríamos afrontarla, marcamos como primer objetivo la búsqueda de un dataset que respondiera de manera eficaz a nuestras necesidades. Fueron muchos los que encontramos, teniendo como palabras clave de búsqueda "E-commerce" o "Watches", entre otras. La búsqueda no fue sencilla pues mi desconocimiento de la matería y la gran cantidad de dataset presentes en la red no me permitía elegir con precisión cual podía ser un buen punto de partida.
+	Tras hablar con mis tutores cómo podríamos afrontarla, marcamos como primer objetivo la búsqueda de un dataset que respondiera de manera eficaz a nuestras necesidades. Fueron muchos los que encontramos, teniendo como palabras clave de búsqueda ``E-commerce'' o ``Watches'', entre otras. La búsqueda no fue sencilla pues mi desconocimiento de la matería y la gran cantidad de dataset presentes en la red no me permitía elegir con precisión cuál podía ser un buen punto de partida.
 	
-	Tras varios días de búsqueda, el sitio web "Kaggle" me brindó el dataset definitivo: "Luxury Watch Listings". Este dataset contenía nada más y nada menos que más de 280000 relojes con sus características y su precio de venta. Tras ponerlo en común, fue el elegido.
+	Tras varios días de búsqueda, el sitio web ``Kaggle'' me brindó el dataset definitivo: ``Luxury Watch Listings''. Este dataset contenía nada más y nada menos que más de 280000 relojes con sus características y su precio de venta. Tras ponerlo en común, fue el elegido.
 	
 	Una vez elegido, busqué toda información necesaria para tratarlo y poder crear un modelo que devolviese una predicción del precio de cualquier reloj. Leyendo en diversas fuentes de información pude darme cuenta que el problema principal a la hora de entrenar un modelo es la presencia de valores nulos. Concretamente, nuestro dataset poseía los datos nulos indicados en la Tabla 5.1.
 	
@@ -66,7 +67,7 @@
 \begin{description}
 	\item[Columna unnamed:] esta columna, a primera vista, parecía que marcaba de manera incremental el número de filas del archivo. Sin embargo, cuando cambiabamos de marca de reloj, volvía a comenzar en uno. Por tanto, trataba de marcar el número de relojes por marca. Resumiendo, fue inútil trabajar con ella para conseguir nuestro objetivo. La solución que se planteó fue el borrado de esta.
 	\item[Columna name:] sin duda fue la columna más problemática de todo el archivo. Más que ser el nombre del reloj, era una descripción de este. El problema principal fue que la descripción no seguía ninguna estructura: marcaba los datos que quería, como quería, repetía datos de otras columnas... En resumen, ha sido y es una columna intratable. Por tanto, la solución fue su borrado.
-	\item[Columna price:] esta columna no presentaba apenas errores. Simplemente marcaba el precio de cada reloj. Sin embargo, aquel producto que no se le fuese marcado un precio, adquería el valor “Price on request” o directamente se encontraba en blanco. La solución que se planteó fue dar a estas dos excepciones el valor -1 para entender que no existe información relativa sobre ese reloj. Hay que añadir que se eliminó el símbolo dolar para evitar errores.
+	\item[Columna price:] esta columna no presentaba apenas errores. Simplemente marcaba el precio de cada reloj. Sin embargo, aquel producto que no tuviera marcado un precio, adquiría el valor “Price on request” o directamente se encontraba en blanco. La solución que se planteó fue dar a estas dos excepciones el valor -1 para entender que no existe información relativa sobre ese reloj. Hay que añadir que se eliminó el símbolo dolar para evitar errores.
 	\item[Columna brand:] no presentó ningún error. Simplemente, se categorizó para su posterior uso en el modelo a crear. Las celdas sin información pasaron a valer -1.
 	\item[Columna model:] no presentó ningún error. Simplemente, se categorizó para su posterior uso en el modelo a crear. Las celdas sin información pasaron a valer -1.
 	\item[Columna ref:] siendo como soy, un apasionado de los relojes, sabía que tener la referencia del reloj que buscamos es uno de los puntos más claves a la hora de reconocer el reloj. Sin embargo, la columna de nuestro dataset no se encontraba del todo limpia. Aun así, no quise perder tan valiosa información y me di cuenta de que toda referencia que lleva una letra siempre aparecería en mayúscula. Por tanto, la solución que se dió fue eliminar toda aquella palabra que tuviera al menos una minúscula.
@@ -83,11 +84,11 @@
 	La solución que se aportó fue únicamente marcar un año por celda. Por tanto, para el primer caso no se hizo nada; el segundo caso se hizo la media entre todos los años que se marcaban; para el tercero se quitó la palabra “Approximation”; y para el último se cambió el valor “Unknown” o celda blanca por -1.
 	\item[Columna cond:] esta columna tenía los datos perfectamente dispuestos para ser categorizados. Sin embargo, se vió que terminaba a mitad de camino, siendo la columna “condition” quien seguía el trabajo de esta. La solución que se aportó fue combinar ambas columnas en una misma y categorizar, marcando como -1 aquellas celdas que se encontraban vacías.
 	\item[Columna sex:] no presentó ningún error. Simplemente, se categorizó para su posterior uso en el modelo a crear. Las celdas sin información pasaron a valer -1.
-	\item[Columna size:] debido a que fue un campo que oposu muchas dificultades, la solución que se aportó fue simple: borrar la columna. No es un campo que aportara información útil comparado con otros campos como la marca, el estado, el precio... que son variables que van a definir casi por completo la predicción objetivo.
-	\item[Columna condition:] explicada en apartado "Columna cond".
+	\item[Columna size:] debido a que fue un campo que opuso muchas dificultades, la solución que se aportó fue simple: borrar la columna. No es un campo que aportara información útil comparado con otros campos como la marca, el estado, el precio... que son variables que van a definir casi por completo la predicción objetivo.
+	\item[Columna condition:] explicada en apartado ``Columna cond''.
 \end{description}
 	
-	Para llegar a este momento pasaron par de semanas hasta que creí encontrar la solución más óptima para poder empezar a crear y entrenar un modelo. Realicé dos líneas de entrenamiento: Regresion Lineal y Random-Forest-Regresor. Los resultados de las métricas fueron los indicados en la Tabla 5.2.
+	Para llegar a este momento pasaron dos semanas hasta que creí encontrar la solución más óptima para poder empezar a crear y entrenar un modelo. Realicé dos líneas de entrenamiento: Regresion Lineal y Random-Forest-Regresor. Los resultados de las métricas fueron los indicados en la Tabla 5.2.
 	
 \tablaSmall{Comparación de métricas}{|c|c|c|}{comparacion-metricas}{
    & Regresion Lineal & Random-Forest-Regresor \\
@@ -99,18 +100,18 @@
   Mean-absolute-percentage-error & 1.2132659733005473 & 0.23691091500423903 \\
 }
 	
-	Tras una reunión vimos que la métrica "Mean Absolute Percentage error" era muy buena, mientras que las demás no lo eran tanto. Esto nos hizo dudar de cómo se estaban tratando, llegando tras varios días a la conclusión de que había cuatro errores clave en la forma de tratar mis datos:
+	Tras una reunión vimos que la métrica ``Mean Absolute Percentage error'' era muy buena, mientras que las demás no lo eran tanto. La razón fue porque, debido a la forma de distribución de precios, necesitabamos utilizar una métrica basada en porcentaje. Esto nos hizo dudar de cómo se estaban tratando, llegando tras varios días a la conclusión de que había cuatro errores clave en la forma de tratar mis datos:
 	
 	\begin{description}
-		\item - Al categorizar por mi cuenta, estaba queriendo decir al modelo de alguna forma que la marca de relojes que recibia el valor 1 era peor que la marca de relojes que recibía el valor 2, y esto no tenía por qué ser así.
+		\item - Al categorizar por mi cuenta, estaba queriendo decir al modelo de alguna forma que la marca de relojes que recibía el valor 1 era peor que la marca de relojes que recibía el valor 2, y esto no tenía por qué ser así.
 		\item - Dar el valor -1 a aquellos campos nulos o sin información relevante no fue una buena práctica para entrenar al modelo.
 		\item - Durante la realización de esta parte, la consola me devolvía error con el tipo de datos. Tras dos semanas intentado ver que ocurría vi que estaba cometiendo un error: los valores int no tienen soporte directo para representar NaN, sin embargo float sí. Esto me hizo tener que volver a empezar de nuevo y pensar de manera distinta el proceso.
 		\item - La libreria pandas trata los valores faltantes de diferente forma que la libreria numpy, siendo pandas pd.NA y numpy np.NaN.
 	\end{description}
 	
-	En conclusión, tuvimos que cambiar de nuevo la forma de trabajar. Dicen que a veces es más fácil desaprender y volver a realizar las cosas de nuevo. En mi caso, me surgió efecto.
+	En conclusión, tuvimos que cambiar de nuevo la forma de trabajar. Dicen que a veces es más fácil desaprender y volver a realizar las cosas de nuevo. En mi caso, me surtió efecto.
 	
-		Lo primero que hice fue ver como podía limpiar los datos, cosa que reutilicé parte de lo que ya había pensado anteriormente. No traté de categorizar, simplemente me quedé con lo que me interesaba y lo que no lo vacié. Con esto listo, pensé en como podía completar los campos vacíos: 
+		Lo primero que hice fue ver cómo podía limpiar los datos, cosa que reutilicé parte de lo que ya había pensado anteriormente. No traté de categorizar, simplemente me quedé con lo que me interesaba y lo que no lo vacié. Con esto listo, pensé en como podía completar los campos vacíos: 
 		\begin{description}
 		\item - Para la columna precio, intenté aplicar la media de aquellos que comparten marca y modelo. No sirvió, pues existen relojes de la misma marca y modelo que se diferencian mucho, bien por la correa, la edición, el año...
 		\item - No podía dar valores porque sí al sexo, brazalete, caja, año...
@@ -131,21 +132,21 @@
 
 	Referenciando al apartado anterior, nos situamos en el dataset final. Tras semanas de trabajo y reuniones con tutores, vimos que debíamos centrarnos en cómo ibamos a comunicar el modelo de Machine Learning con la aplicación de Flutter. Este proceso fue uno de los más duros, pues la información que había en la red era escasa y diferente. Si tuviera que definir este apartado en una frase sería: prueba y error.
 	
-	Con el dataset preparado, descubrí OneHotEncoder (explicado en parte teórica) y entrené al modelo, consiguiendo un modelo que predecía el precio del reloj. Tras revisar las pocas fuentes de información disponibles, vie que existía una herramienta para conectar el modelo: tflite. Al parecer, todo era muy sencillo. Simplemente debía conseguir guardar el modelo con la extensión .h5, agregar una serie de dependencias en mi programa y descargar algún que otro paquete. Sin embargo, esto o fue así. Cada vez que lanzaba de alguna manera peticiones al modelo, el problema con los tipos de datos afloraba.
+	Con el dataset preparado, descubrí OneHotEncoder (explicado en parte teórica) y entrené al modelo, consiguiendo un modelo que predecía el precio del reloj. Tras revisar las pocas fuentes de información disponibles, vi que existía una herramienta para conectar el modelo: tflite. Al parecer, todo era muy sencillo. Simplemente debía conseguir guardar el modelo con la extensión .h5, agregar una serie de dependencias en mi programa y descargar algún que otro paquete. Sin embargo, esto o fue así. Cada vez que lanzaba de alguna manera peticiones al modelo, el problema con los tipos de datos afloraba.
 	
 	Esto no fue el único problema. Un error mío fue entrenar siempre por completo el modelo cada vez que intentaba una cosa nueva. Esto me suponía cerca de tres cuartos de hora esperando a que terminara, muchas veces con el resultado final de no poder ni guardar el modelo. 
 	
-	Al igual que con el dataset, dar con el problema fue un mundo. Traté de cambiar el tipo de datos, traté hacer conversiones extensiones sobre el modelo... pero nada. El modelo no respondía. Volviendo un poco al primer apartado, pensé que podía ser problema de las versiones de "tensorflow", "Flask"... y así fue: cada vez que realizaba un "pip install tensorflow" se decargaba por detrás una librería "tensorflow-intel" que descuadraba la compatibilidad de unas librerías con otras. Resumiendo, había que buscar otra forma.
+	Al igual que con el dataset, dar con el problema fue un mundo. Traté de cambiar el tipo de datos, traté hacer conversiones extensiones sobre el modelo... pero nada. El modelo no respondía. Volviendo un poco al primer apartado, pensé que podía ser problema de las versiones de ``tensorflow'', ``Flask''... y así fue: cada vez que realizaba un ``pip install tensorflow'' se decargaba por detrás una librería ``tensorflow-intel'' que descuadraba la compatibilidad de unas librerías con otras. Resumiendo, había que buscar otra forma.
 	
 	Ojeando par de vídeos y leyendo en algún sitio web, ví que podía conseguir mi objetivo dando algo más de vuelta. Como veía que entrenar mi modelo suponía una gran cantidad de tiempo, tomé el consejo de mis tutores y traté de reducir el número de líneas de entrenamiento ya que mi objetivo era que se conectase a la aplicación como fuera.
 	
-	La extensión elegida fue ".joblib". Una vez conseguida, realicé un pequeño script en python para poder lanzar en local. Con todo ello, conseguí que el script funcionase, pero tuve problemas con la forma de lanzar peticiones desde la terminal. Esto fue un poco frustante, ya que veía como siguiendo la información disponible en red funcionaba y yo no lo conseguía.
+	La extensión elegida fue ``.joblib''. Una vez conseguida, realicé un pequeño script en python para poder lanzar en local. Con todo ello, conseguí que el script funcionase, pero tuve problemas con la forma de lanzar peticiones desde la terminal. Esto fue un poco frustante, ya que veía como siguiendo la información disponible en red funcionaba y yo no lo conseguía.
 	
 	No podía destinar el tiempo del que no disponía en ello, así que intenté trabajar con Postman, herramienta muy intuitiva que yo había utilizado tanto en el mundo estudiantil como en el mundo laboral. Tras un tiempo configurando todo y corrigiendo errores, conseguí dar respuesta a mi petición POST, cosa que celebré como un gol en el ambito futbolístico.
 	
 	La siguiente fase era desplegarlo de alguna forma para que mi aplicación Flutter pudiera hacer la llamada que había conseguido con Postman. Muchos vídeos me recomendaban Fly.io y Heroku. Ambas presumían de ser entornos gratuitos, pero a la hora de la verdad, te obligaban a ingresar un método de pago. Aun así, comenté mi problema con algún compañero y me recomendó Render, el cual sería mi opción final.
 	
-	El camino de Render era aparentemente sencillo: conectar con mi repositorio de Git y desplegar. Como marqué al principio del apartado, el proceso fue prueba y error. Tras varios commits, horas de intentos y pruebas, dí con los cuatro archivos necesarios para conseguir desplegar la API que haría las peticiones al modelo: Procfile.txt, requirements.txt, el modelo con extensión .joblib y el script con extensión .py.
+	El camino de Render era aparentemente sencillo: conectar con mi repositorio de Git y desplegar. Como marqué al principio del apartado, el proceso fue prueba y error. Tras varios commits, horas de intentos y pruebas, di con los cuatro archivos necesarios para conseguir desplegar la API que haría las peticiones al modelo: Procfile.txt, requirements.txt, el modelo con extensión .joblib y el script con extensión .py.
 	
 	Con todo listo, la predicción y conexión con mi aplicación estaban listas.
 	
@@ -183,3 +184,18 @@
 	\end{enumerate}
 	
 	Refiriéndome al último condicionante, nos ponemos en el supuesto de que un usuario gane todas las pujas que aplica. Si ganase todas, debe poder pagar todas. De ahí que se haga la comprobación y, si no pudiese hacer frente a ello, se le avise con una alerta informativa explicando el porqué de todo.
+	
+\section{Gestión del proyecto}
+	
+	En cuanto a la gestión del proyecto, se ha aplicado la metodología ágil Scrum. Aunque no se ha seguido como tal debido a factores externos, los \emph{sprints} han sido de unas dos semanas aproximadamente.
+	
+	Ya que se ha utilizado GitHub, los ciclos de trabajo se han definido como \emph{milestones}. En cada uno de ellos se ha definido las tareas que comentábamos tanto tutores como yo para afrontar en ese \emph{sprint.}
+	
+	Para definir las tareas, se han seguido los siguientes pasos:
+	\begin{enumerate}
+		\item Definición de título
+		\item Descripción de la tarea si fuera necesario
+		\item Asignación de responsable de la tarea
+		\item Definición de etiquetas que puedan representar a la tarea. En algunos casos, se han creado propias para definirlo como veíamos oportuno.
+		\item Definición del ciclo de trabajo donde iba esa tarea.
+	\end{enumerate}

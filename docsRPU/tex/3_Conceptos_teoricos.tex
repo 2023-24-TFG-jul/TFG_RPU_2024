@@ -82,16 +82,16 @@
 %VersionOne & X & X & X & X\\
 %}
 
-	En este apartado del informe trataré de abordar los puntos teóricos necesarios para afrontar de manera más clara el resto de secciones. La razón principal de que aparezcan unos sí y otros no es puramente personal. El objetivo de este apartado es resumir puntos clave que me han servido a mí para conseguir los objetivos marcados en el punto anterior.
+	En este apartado del informe trataré de abordar los puntos teóricos necesarios para afrontar de manera más clara el resto de secciones. La selección de los conceptos teóricos incluidos en esta sección es puramente personal. El objetivo de este apartado es resumir puntos clave que me han servido a mí para conseguir los objetivos marcados en el punto anterior.
 	
 \section{Definición de subasta y tipos de subastas}
 
-	El término subasta se define como la situación donde dos o más compradores pujan distintas cantidades de dinero por un mismo producto, siendo uno de ellos el comprador final. Para llevarla a cabo, se deben seguir una serie de reglas y directrices marcadas antes del comienzo de la subasta. El objetivo de este tipo de ventas es conseguir una mejor venta posible, llegando a un acuerdo justo entre vendedor y comprador.
+	El término subasta se define como la situación donde dos o más compradores pujan distintas cantidades de dinero por un mismo producto, siendo uno de ellos el comprador final. Para llevarla a cabo se deben seguir una serie de reglas y directrices marcadas antes del comienzo de la subasta. El objetivo de este tipo de ventas es conseguir una mejor venta posible, llegando a un acuerdo justo entre vendedor y comprador.
 	
-	Actualmente, existen muchos tipos de subasta, pero todas ellas se basan en cuatro pilares fundamentales o tipos:
+	Según \cite{apuntes:ecommerce_adwords}, actualmente existen muchos tipos de subasta, pero todas ellas se basan en cuatro pilares fundamentales o tipos:
 	
 	\begin{description}
-		\item[Precio descendente u holandesa:] la subasta comienza con un precio elevado y va disminuyendo a medida que nadie interrumpe al subastador. En el momento que alguien quiere aplicar, para al subastador en el precio que desee. Este hombre será el ganador de la subasta.
+		\item[Precio descendente u holandesa:] la subasta comienza con un precio elevado y va disminuyendo a medida que nadie interrumpe al subastador. En el momento que alguien quiere pujar, para al subastador en el precio que desee. Este hombre será el ganador de la subasta.
 		\item[Precio ascendente o inglesa:] la subasta comienza con un precio mínimo y va subiendo a medida que los posibles compradores lanzan pujas de igual o mayor precio de lo que el subastador indica. El ganador de la subasta será aquella persona que lance la puja más alta.
 		\item[De sobre cerrado a primer precio:] los pujadores introducen el precio en un sobre cerrado. Una vez estén todos listos, se abren los sobres y gana la persona que marcó la puja más alta, teniendo que pagar tal cantidad por lo subastado.
 		\item[De sobre cerrado a segundo precio o Vickrey:] la dinámica es igual que el anterior tipo de subasta, pero con una diferencia: la persona con la puja más alta pagará el segundo precio más alto por el producto.
@@ -107,53 +107,55 @@
 
 \section{Definición de Machine Learning, algoritmos y evaluación}
 
-	El aprendizaje automático o Machine Learning es una parte de la informática muy ligada al concepto de AI o Inteligencia Artificial. Definir el objetivo de esta es simple: conseguir que una máquina se comporte como un ser humano. Conseguir el objetivo de esto es algo más complicado. Principalmente se busca entrenar a la máquina con el uso de algoritmos y datos de forma que esta aprenda de manera gradual. No hay que decir que cuánto mayor sea el número de datos y cuánto mayor sea la calidad de estos, mayor precisión se conseguirá. 
+	El aprendizaje automático o Machine Learning es una parte de la informática muy ligada al concepto de AI o Inteligencia Artificial. Según \cite{oracle:homepage}, el término IA se refiere a ``aplicaciones que realizan tareas complejas para las que antes eran necesaria la intervención humana''. Principalmente se busca entrenar a la máquina con el uso de algoritmos y datos de forma que esta aprenda de manera gradual. No hay que decir que cuanto mayor sea el número de datos y cuanto mayor sea la calidad de estos, mayor precisión se conseguirá. 
 	
-	El término Machine Learning podemos atribuírselo a Arthur Samuel quien, en 1952, creo un software capaz de aprender y jugar a las damas. Aun así, este campo ha evolucionado a pasos agigantados, siendo actualmente uno de los puntos más relevantes dentro del campo de la informática. Entre los hitos más significativos, destacan principalmente unos estudiantes de la Universidad de Stanford. Estos alumnos consiguieron desarrollar en 1979 un software capaz de pilotar un carro de manera autónoma sin que este chocara con ningún obstáculo.  No podemos olvidarnos de uno de los momentos más significativos de nuestra época cuando el gran Garri Kaspárov fue derrotado por Deeper Blue en una partida de ajedrez en 1997, siendo la primera vez que el ajedrecista perdía contra una máquina.
+	El término Machine Learning podemos atribuírselo a Arthur Samuel quien, en 1952, creó un software capaz de aprender y jugar a las damas. Aún así, este campo ha evolucionado a pasos agigantados, siendo actualmente uno de los puntos más relevantes dentro del campo de la informática. Entre los hitos más significativos, destacan principalmente unos estudiantes de la Universidad de Stanford. Estos alumnos consiguieron desarrollar en 1979 un software capaz de pilotar un carro de manera autónoma sin que este chocara con ningún obstáculo.  No podemos olvidarnos de uno de los momentos más significativos de nuestra época cuando el gran Garri Kaspárov fue derrotado por Deeper Blue en una partida de ajedrez en 1997, siendo la primera vez que el ajedrecista perdía contra una máquina.
 	
 	Como se ha marcado en esta introducción, esta rama de la informática se centra en desarrollar algoritmos y modelos autosuficientes, es decir, que sean capaces de aprender de manera automática a través de datos y la experiencia. Dentro de esta rama, encontramos infinidad de técnicas y algoritmos, aunque me voy a quedar con los más comunes.
 	
-	El aprendizaje supervisado es una rama del aprendizaje automático donde se entrena a un modelo con una serie de datos que contienen cuál es su entrada y cómo debe ser su salida. Un ejemplo de ello es la venta de un local: el modelo recibe como variables de entrada el número de baños, los metros cuadrados, el año de edificación... y el modelo procesa todo dando como salida el precio del local. Dentro de este tipo de aprendizaje pueden abordarse dos tipos de problemas: regresión si lo que devuelve la máquina es un valor justo (siguiendo con el ejemplo anterior, el precio del local), o clasificación si lo que devuelve es una categoría (clasificar imágenes de vehículos entre coches o camiones). Hay que añadir que son muchos los algoritmos de los que consta, aunque destacan principalmente:
+	Según \cite{ibm:machine_learning}, el aprendizaje supervisado es una rama del aprendizaje automático donde se entrena a un modelo con una serie de datos que contienen cuál es su entrada y cómo debe ser su salida. Un ejemplo de ello es la venta de un local: el modelo recibe como variables de entrada el número de baños, los metros cuadrados, el año de edificación... y el modelo procesa todo dando como salida el precio del local. Dentro de este tipo de aprendizaje pueden abordarse dos tipos de problemas: regresión si lo que devuelve la máquina es un valor numérico continuo (siguiendo con el ejemplo anterior, el precio del local), o clasificación si lo que devuelve es un valor categórico (clasificar imágenes de vehículos entre coches o camiones).
+	
+	Son muchos los algoritmos presentes en este grupo, pero los más notables son:
 	
 	\begin{description}
-		\item[Regresión lineal:] se modela la relación de una variable dependiente con una o varias variables independientes.
-		\item[Regresión logística:] se modela para solventar problemas de clasificación binaria.
-		\item[SVM:] se utiliza tanto en regresión como en clasificación. El objetivo es separar las clases en el espacio de características a través de la búsqueda del hiperplano.
-		\item[Árboles de decisión:] el objetivo es dividir el espacio de características en regiones y asignar una etiqueta a cada una de ellas.
-		\item[Random forest:] conjunto de árboles de decisión que trabajan de manera combinada para alcanzar una mayor precisión y así evitar el sobreajuste.
+		\item[Regresión lineal:] es uno de los modelos más simples y fáciles de interpretar. Destaca porque modela la relación entre una variable dependiente (variable que se intenta predecir) y una o varias independientes (variables no resultado que sirven para conseguir la predicción) mediante una recta, consiguiendo así predicciones más precisas y comprender como influyen.
+		\item[Regresión logística:] es un algoritmo fundamental a la hora de enfrentarnos a problemas de clasificación binaria. Destaca por utilizar la función logística (función matemática para transformar cualquier valor en otro con rango de 0 a 1) consiguiendo así modelar la probabilidad de que una instancia pertenezca o no a una clase.
+		\item[SVM:] se utiliza tanto en regresión como en clasificación. Son muy eficaces en espacios de alta dimensión y casos donde el número de muestras es mucho menor que el número de dimensiones. El objetivo es separar las instancias en el espacio de características a través de la búsqueda del hiperplano, maximizando así el margen entre clases.
+		\item[Árboles de decisión:] el objetivo es dividir el espacio de características en regiones y asignar una etiqueta a cada una de ellas. Destacan por ser muy intuitivos y fáciles de interpretar, así como versátiles ya que pueden manejar tanto variables numéricas como categóricas.
+		\item[Random forest:] conjunto de árboles de decisión que trabajan de manera combinada para alcanzar una mayor precisión y así evitar el sobreajuste. Destacan porque ayudan a mejorar la precisión de las predicciones a partir de promediar los resultados de un conjunto de árboles de decisión independientes. Entre sus técnicas destaca el \emph{bagging}, consiguiendo así reducir la varianza del modelo y mejorar la generalización.
 	\end{description}
 
-	Por otro lado estaría el aprendizaje no supervisado donde los datos no tienen ni etiquetas ni salidas asociadas. Su objetivo es que la máquina aprenda a base de identificar patrones en los datos y extraer información útil de ellos. Para explicar mejor esto, pongamos un ejemplo: teniendo un conjunto de transacciones bancarias, determinar grupos de personas según las similitudes de compras. Dentro de ello podemos distinguir tres tipos de problemas:
-	
-	\begin{description}
-		\item[Clustering:] el objetivo es agrupar los datos en conjuntos o clusters según existan similitudes entre ellos. Por indicar alguno de los algoritmos dentro de este tipo, destacan:
-			\begin{description}
-				\item [K-Means:] divide los datos en k grupos teniendo en cuenta la minimización de la varianza. El objetivo es que los centros de estos grupos se vayan actualizando de manera iterativa minimizando así el sumatorio de las distancias cuadradas entre los datos y el centro más cercano.
-				\item [Clustering Jerárquico:] consiste en agrupar datos a través de la fusión iterativa de los clusteres más similares. El resultado suele ser representado con un dendrograma.
-				\item [Density-Based Spatial Clustering of Applications with Noise (DBSCAN):] agrupa los datos en función de la densidad. Destaca por ser un algoritmo de gran ayuda a la hora de detectar ruido.
-			\end{description}
-		\item[Reducción de dimensionalidad:] el objetivo es reducir el número de variables en un conjunto de datos sin perder la mayor parte de la información. Ejemplos de algoritmos son:
-			\begin{description}
-				\item [Análisis de Componentes Principales (PCA):] reduce dimensionalidad transformando los datos en nuevas variables ordenadas según al cantidad de varianza que explican.
-				\item [T-Distributed Stochastic Neighbor Embedding (t-SNE):] reduce la dimensionalidad disminuyendo el espacio y manteniendo las relaciones de proximidad locales. Muy útil para la búsqueda de patrones.
-			\end{description}
-		\item[Asociación:] el objetivo de la máquina es que aprenda a base de relacionar variables en un conjunto de datos determinado. Un ejemplo dominante dentro de este grupo son la sección de recomendación de webs de compras. Ejemplos de algoritmos dentro de ello son:
-			\begin{description}
-				\item [Equivalence Class Clustering and bottom-up Lattice Traversal (Eclat):] permite encontrar conjuntos de datos frecuentes en bases de datos transaccionales.
-				\item [Frequent Pattern Growth (FP-Growth):] mismo objetivo que el anterior pero la dinámica consiste en la contrucción de un árbol de patrones frecuentes.
-			\end{description}
-	\end{description}
-
-	Si combinamos las ideas fundamentales de estos dos aprendizajes anteriores, damos lugar al aprendizaje semisupervisado. Simplemente permite que la máquina aprenda a base de datos sin etiqueta y con ella.
-	
-	Otro tipo de Machine Learning es el conocido como aprendizaje por refuerzo. La idea fundamental de este tipo de aprendizaje es que la respuesta del modelo mejore a partir de una retroalimentación en forma de recompensas. En otras palabras, el algoritmo va a aprender basándose en lo que le rodea y siguiendo la filosofía “ensayo-error”. Se utiliza en infinidad de sectores y los algoritmos por excelencia dentro de este aprendizaje son:
-			\begin{description}
-				\item [Q-Learning:] actualiza los valores teniendo en cuenta las recompensas recibidas y las estimaciones futuras.
-				\item [State-Action-Reward-State-Action (SARSA):] actualiza los valores teniendo en cuenta las acciones presentes y las futuras.
-				\item [Algoritmo de Policy Gradient:] actualiza los valores según la dirección del gradiente de la recompensa esperada.
-			\end{description}
-	
-	Por último, otro aprendizaje muy presente en diversos sectores es el Deep Learning. El objetivo de este campo es emular el comportamiento de un cerebro humano a partir de algoritmos de redes neuronales artificiales formadas por múltiples capas de procesamiento capaces de representar datos de alto nivel. Ejemplos muy característicos son el reconocimiento de imágenes, detección de objetos, detección de fraudes, traducción automática...
+%	Por otro lado estaría el aprendizaje no supervisado donde los datos no tienen ni etiquetas ni salidas asociadas. Su objetivo es que la máquina aprenda a base de identificar patrones en los datos y extraer información útil de ellos. Para explicar mejor esto, pongamos un ejemplo: teniendo un conjunto de transacciones bancarias, determinar grupos de personas según las similitudes de compras. Dentro de ello podemos distinguir tres tipos de problemas:
+%	
+%	\begin{description}
+%		\item[Clustering:] el objetivo es agrupar los datos en conjuntos o clusters según existan similitudes entre ellos. Por indicar alguno de los algoritmos dentro de este tipo, destacan:
+%			\begin{description}
+%				\item [K-Means:] divide los datos en k grupos teniendo en cuenta la minimización de la varianza. El objetivo es que los centros de estos grupos se vayan actualizando de manera iterativa minimizando así el sumatorio de las distancias cuadradas entre los datos y el centro más cercano.
+%				\item [Clustering Jerárquico:] consiste en agrupar datos a través de la fusión iterativa de los clusteres más similares. El resultado suele ser representado con un dendrograma.
+%				\item [Density-Based Spatial Clustering of Applications with Noise (DBSCAN):] agrupa los datos en función de la densidad. Destaca por ser un algoritmo de gran ayuda a la hora de detectar ruido.
+%			\end{description}
+%		\item[Reducción de dimensionalidad:] el objetivo es reducir el número de variables en un conjunto de datos sin perder la mayor parte de la información. Ejemplos de algoritmos son:
+%			\begin{description}
+%				\item [Análisis de Componentes Principales (PCA):] reduce dimensionalidad transformando los datos en nuevas variables ordenadas según al cantidad de varianza que explican.
+%				\item [T-Distributed Stochastic Neighbor Embedding (t-SNE):] reduce la dimensionalidad disminuyendo el espacio y manteniendo las relaciones de proximidad locales. Muy útil para la búsqueda de patrones.
+%			\end{description}
+%		\item[Asociación:] el objetivo de la máquina es que aprenda a base de relacionar variables en un conjunto de datos determinado. Un ejemplo dominante dentro de este grupo son la sección de recomendación de webs de compras. Ejemplos de algoritmos dentro de ello son:
+%			\begin{description}
+%				\item [Equivalence Class Clustering and bottom-up Lattice Traversal (Eclat):] permite encontrar conjuntos de datos frecuentes en bases de datos transaccionales.
+%				\item [Frequent Pattern Growth (FP-Growth):] mismo objetivo que el anterior pero la dinámica consiste en la contrucción de un árbol de patrones frecuentes.
+%			\end{description}
+%	\end{description}
+%
+%	Si combinamos las ideas fundamentales de estos dos aprendizajes anteriores, damos lugar al aprendizaje semisupervisado. Simplemente permite que la máquina aprenda a base de datos sin etiqueta y con ella.
+%	
+%	Otro tipo de Machine Learning es el conocido como aprendizaje por refuerzo. La idea fundamental de este tipo de aprendizaje es que la respuesta del modelo mejore a partir de una retroalimentación en forma de recompensas. En otras palabras, el algoritmo va a aprender basándose en lo que le rodea y siguiendo la filosofía “ensayo-error”. Se utiliza en infinidad de sectores y los algoritmos por excelencia dentro de este aprendizaje son:
+%			\begin{description}
+%				\item [Q-Learning:] actualiza los valores teniendo en cuenta las recompensas recibidas y las estimaciones futuras.
+%				\item [State-Action-Reward-State-Action (SARSA):] actualiza los valores teniendo en cuenta las acciones presentes y las futuras.
+%				\item [Algoritmo de Policy Gradient:] actualiza los valores según la dirección del gradiente de la recompensa esperada.
+%			\end{description}
+%	
+%	Por último, otro aprendizaje muy presente en diversos sectores es el Deep Learning. El objetivo de este campo es emular el comportamiento de un cerebro humano a partir de algoritmos de redes neuronales artificiales formadas por múltiples capas de procesamiento capaces de representar datos de alto nivel. Ejemplos muy característicos son el reconocimiento de imágenes, detección de objetos, detección de fraudes, traducción automática...
 	
 	En nuestro caso, nuestro problema responde a un aprendizaje supervisado. Aunque lo veremos más adelante, se han probado dos algoritmos distintos, siendo Regresión Lineal el definitivo.
 	

@@ -2,10 +2,65 @@
 
 \section{Introducción}
 
+	La idea de este apartado es marcar los pasos a seguir para que cualquier persona que decidiese escalar este trabajo pudiera ejecutarlo sin problema en su equipo. Es importante aclarar que Flutter establece una serie de requirimientos específicos que son de vital importancia para que todo funcione correctamente.
+
 \section{Estructura de directorios}
+
+	La estructura de directorios puede verse representada en la Figura D.1. Aunque muchas de las carpetas se crean automáticamente a la hora de crear el proyecto, destacan distintos archivos y directorios creados para la realización del trabajo. Hay que añadir que si no se comentan de manera específica significa que no son archivos donde se hayan realizado cambios y, por consiguiente, no son necesarios tocar si se quisiera escalar la aplicación.
+
+\imagen{directorios}{Estructura de directorios}{1}
+
+	En la carpeta assets se encuentran arhivos de diversos tipos que son necesarios para la realización de la aplicación. En mi caso, la carpeta contiene los siguientes archivos:
+	\begin{description}
+		\item [databasewatches.csv :] archivo de extensión csv utilizado para el entrenamiento del modelo de predicción de precios y para cargar los desplegables de campos como: brand, model, condition... Más adelante veremos como se ha conseguido tal tarea.
+		\item [kairoswallpaper.png :] imagen utilizada para establecer el fondo decorativo de la aplicación.
+	\end{description}
+	
+	En la carpeta lib encontramos los scripts que han dado vida a la aplicación. Dentro de ella se han creado subdirectorios para seguir un orden y estructura claro. En este caso, los directorios han sido:
+	\begin{description}
+		\item [models:] recoge los modelos de la aplicación.
+		\item [views:] recoge los scripts con las vistas y controladores de la aplicación.
+		\item [settings:] recoge scripts con funciones necesarias para traer datos de archivos presentes en la carpeta assets.
+	\end{description}
+	
+	Por último, uno de los archivos más importantes es pubspec.yaml, donde se definen todas las dependencias con sus versiones necesarias para compilar el programa.
 
 \section{Manual del programador}
 
+	Antes de explicar como poner el proyecto en nuestro ordenador, me gustaría marcar cuáles han sido los pasos seguidos para crear el proyecto. Esto puede ser de ayuda a futuros estudiantes por su alguno de los pasos a seguir desembocan en errores no comprensibles:
+	\begin{enumerate}
+		\item Desde la consola, nos situamos en la carpeta donde queramos crear el proyecto.
+		\item Escribimos flutter create nombredelproyecto
+		\item Nos situamos en el proyecto.
+		\item Escribimos cmd . para abrir VSC
+	\end{enumerate}
+	
+	Estos serían los pasos principales para la creación del proyecto. Una vez realizados, para conectar Flutter a Firebase, es decir, nuestra base de datos realizamos:
+	\begin{enumerate}
+		\item Vamos a Firebase en nuestro navegador
+		\item Iniciamos sesión
+		\item Pulsamos en el apartado Ir a la consola
+		\item Creamos el proyecto con el nombre que se desee
+		\item Habilitamos análisis y seleccionamos España
+		\item Dentro del apartado compilación creamos firestore database
+		\item Pulsamos sobre crear base de datos
+		\item Marcamos como ubicación eur3(Europe)
+		\item Marcamos comenzar en modo de prueba. Recomendable cambiar el campo fecha manualmente para no perder la base de datos.
+	\end{enumerate}
+	
+	De esta forma, ya habríamos creado la base de datos en la nube. Sin embargo, es necesario comunicar esta con nuestra aplicación Flutter. Para ello:
+	\begin{enumerate}
+		\item En consola, nos situamos en la carpeta del proyecto y escribimos flutter pub add $firebase_core$
+		\item Descargamos aplicación node.
+		\item Ejecutamos como administrador el comando npm install -g $firebase-tools$
+		\item Escribimos firebase login e iniciamos sesión
+		\item Escribimos dart pub global activate $flutterfire-cli$
+		\item Escribimos flutterfire configure
+		\item COn las flechas nos situamos en el proyecto, dejamos marcados todos los campos y marcamos yes
+	\end{enumerate}
+
 \section{Compilación, instalación y ejecución del proyecto}
+
+	
 
 \section{Pruebas del sistema}
