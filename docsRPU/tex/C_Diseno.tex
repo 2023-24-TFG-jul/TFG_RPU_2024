@@ -35,12 +35,28 @@
 
 \section{Diseño procedimental}
 
-	No hay mejor forma de presentar el diseño procedimental que esquematizando los diagramas de casos de uso que pueden darse a lo largo del uso de la aplicación. A continuación, las figuras siguientes presentarán cada uno de ellos.
+	No hay mejor forma de presentar el diseño procedimental que esquematizando el diagrama de casos de uso que pueden darse a lo largo del uso de la aplicación junto con sus digramas de secuencia. A continuación, de la Figuras C.7 hasta la Figura C.20 (ambas incluidas) presentaran todo esto.
+	
+\imagen{casoUsoGeneral}{Esquema general de casos de uso}
+\imagen{casoUso1}{Iniciar sesión}
+\imagen{casoUso2}{Registrar usuario}
+\imagen{casoUso3}{Ver relojes}
+\imagen{casoUso4}{Añadir reloj}
+\imagen{casoUso5}{Editar reloj}
+\imagen{casoUso6}{Eliminar reloj}
+\imagen{casoUso7}{Ver subastas}
+\imagen{casoUso8}{Crear subasta}
+\imagen{casoUso9}{Eliminar subasta}
+\imagen{casoUso10}{Pujar en una subasta}
+\imagen{casoUso11}{Comprar reloj directamente en una subasta}
+\imagen{casoUso12}{Editar información personal}
+\imagen{casoUso13}{Consultar precio reloj}
+
 
 \section{Diseño arquitectónico}
 
 	Siguiendo un poco lo marcado en la introducción, es importante definir cómo se comunican las distintas partes de este trabajo. En el informe referente a la memoria se establecía que el patrón ``Modelo-Vista-Controlador'' o MVC iba a ser quien marcara la arquitectura dentro del proyecto Flutter. Sin embargo, también se debe tener en cuenta cómo se ha conectado la API del modelo de predicción de precios y la base de datos explicada anteriormente.
-	Para ser más preciso, se presenta a través de la Figura C.12 la conexión entre las distintas partes. Para ello, se va a seguir el proceso de una acción como ejemplo.
+	Para ser más preciso, se presenta a través de la Figura C.21 la conexión entre las distintas partes. Para ello, se va a seguir el proceso de una acción como ejemplo.
 
 \imagen{disenoArquitectonico}{Esquema conexión de elementos}
 
@@ -58,32 +74,32 @@
 
 \section{Diseño visual}
 
-	Siempre es bueno realizar un pequeño esquema de cómo podrían verse las distintas pantallas de nuestra aplicación. Si es cierto que son bocetos que pueden distar bastante de la realidad, pero es una buena práctica si realizamos en conjunto con el cliente. Al final lo que buscamos es entendernos con él lo mejor posible y que mejor que a través de un dibujo.
+	Siempre es bueno realizar un pequeño esquema de cómo podrían verse las distintas pantallas de nuestra aplicación. Si es cierto que son bocetos que pueden distar bastante de la realidad, pero es una buena práctica si los realizamos en conjunto con el cliente. Al final lo que buscamos es entendernos con él lo mejor posible y que mejor que a través de un dibujo.
 	
-	En mi caso, decidí intentar representar las interfaces basándonos en todos los requisitos explicados en apartados anteriores. Para ello, utilicé el sitio web NinjaMock, el cual ya había utilizado en anteriores asignaturas del grado.
+	En mi caso, decidí intentar representar las interfaces basándome en todos los requisitos explicados en apartados anteriores. Para ello, utilicé el sitio web NinjaMock, el cual ya había utilizado en anteriores asignaturas del grado.
 	
 	NinjaMock es una herramienta muy amigable y eficaz si nuestro objetivo es realizar bocetos de cómo podría quedar el \emph{front-end} de nuestra aplicación. Aunque tiene una versión de pago, este software nos brinda la oportunidad de crear un único proyecto con todas nuestras interfaces de manera gratuita.
 	
-	A continuación, adjuntamos las distintas interfaces haciendo breves comentarios de ellas donde fuera necesario:
+	A continuación, adjuntamos las distintas interfaces haciendo breves comentarios de ellas donde fuera necesario
 
 \imagen{image1}{Diseño inicio de sesión y registro de cuenta}
 
-	Como se puede apreciar, en muchas de las ventanas lanzaremos mensajes a modo de advertencia al usuario si este no completa correctamente los campos requeridos. Todas las condiciones de cada campo se marcan en los requisitos expuestos.
+	Como se puede apreciar en la Figura C.22, en muchas de las ventanas lanzaremos mensajes a modo de advertencia al usuario si este no completa correctamente los campos requeridos. Todas las condiciones de cada campo se marcan en los requisitos expuestos.
 	
-\imagen{image2}{Diseño recuperación de contraseña y página principal}{1}
+\imagen{image2}{Diseño recuperación de contraseña y página principal}
 
-	La idea de la recuperación de contraseña es reactivarla a través de un código al correo electrónico del usuario. La mayoría de los iconos que nos llevan a alguna interfaz es porque se han marcado como iconos a ventanas emergentes para ayudar más al usuario.
+	Según lo representado en la Figura C.23, la idea de la recuperación de contraseña es reactivarla a través de un código al correo electrónico del usuario (aunque esto son líneas futuras). La mayoría de los iconos que nos llevan a alguna interfaz es porque se han marcado como iconos a ventanas emergentes para ayudar más al usuario.
 	
-\imagen{image3}{Diseño ver mis relojes y añadir nuevos}{1}
+\imagen{image3}{Diseño ver mis relojes y añadir nuevos}
 
-	Los iconos son bastante explícitos. Destaco lo que se marca como un billete: será la puerta a la puesta en venta del reloj. Lo vemos en la siguiente imagen como ``creación de subasta''.
+	Según la Figura C.24, los iconos son bastante explícitos. Destaco lo que se marca como un billete: será la puerta a la puesta en venta del reloj. Lo vemos en la Figura C.25 como ``creación de subasta''.
 
-\imagen{image4}{Diseño creación de subasta y estado de ventas}{1}
+\imagen{image4}{Diseño creación de subasta y estado de ventas}
 
-\imagen{image5}{Diseño de aplicar a una subasta y predicción de precio}{1}
+\imagen{image5}{Diseño de aplicar a una subasta y predicción de precio}
 
-	Al igual que en otras interfaces, el usuario podrá aplicar a la subasta directamente desde este botón. Saldrá una ventana emergente donde marcará el precio a aplicar.
+	Al igual que en otras interfaces, el usuario podrá aplicar a la subasta directamente desde el botón represetnado en la Figura C.26. Saldrá una ventana emergente donde marcará el precio a aplicar.
 	
-\imagen{image6}{Diseño configuración de información personal}{1}
+\imagen{image6}{Diseño configuración de información personal}
 
-	Hay que destacar que no debe cumplimentar todos los campos para configurar la información personal. Aun así, habrá campos que dependan unos de otros como los de contraseña.
+	Hay que destacar sobre lo representado en la Figura C.27 que no debe cumplimentar todos los campos para configurar la información personal. Aun así, habrá campos que dependan unos de otros como los de contraseña.
