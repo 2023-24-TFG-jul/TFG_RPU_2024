@@ -148,7 +148,7 @@ class _AddWatchState extends State<AddWatch> {
 
         int roundedPrice = predictedPrice.round();
 
-        setState(() { //update price field ?????
+        setState(() {
           _priceController = roundedPrice;
         });
 
