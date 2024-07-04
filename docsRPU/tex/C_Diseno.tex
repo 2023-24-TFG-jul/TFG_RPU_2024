@@ -6,7 +6,7 @@
 
 \section{Diseño de datos}
 
-	Como se ha indicado en otros puntos de este trabajo, la base de datos utilizada ha sido Firestore Database. Esta base de datos, albergada en la nube y propiedad de Google, responde a la filosofía NoSQL. Para situarnos, una vez que entramos en la base de datos nos encontramos la ventana representada en la Figura C.1.
+	Como se ha indicado en otros puntos de este trabajo, la base de datos utilizada ha sido Firestore Database. Esta base de datos, albergada en la nube y propiedad de Google, responde a la filosofía NoSQL. Para situarnos, una vez que entramos en la base de datos nos encontramos la ventana representada en la Figura \ref{fig:db1}.
 	
 \imagen{db1}{Pantalla principal Firestore Database}
 
@@ -17,13 +17,13 @@
 		\item En la ventana modal, establecer un identificador único a cada ``documento'' (suelen generarse de manera automática) y completar añadiendo los campos que se deseen siguiendo: campo-tipo-valor
 	\end{enumerate}
 	
-	En relación a este trabajo, se han necesitado tres colecciones: usuarios, relojes y subastas. A continuación se presentan la Figura C.2, la Figura C.3 y la Figura C.4 que marcan los tipos de datos de cada colección respectivamente.
+	En relación a este trabajo, se han necesitado tres colecciones: usuarios, relojes y subastas. A continuación se presentan la Figura \ref{fig:db3}, la Figura \ref{fig:db4} y la Figura \ref{fig:db2} que marcan los tipos de datos de cada colección respectivamente.
 	
 \imagen{db3}{Forma datos usuarios}
 \imagen{db4}{Forma datos relojes}	
 \imagen{db2}{Forma datos subasta}
 
-	Sin embargo, los datos no se guardan de manera manual. Desde Flutter se han creado dos funciones capaces de enviar y recibir los datos entre ambas partes. Como ejemplo, la Figura C.5 y la Figura C.6 representan el código necesario para entablar tal comunicación con la colección \emph{auctions}.
+	Sin embargo, los datos no se guardan de manera manual. Desde Flutter se han creado dos funciones capaces de enviar y recibir los datos entre ambas partes. Como ejemplo, la Figura \ref{fig:db5} y la Figura \ref{fig:db6} representan el código necesario para entablar tal comunicación con la colección \emph{auctions}.
 	
 \imagen{db5}{Conexión con Flutter parte 1}	
 \imagen{db6}{Conexión con Flutter parte 2}
@@ -35,9 +35,8 @@
 
 \section{Diseño procedimental}
 
-	No hay mejor forma de presentar el diseño procedimental que esquematizando el diagrama de casos de uso que pueden darse a lo largo del uso de la aplicación junto con sus digramas de secuencia. A continuación, de la Figuras C.7 hasta la Figura C.20 (ambas incluidas) presentaran todo esto.
+	No hay mejor forma de presentar el diseño procedimental que esquematizando el diagrama de casos de uso que pueden darse a lo largo del uso de la aplicación junto con sus digramas de secuencia. A continuación, de la Figura \ref{fig:casoUso1} hasta la Figura \ref{fig:casoUso13} (ambas incluidas) presentarán todo esto.
 	
-\imagen{casoUsoGeneral}{Esquema general de casos de uso}
 \imagen{casoUso1}{Iniciar sesión}
 \imagen{casoUso2}{Registrar usuario}
 \imagen{casoUso3}{Ver relojes}
@@ -56,7 +55,7 @@
 \section{Diseño arquitectónico}
 
 	Siguiendo un poco lo marcado en la introducción, es importante definir cómo se comunican las distintas partes de este trabajo. En el informe referente a la memoria se establecía que el patrón ``Modelo-Vista-Controlador'' o MVC iba a ser quien marcara la arquitectura dentro del proyecto Flutter. Sin embargo, también se debe tener en cuenta cómo se ha conectado la API del modelo de predicción de precios y la base de datos explicada anteriormente.
-	Para ser más preciso, se presenta a través de la Figura C.21 la conexión entre las distintas partes. Para ello, se va a seguir el proceso de una acción como ejemplo.
+	Para ser más preciso, se presenta a través de la Figura \ref{fig:disenoArquitectonico} la conexión entre las distintas partes. Para ello, se va a seguir el proceso de una acción como ejemplo.
 
 \imagen{disenoArquitectonico}{Esquema conexión de elementos}
 
@@ -80,26 +79,56 @@
 	
 	NinjaMock es una herramienta muy amigable y eficaz si nuestro objetivo es realizar bocetos de cómo podría quedar el \emph{front-end} de nuestra aplicación. Aunque tiene una versión de pago, este software nos brinda la oportunidad de crear un único proyecto con todas nuestras interfaces de manera gratuita.
 	
-	A continuación, adjuntamos las distintas interfaces haciendo breves comentarios de ellas donde fuera necesario
-
-\imagen{image1}{Diseño inicio de sesión y registro de cuenta}
-
-	Como se puede apreciar en la Figura C.22, en muchas de las ventanas lanzaremos mensajes a modo de advertencia al usuario si este no completa correctamente los campos requeridos. Todas las condiciones de cada campo se marcan en los requisitos expuestos.
+	A continuación, adjuntamos las distintas interfaces haciendo breves comentarios de ellas donde fuera necesario.
 	
-\imagen{image2}{Diseño recuperación de contraseña y página principal}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{img/image1.png}
+    \caption{Diseño inicio de sesión y registro de cuenta}
+    \label{fig:image1}
+\end{figure}
 
-	Según lo representado en la Figura C.23, la idea de la recuperación de contraseña es reactivarla a través de un código al correo electrónico del usuario (aunque esto son líneas futuras). La mayoría de los iconos que nos llevan a alguna interfaz es porque se han marcado como iconos a ventanas emergentes para ayudar más al usuario.
+	Como se puede apreciar en la Figura \ref{fig:image1}, en muchas de las ventanas lanzaremos mensajes a modo de advertencia al usuario si este no completa correctamente los campos requeridos. Todas las condiciones de cada campo se marcan en los requisitos expuestos.
 	
-\imagen{image3}{Diseño ver mis relojes y añadir nuevos}
-
-	Según la Figura C.24, los iconos son bastante explícitos. Destaco lo que se marca como un billete: será la puerta a la puesta en venta del reloj. Lo vemos en la Figura C.25 como ``creación de subasta''.
-
-\imagen{image4}{Diseño creación de subasta y estado de ventas}
-
-\imagen{image5}{Diseño de aplicar a una subasta y predicción de precio}
-
-	Al igual que en otras interfaces, el usuario podrá aplicar a la subasta directamente desde el botón represetnado en la Figura C.26. Saldrá una ventana emergente donde marcará el precio a aplicar.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{img/image2.png}
+    \caption{Diseño recuperación de contraseña y página principal}
+    \label{fig:image2}
+\end{figure}
 	
-\imagen{image6}{Diseño configuración de información personal}
+	Según lo representado en la Figura \ref{fig:image2}, la idea de la recuperación de contraseña es reactivarla a través de un código al correo electrónico del usuario (aunque esto son líneas futuras). La mayoría de los iconos que nos llevan a alguna interfaz es porque se han marcado como iconos a ventanas emergentes para ayudar más al usuario.
+	
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{img/image3.png}
+    \caption{Diseño ver mis relojes y añadir nuevos}
+    \label{fig:image3}
+\end{figure}
+	
+	Según la Figura \ref{fig:image3}, los iconos son bastante explícitos. Destaco lo que se marca como un billete: será la puerta a la puesta en venta del reloj. Lo vemos en la Figura \ref{fig:image4} como ``creación de subasta''.
+	
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{img/image4.png}
+    \caption{Diseño creación de subasta y estado de ventas}
+    \label{fig:image4}
+\end{figure}
 
-	Hay que destacar sobre lo representado en la Figura C.27 que no debe cumplimentar todos los campos para configurar la información personal. Aun así, habrá campos que dependan unos de otros como los de contraseña.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{img/image5.png}
+    \caption{Diseño de aplicar a una subasta y predicción de precio}
+    \label{fig:image5}
+\end{figure}
+
+	Al igual que en otras interfaces, el usuario podrá aplicar a la subasta directamente desde el botón representado en la Figura \ref{fig:image5}. Saldrá una ventana emergente donde marcará el precio a aplicar.
+	
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\linewidth]{img/image6.png}
+    \caption{Diseño configuración de información personal}
+    \label{fig:image6}
+\end{figure}
+
+	Hay que destacar sobre lo representado en la Figura \ref{fig:image6} que no debe cumplimentar todos los campos para configurar la información personal. Aun así, habrá campos que dependan unos de otros como los de contraseña.

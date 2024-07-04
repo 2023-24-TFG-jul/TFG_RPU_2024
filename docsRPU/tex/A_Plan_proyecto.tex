@@ -6,7 +6,7 @@
 
 \section{Planificación temporal}
 
-	Tras la primera reunión con los tutores, decidimos llevar a cabo el proyecto siguiendo la metodología ágil \emph{Scrum}, vista en diversas asignaturas del grado. Sin embargo, debido a ser un proyecto con un único desarrollador y con un contexto cambiante, los ciclos de trabajo han sido diferentes. Al trabajar con GitHub, los \emph{sprints} se han definido como \emph{milestones}, tal y como se representa en la Figura A.1.
+	Tras la primera reunión con los tutores, decidimos llevar a cabo el proyecto siguiendo la metodología ágil \emph{Scrum}, vista en diversas asignaturas del grado. Sin embargo, debido a ser un proyecto con un único desarrollador y con un contexto cambiante, los ciclos de trabajo han sido diferentes. Al trabajar con GitHub, los \emph{sprints} se han definido como \emph{milestones}, tal y como se representa en la Figura \ref{fig:sprints}.
 	
 \imagen{sprints}{Registro de sprints}
 
@@ -22,7 +22,7 @@
 		\item Crear mi primera \emph{issue} y adjudicarla \emph{labels} creadas por mí mismo.
 		\item Completar documentos necesarios para la universidad relacionados con este trabajo.
 	\end{enumerate}
-	En cuanto a problemas encontrados, la tarea más complicada fue la instalación de Flutter y la conexión del equipo con la cuenta de GitHub. Flutter consta de muchos requerimientos para su instalación y su documentación de creación de proyectos es algo compleja, cosa que ralentizó el trabajo.
+	En cuanto a problemas encontrados, la tarea más complicada fue la instalación de Flutter y la conexión del equipo con la cuenta de GitHub. Flutter consta de muchos requerimientos para su instalación y su documentación de creación de proyectos es algo compleja, cosa que ralentizó el trabajo. Para más información, ver \cite{flutter}.
 	
 \subsection{Sprint 1 : 28/02/2024 - 13/03/2024}
 
@@ -34,16 +34,16 @@
 		\item Configurar LaTeX para el desarrollo del informe.
 		\item Seguir trabajando con la herramienta Flutter.
 	\end{enumerate}
-	La mayor parte del tiempo fue destinada a la búsqueda de un \emph{dataset} con mucha información. El desconocimiento en la materia hizo que no se supiera bien qué características debía tener un buen \emph{dataset}. Tras varias opciones, se decidió centrar la aplicación en el mundo de relojes y se eligió el óptimo para ello.
+	La mayor parte del tiempo fue destinada a la búsqueda de un \emph{dataset} con mucha información. El desconocimiento en la materia hizo que no se supiera bien qué características debía tener un buen \emph{dataset}: muchos de los archivos no tenían suficientes registros, u otros tenían muchos registros pero tenían muchas de sus columnas con valores nulos y/o vacíos. Estos no eran buenos candidatos para entrenar un modelo de predicción. Tras varias opciones, se decidió centrar la aplicación en el mundo de los relojes y se eligió el óptimo para ello.
 	
 \subsection{Sprint 2 : 13/03/2024 - 03/04/2024}
 
 	El tercer \emph{sprint} del proyecto se dedicó únicamente a la parte del aprendizaje automático. Duró tres semanas y las tareas realizadas durante este fueron:
 	\begin{enumerate}
 		\item Buscar información teórica relativa al aprendizaje automático.
-		\item Conseguir un \emph{dataset} donde los valores fueran numéricos en vez de cadenas de texto.
+		\item Conseguir un \emph{dataset} donde la mayoría de los valores fueran numéricos en vez de cadenas de texto.
 	\end{enumerate}
-	Durante este sprint se invirtió mucho tiempo para entender qué era el aprendizaje automático y cómo podía ser empleado en este proyecto. El problema principal que surgió fue la gran cantidad de información no relevante que albergaba el \emph{dataset}. En esta tarea se invirtió mucho tiempo en estudiar la estipulación de las características de más de 280000 registros de relojes.
+	Durante este \emph{sprint} se invirtió mucho tiempo para entender qué era el aprendizaje automático y cómo podía ser empleado en este proyecto. El problema principal que surgió fue la gran cantidad de información no relevante que albergaba el \emph{dataset}. En esta tarea se invirtió mucho tiempo en estudiar la estipulación de las características de más de 280000 registros de relojes.
 
 \subsection{Sprint 3 : 03/04/2024 - 24/04/2024}
 
@@ -65,7 +65,7 @@
 		\item Documentar todo el trabajo del aprendizaje automático realizado hasta la fecha.
 		\item Crear bocetos que representasen las futuras vistas de la aplicación.
 	\end{enumerate}
-	En cuanto a los requisitos y los bocetos, realizarlos fue una tarea importante para establecer con claridad que se buscaba ver en la aplicación. Por otra parte, la tarea relacionada con las funciones \emph{get} y \emph{add} llevó bastante tiempo ya que, aunque las funciones fueran sencillas al final, llegar hasta ese momento necesitaba de conocer cosas previas no vistas. Un problema a destacar fue el archivo de dependencias del proyecto, el cual es bastante complejo de configurar sin saber nada acerca de la materia.
+	En cuanto a los requisitos y los bocetos, realizarlos fue una tarea importante para establecer con claridad que se buscaba ver en la aplicación. Por otra parte, la tarea relacionada con las funciones \emph{get} y \emph{add} llevó bastante tiempo ya que, aunque las funciones fueran sencillas al final, llegar hasta ese momento necesitaba de conocer cosas previas no vistas. Un problema a destacar fue el archivo de dependencias del proyecto, el cual es bastante complejo de configurar sin saber nada acerca de la materia. Aun así, realizando pruebas y consultando documentación, se consiguió tener el archivo configurado.
 	
 \subsection{Sprint 5 : 08/05/2024 - 22/05/2024}
 
@@ -75,7 +75,7 @@
 		\item Desarrollo del registro de un usuario.
 		\item Corrección de errores en la documentación.
 	\end{enumerate}
-	El trabajo de este \emph{sprint} no fue sencillo, pero mereció mucho la pena para entender ciertas cosas sobre Flutter que se desconocían hasta el momento. Tras la reunión de este ciclo de trabajo, vimos que había una serie de errores que eran necesarios tener en cuenta y corregir para el siguiente \emph{sprint}. El problema más destacable fue la incapacidad por mi parte de llevar variables de una ventana a otra, lo que ralentizó todo buscando distintas formas de conseguir esta parte fundamental.
+	El trabajo de este \emph{sprint} no fue sencillo, pero mereció mucho la pena para entender ciertas cosas sobre Flutter que se desconocían hasta el momento. Tras la reunión de este ciclo de trabajo, vimos que había una serie de errores que eran necesarios tener en cuenta y corregir para el siguiente \emph{sprint}. El problema más destacable fue la incapacidad por mi parte de llevar variables de una ventana a otra, lo que ralentizó todo buscando distintas formas de conseguir esta parte fundamental para el funcionamiento de la aplicación y el almacenamiento en la base de datos.
 	
 \subsection{Sprint 6 : 22/05/2024 - 31/05/2024}
 
@@ -86,11 +86,11 @@
 		\item Crear la vista de la lista de relojes.
 		\item Crear la vista de la lista de subastas.
 	\end{enumerate}
-	Debido al buen momento que atravesaba, fueron surgiendo tareas intermedias que significaban nuevas implementaciones al trabajo. Lo más complicado del \emph{sprint} fue la forma de relacionar los relojes con las subastas, ya que la base de datos utilizada era NoSQL y mis conocimientos se centraban en bases de datos SQL.
+	Debido al buen momento que atravesaba, fueron surgiendo tareas intermedias que significaban nuevas implementaciones al trabajo. Lo más complicado del \emph{sprint} fue la forma de relacionar los relojes con las subastas, ya que la base de datos utilizada era NoSQL y durante mi formación académica he trabajado más con bases de datos SQL.
 	
 \subsection{Sprint 7 : 31/05/2024 - 13/06/2024}
 
-	Tras una demo con los tutores y una puesta en común de las tareas a afrontar, se realizó un \emph{sprint} de dos semanas donde se realizaron las siguientes tareas:
+	Tras una demo con los tutores donde ya se podía registrar usuarios y relojes perfectamente, y una puesta en común de las tareas a afrontar, se realizó un \emph{sprint} de dos semanas donde se realizaron las siguientes tareas:
 	\begin{enumerate}
 		\item Incluir campo \emph{wallet} al usuario.
 		\item Tratar cambios en los estados de los relojes y subastas tras realizar distintas acciones.
@@ -101,14 +101,24 @@
 	
 \subsection{Sprint 8 : 13/06/2024 - 19/06/2024}
 
-	El noveno y último \emph{sprint} duró una semana. Las tareas realizadas fueron:
+	El noveno \emph{sprint} duró una semana. Las tareas realizadas fueron:
 	\begin{enumerate}
-		\item Resolver errores tenidos en el anterior sprint.
+		\item Resolver pequeños errores tenidos en el anterior sprint.
 		\item Incluir condicionantes al campo \emph{wallet} del usuario para controlar mejor las subastas.
-		\item Tratar la decoración y respuesta de la aplicación a cualquier tipo de dispositivo.
-		\item Conectar modelo a la aplicación.
+		\item Hacer la aplicación adaptable a cualquier tipo de dispositivo y añadir imágenes de fondo.
+		\item Conectar modelo de predicción a la aplicación.
 	\end{enumerate}
 	Las tres primeras tareas no me llevaron mucho tiempo y pude dedicar casi todas las horas a la conexión del modelo. Sin duda, la conexión del modelo a la aplicación ha sido el punto más problemático de todo el trabajo. Tras los resultados ``esperanzadores'' obtenidos en anteriores \emph{sprints}, vimos que no iban a servir de mucho porque no me fue posible conectarlo como yo creía hacerlo. Se intentaron diversas formas de conectar, ya sea cambiando el formato, la limpieza de datos... llegando a definir un sencillo modelo de predicción que se tuvo que lanzar a producción para que llegase información a la aplicación. Puede que el camino fueran escasos pasos, pero el desconocimiento de esto hizo que el trabajo se complicase mucho.
+	
+\subsection{Sprint 9 : 19/06/2024 - 04/07/2024}
+
+	El décimo y último \emph{sprint} duró dos semanas y en ello se realizaron las siguientes tareas:
+	\begin{enumerate}
+		\item Despliegue de la aplicación con Netlify.
+		\item Corrección de los últimos puntos de la memoria.
+	\end{enumerate}
+	
+	Durante este sprint se ha ido corrigiendo los documentos asociados a este proyecto. Además, se ha desplegado la aplicación en Netlify, la cual es gratuita y fácil de manejar. Simplemente se necesitó compilar el proyecto desde la terminal de Visual Studio Code con el comando ``flutter build web'' y subir la carpeta web generada a nuestra cuenta de Netlify. En mi caso, me registre con la cuenta de GitHub para tener una conexión más rápida con el proyecto a través del repositorio. 
 	
 \section{Estudio de viabilidad}
 
@@ -139,40 +149,40 @@
 	
 	Por tanto, según datos recientes, los costes anuales serían:
 	\begin{enumerate}
-		\item Sueldo medio de un desarrollador \emph{web} en España : 30000 euros
-		\item Coste del ordenador donde se realiza el trabajo: 500 euros
-		\item Coste del \emph{Hosting} y dominio: 200 euros
-		\item Costes de marketing y publicidad (campaña básica): 1000 euros
-		\item Costes de mantenimiento: 500 euros
+		\item Sueldo medio de un desarrollador \emph{web} en España : 30000 €
+		\item Coste del ordenador donde se realiza el trabajo: 500 €
+		\item Coste del \emph{Hosting} y dominio: 200 €
+		\item Costes de marketing y publicidad (campaña básica): 1000 €
+		\item Costes de mantenimiento: 500 €
 	\end{enumerate}
 	
 	Por otro lado, los supuestos ingresos anuales esperados son:
 	\begin{enumerate}
-		\item Publicidad : 500 euros
-		\item Tarifas para publicación de productos: 100 usuarios a 5 euros el mes
-		\item Comisiones por venta: varía mucho porque se definiría un porcentaje del precio total. Suponemos 300 ventas de 1000 a un 10 por ciento de comisión.
+		\item Publicidad : 500 €
+		\item Tarifas para publicación de productos: 100 usuarios a 5 € el mes
+		\item Comisiones por venta: varía mucho porque se definiría un porcentaje del precio total. Suponemos 300 ventas de 1000 € a un 10 por ciento de comisión.
 	\end{enumerate}
 	
 	Por tanto:
 	
 	\begin{equation}
-		\text{Costes\ Totales\ Anuales} = 30,000 + 500 + 200 + 1,000 + 500 = 32,200 \ \text{euros}
+		\text{Costes\ Totales\ Anuales} = 30,000 + 500 + 200 + 1,000 + 500 = 32,200 \ \text{€}
 	\end{equation}
 	\begin{align}
-		\text{Ingresos\ por\ Publicidad} &= 500 \ \text{euros} \\
-		\text{Ingresos\ por\ Tarifas} &= 100 \times 5 \times 12 = 6,000 \ \text{euros} \\
-		\text{Ingresos\ por\ Comisiones} &= 50 \times 1,000 \times 0.10 = 5,000 \ \text{euros} \\
-		\text{Ingresos\ Totales\ Anuales} &= 500 + 6,000 + 5,000 = 11,500 \ \text{euros}
+		\text{Ingresos\ por\ Publicidad} &= 500 \ \text{€} \\
+		\text{Ingresos\ por\ Tarifas} &= 100 \times 5 \times 12 = 6,000 \ \text{€} \\
+		\text{Ingresos\ por\ Comisiones} &= 50 \times 1,000 \times 0.10 = 5,000 \ \text{€} \\
+		\text{Ingresos\ Totales\ Anuales} &= 500 + 6,000 + 5,000 = 11,500 \ \text{€}
 	\end{align}
 	\begin{equation}
 		\text{Balance\ Anual} = \text{Ingresos\ Totales\ Anuales} - \text{Costes\ Totales\ Anuales}
 	\end{equation}
 
 	\begin{equation}
-		\text{Balance\ Anual} = 11,500 - 32,200 = -20700 \ \text{euros}
+		\text{Balance\ Anual} = 11,500 - 32,200 = -20700 \ \text{€}
 	\end{equation}
 	
-	Según los cálculos, el proyecto no es viable con una pérdida el primer año de 20700 euros. Sin embargo, la ayuda de futuros inversores para comenzar con algo más de capital y ofreciendo mejoras tras ese ingreso, cambiaría mucho el balance ofrecido.
+	Según los cálculos, el proyecto no es viable con una pérdida el primer año de 20700 €. Sin embargo, la ayuda de futuros inversores para comenzar con algo más de capital y ofreciendo mejoras tras ese ingreso, cambiaría mucho el balance ofrecido.
 
 \subsection{Viabilidad legal}
 
@@ -187,12 +197,12 @@
 	
 	Como la aplicación va a ser desplegada en España y está siendo lanzada por una empresa, es necesario que esta se encuentre registrada en el país donde vaya a operar. Hay que añadir que, además del registro, es necesario la adquisición de licencias como Licencia Comercial o Registro de IVA entre otras. Por otro lado, al ser una aplicación de subastas, es necesario el cumplimiento de las leyes de subastas locales y nacionales, así como atender a las regulaciones específicas sobre venta de productos de lujo. Ejemplos de ellas son:
 	\begin{enumerate}
-		\item Ley de Contratos del Sector Público (LCSP) según Real Decreto Legislativo 3/2011, de 14 de noviembre.
-		\item Ley de Enjuiciamiento Civil (LEC) según Ley 1/2000, de 7 de enero.
-		\item Reglamento General de la Ley de Contratos de las Administraciones Públicas según Real Decreto 1098/2001, de 12 de octubre.
+		\item Ley de Contratos del Sector Público (LCSP) según Real Decreto Legislativo 3/2011, de 14 de noviembre. \cite{leySectorPublico}
+		\item Ley de Enjuiciamiento Civil (LEC) según Ley 1/2000, de 7 de enero. \cite{leyEnjuiciamiento}
+		\item Reglamento General de la Ley de Contratos de las Administraciones Públicas según Real Decreto 1098/2001, de 12 de octubre. \cite{leyContratos}
 	\end{enumerate}
 	
-	En cuanto a la protección del consumidor, se deben establecer de manera clara tanto los términos de uso como las políticas de devolución y reembolsos. Las políticas de privacidad deben ser claras y se deben cumplir la ley de protección de datos poniendo como ejemplo la \emph{General Data Protection Regulation} (GDPR) para la protección de datos de individuos dentro de la UE.
+	En cuanto a la protección del consumidor, se deben establecer de manera clara tanto los términos de uso como las políticas de devolución y reembolsos. Las políticas de privacidad deben ser claras y se deben cumplir la \emph{General Data Protection Regulation} (GDPR) para la protección de datos de individuos dentro de la UE. \cite{RGPD}
 	
 	La defensa por la propiedad intelectual también es importante tenerla en cuenta a la hora de estudiar este punto. Se deben tomar medidas para la protección de usuarios y, ya que Kairos realiza transacciones, estas deben cumplirse según los estándares de seguridad en transacciones en línea.
 	
