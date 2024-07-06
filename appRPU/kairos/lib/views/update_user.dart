@@ -150,9 +150,9 @@ class _UpdateUserState extends State<UpdateUser> {
                         ),
                         IconButton(
                           icon: const Icon(Icons.info_outline),
-                          tooltip:
-                              'If you do not want to change the password, enter the same password as confirmation of the data update.',
-                          onPressed: () {},
+                          onPressed: () {
+                            _showDialog('Password info', 'If you do not want to change the password, enter the same password as confirmation of the data update.');
+                          },
                           color: Colors.white,
                         ),
                       ],

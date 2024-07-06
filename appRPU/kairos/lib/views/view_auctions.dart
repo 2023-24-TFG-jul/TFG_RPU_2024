@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kairos/models/auction.dart';
 import 'package:kairos/models/user.dart';
 import 'package:kairos/models/watch.dart';
+import 'package:kairos/views/home.dart';
 import 'add_auction.dart';
 
 class ViewAuctions extends StatefulWidget {
@@ -33,11 +34,17 @@ class _ViewAuctionsState extends State<ViewAuctions> {
       _auctionsFuture =
           _auctionRepository.getAllAuctions().then((auctions) async {
         for (var auction in auctions) {
-          if (_isAuctionExpired(auction) &&
-              auction.auctionStatus != 'Finished') {
-            auction.auctionStatus = 'Finished';
-            await _watchRepository.updateSaleStatusWatch(
-                auction.watchNickName, 'Purchased');
+          if (_isAuctionExpired(auction) && auction.auctionStatus != 'Finished') {
+              if(auction.buyerEmail == '-'){
+                await _watchRepository.updateSaleStatusWatch(auction.watchNickName, 'Not purchased');
+              } else {
+                await _watchRepository.updateSaleStatusWatch(auction.watchNickName, 'Purchased');
+              }
+              await _auctionRepository.updateAuctionStatus(auction.watchNickName, 'Finished');
+              await _userRepository.updateUserWallet(loginUserEmail, auction.actualValue);
+              await _userRepository.updateUserWallet(auction.vendorEmail, -auction.actualValue);
+          } else if(auction.auctionStatus == 'Finished') {
+              break;
           }
         }
         return auctions;
@@ -80,6 +87,13 @@ void _buyAuction(String auctionId) async {
       await _userRepository.updateUserWallet(loginUserEmail, auction.maximumValue);
       await _userRepository.updateUserWallet(auction.vendorEmail, -auction.maximumValue); //para que sume
       _loadAuctions(loginUserEmail);
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => Home(loginUserEmail: loginUserEmail),
+        ),
+      );
       _showDialog('Correct purchase', 'Watch successfully acquired.');
       return;
     } else {

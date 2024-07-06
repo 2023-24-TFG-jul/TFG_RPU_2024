@@ -224,9 +224,9 @@ class _RegisterState extends State<Register> {
             ),
             IconButton(
               icon: const Icon(Icons.info_outline),
-              tooltip:
-                  'This field collects the money you wish to debit your account for payments. You can change it in the "Update your personal data" section. If you do not enter any value, we understand that you start from zero.',
-              onPressed: () {},
+              onPressed: () {
+                _showDialog('Wallet info', 'This field collects the money you wish to debit your account for payments. You can change it in the "Update your personal data" section. If you do not enter any value, we understand that you start from zero.');
+              },
               color: Colors.white,
             ),
           ],
