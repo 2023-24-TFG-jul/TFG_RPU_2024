@@ -15,7 +15,7 @@ Pruebe la aplicación siguiendo el siguiente enlace: https://kairosrpu.netlify.a
 - Render: Servicio de alojamiento de la API de predicción de precios.
 
 # 📜 Licencia
-- Este proyecto está bajo la licencia MIT. Consulta el archivo LICENSE.txt para más información.
+- Este proyecto está bajo la licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más información.
 
 # 📝 Notas
 - A la hora de predecir el precio del reloj, la respuesta a la llamada de la API puede tardar segundos y/o minutos debido a que se utiliza su versión gratuita. Por favor, pulse solo una vez sobre el icono € y espere.
