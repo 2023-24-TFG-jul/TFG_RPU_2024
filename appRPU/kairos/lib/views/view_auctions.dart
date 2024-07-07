@@ -41,7 +41,7 @@ class _ViewAuctionsState extends State<ViewAuctions> {
                 await _watchRepository.updateSaleStatusWatch(auction.watchNickName, 'Purchased');
               }
               await _auctionRepository.updateAuctionStatus(auction.watchNickName, 'Finished');
-              await _userRepository.updateUserWallet(auction.buyerEmail, auction.actualValue);
+              await _userRepository.updateUserWallet(loginUserEmail, auction.actualValue);
               await _userRepository.updateUserWallet(auction.vendorEmail, -auction.actualValue);
           } else if(auction.auctionStatus == 'Finished') {
               break;
